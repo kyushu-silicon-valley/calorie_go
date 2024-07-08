@@ -1,0 +1,28 @@
+name: Hackathon Issue
+description: ハッカソンのプロジェクト用のイシューテンプレート
+title: "[ハッカソン] タイトルを記入してください"
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ## 概要
+        簡単な説明をここに記入してください。
+
+  - type: input
+    id: title
+    attributes:
+      label: タイトル
+      description: イシューの具体的なタイトルを入力してください。
+      placeholder: タイトルを記入してください
+    validations:
+      required: true
+
+  - type: textarea
+    id: description
+    attributes:
+      label: 説明
+      description: このイシューに関する詳細な説明を記入してください。
+      placeholder: 詳細を記入してください
+    validations:
+      required: true
