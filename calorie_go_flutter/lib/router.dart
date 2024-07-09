@@ -7,68 +7,62 @@ import 'package:calorie_go_flutter/pages/ticket/ticket.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
+CustomTransitionPage<T> buildTransitionPage<T>({
+  required Widget child,
+}) {
+  return CustomTransitionPage<T>(
+    child: child,
+    transitionsBuilder: (context, animation, secondaryAnimation, child) {
+      return child;
+    },
+    transitionDuration: const Duration(milliseconds: 0),
+  );
+}
+
 final goRouter = GoRouter(
   initialLocation: '/',
   routes: [
     GoRoute(
       path: '/',
       name: 'home',
-      pageBuilder: (context, state) {
-        return MaterialPage(
-          key: state.pageKey,
-          child: const HomePage(),
-        );
-      },
+      pageBuilder: (context, state) => buildTransitionPage(
+        child: const HomePage(),
+      ),
     ),
     GoRoute(
       path: '/exercise',
       name: 'exercise',
-      pageBuilder: (context, state) {
-        return MaterialPage(
-          key: state.pageKey,
-          child: const ExercisePage(),
-        );
-      },
+      pageBuilder: (context, state) => buildTransitionPage(
+        child: const ExercisePage(),
+      ),
     ),
     GoRoute(
       path: '/ranking',
       name: 'ranking',
-      pageBuilder: (context, state) {
-        return MaterialPage(
-          key: state.pageKey,
-          child: const RankingPage(),
-        );
-      },
+      pageBuilder: (context, state) => buildTransitionPage(
+        child: const RankingPage(),
+      ),
     ),
     GoRoute(
       path: '/ticket',
       name: 'ticket',
-      pageBuilder: (context, state) {
-        return MaterialPage(
-          key: state.pageKey,
-          child: const TicketPage(),
-        );
-      },
+      pageBuilder: (context, state) => buildTransitionPage(
+        child: const TicketPage(),
+      ),
     ),
     GoRoute(
       path: '/setting',
       name: 'setting',
-      pageBuilder: (context, state) {
-        return MaterialPage(
-          key: state.pageKey,
-          child: const SettingPage(),
-        );
-      },
+      pageBuilder: (context, state) => buildTransitionPage(
+        child: const SettingPage(),
+      ),
     ),
     GoRoute(
       path: '/sample',
       name: 'sample',
-      pageBuilder: (context, state) {
-        return MaterialPage(
-          key: state.pageKey,
-          child: const SamplePage(),
-        );
-      },
+      pageBuilder: (context, state) => buildTransitionPage(
+        child: const SamplePage(),
+      ),
     ),
   ],
   errorPageBuilder: (context, state) => MaterialPage(
