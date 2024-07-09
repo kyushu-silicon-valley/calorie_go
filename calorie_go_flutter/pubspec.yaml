@@ -11,6 +11,10 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  serverpod_flutter: 2.0.1
+  calorie_go_client:
+    path: ../calorie_go_client
+
 
   cupertino_icons: ^1.0.6
   riverpod_annotation: ^2.3.5
