@@ -14,8 +14,6 @@ jobs:
       - uses: subosito/flutter-action@v2
         with:
           flutter-version: "3.22.2"
-      - name: Go to mobile directory
-        run: cd calorie_go_flutter
       - name: Install dependencies
         run: flutter pub get
       - name: generate files
