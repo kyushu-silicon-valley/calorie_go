@@ -1,0 +1,2 @@
+# providers
+このディレクトリにはproviderのうち、pageに紐づかないでグローバルステートで状態を管理するproviderを設置する
