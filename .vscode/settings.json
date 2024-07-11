@@ -1,5 +1,12 @@
 {
-  "cSpell.words": ["cmds", "cupertino", "psql", "riverpod", "Serverpod"],
+  "cSpell.words": [
+    "cmds",
+    "cupertino",
+    "googlesignin",
+    "psql",
+    "riverpod",
+    "Serverpod"
+  ],
   "explorer.fileNesting.enabled": true,
   "explorer.fileNesting.expand": false,
   "explorer.fileNesting.patterns": {
