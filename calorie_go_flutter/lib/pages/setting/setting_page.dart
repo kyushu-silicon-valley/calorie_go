@@ -22,7 +22,7 @@ class SettingPage extends HookConsumerWidget {
                 if (!context.mounted) return;
                 context.go('/top');
               },
-              child: Text('LogOut'),
+              child: const Text('LogOut'),
             ),
           ],
         ),
