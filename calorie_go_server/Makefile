@@ -6,4 +6,4 @@ gen:
 	serverpod generate
 
 migrate:
-	serverpod create-migration
+	dart run bin/main.dart --role maintenance --apply-migrations

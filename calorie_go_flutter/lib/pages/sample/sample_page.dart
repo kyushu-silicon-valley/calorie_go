@@ -1,3 +1,4 @@
+import 'package:calorie_go_flutter/gen/assets.gen.dart';
 import 'package:calorie_go_flutter/pages/sample/sample_page_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -17,6 +18,7 @@ class SamplePage extends HookConsumerWidget {
       ),
       body: Column(
         children: [
+          // サーバーへの送信サンプル
           Padding(
             padding: const EdgeInsets.all(16),
             child: TextField(
@@ -45,6 +47,11 @@ class SamplePage extends HookConsumerWidget {
               },
               child: const Text('サーバーに送信'),
             ),
+          ),
+          // 画像の表示のサンプル
+          Assets.images.sample.sampleImage.image(
+            width: 100,
+            height: 100,
           ),
         ],
       ),
