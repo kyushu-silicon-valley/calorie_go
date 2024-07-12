@@ -29,7 +29,7 @@ class TopPage extends HookConsumerWidget {
               const Spacer(),
               SignInWithGoogleButton(
                 style: ElevatedButton.styleFrom(
-                  minimumSize: Size(300, 50),
+                  minimumSize: const Size(300, 50),
                   ),
                 caller: client.modules.auth,
                 clientId: clientId,
@@ -50,24 +50,21 @@ class TopPage extends HookConsumerWidget {
 class _Header extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final double height = 320;
-    return Container(
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Container(child: Assets.images.top.topLogo.image()),
-          Text(
-            '動いて競って育てよう！',
-            style: GoogleFonts.bizUDPGothic(color: Color(0xFF00008B), fontSize: 20,fontWeight: FontWeight.bold,shadows: <Shadow>[
-             Shadow(
-               color: Colors.grey,
-               offset: Offset(5.0, 5.0),
-               blurRadius: 3.0,
-             ),
-           ],),
-          ),
-        ],
-      ),
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Container(child: Assets.images.top.topLogo.image()),
+        Text(
+          '動いて競って育てよう！',
+          style: GoogleFonts.bizUDPGothic(color: const Color(0xFF00008B), fontSize: 20,fontWeight: FontWeight.bold,shadows: <Shadow>[
+           const Shadow(
+             color: Colors.grey,
+             offset: Offset(5.0, 5.0),
+             blurRadius: 3.0,
+           ),
+         ],),
+        ),
+      ],
     );
   }
 }
