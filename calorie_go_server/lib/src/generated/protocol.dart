@@ -23,6 +23,8 @@ import 'user_exercise_hist.dart' as _i11;
 import 'user_monster_feature.dart' as _i12;
 import 'user_ticket.dart' as _i13;
 import 'package:calorie_go_server/src/generated/exercise.dart' as _i14;
+import 'package:calorie_go_server/src/generated/user_exercise_hist.dart'
+    as _i15;
 export 'calorie_go_user.dart';
 export 'example.dart';
 export 'exercise.dart';
@@ -574,9 +576,11 @@ class Protocol extends _i1.SerializationManagerServer {
       return (data as List).map((e) => deserialize<_i14.Exercise>(e)).toList()
           as dynamic;
     }
-    if (t == _i1.getType<List<_i3.UserInfo>?>()) {
+    if (t == _i1.getType<List<_i15.UserExerciseHist>?>()) {
       return (data != null
-          ? (data as List).map((e) => deserialize<_i3.UserInfo>(e)).toList()
+          ? (data as List)
+              .map((e) => deserialize<_i15.UserExerciseHist>(e))
+              .toList()
           : null) as dynamic;
     }
     try {

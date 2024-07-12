@@ -1,9 +1,13 @@
-import 'package:serverpod_auth_client/serverpod_auth_client.dart';
+import 'package:calorie_go_client/calorie_go_client.dart';
+import 'package:calorie_go_flutter/constants.dart';
 
 class RankingRepository {
-  Future<List<UserInfo>> getRanking() async {
-    // TODO: Implement
-    await Future.delayed(const Duration(seconds: 2));
-    return [];
+  Future<List<UserExerciseHist>?> getRanking() async {
+    try {
+      final ranking = await client.ranking.getRanking();
+      return ranking;
+    } catch (e) {
+      throw Exception(e);
+    }
   }
 }

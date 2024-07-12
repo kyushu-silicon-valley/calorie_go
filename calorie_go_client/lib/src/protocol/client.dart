@@ -12,8 +12,8 @@ import 'package:serverpod_client/serverpod_client.dart' as _i1;
 import 'dart:async' as _i2;
 import 'package:calorie_go_client/src/protocol/exercise.dart' as _i3;
 import 'package:calorie_go_client/src/protocol/monsters.dart' as _i4;
-import 'package:serverpod_auth_client/serverpod_auth_client.dart' as _i5;
-import 'package:calorie_go_client/src/protocol/user_exercise_hist.dart' as _i6;
+import 'package:calorie_go_client/src/protocol/user_exercise_hist.dart' as _i5;
+import 'package:serverpod_auth_client/serverpod_auth_client.dart' as _i6;
 import 'protocol.dart' as _i7;
 
 /// {@category Endpoint}
@@ -87,8 +87,8 @@ class EndpointRanking extends _i1.EndpointRef {
   @override
   String get name => 'ranking';
 
-  _i2.Future<List<_i5.UserInfo>?> getRanking() =>
-      caller.callServerEndpoint<List<_i5.UserInfo>?>(
+  _i2.Future<List<_i5.UserExerciseHist>?> getRanking() =>
+      caller.callServerEndpoint<List<_i5.UserExerciseHist>?>(
         'ranking',
         'getRanking',
         {},
@@ -118,8 +118,8 @@ class EndpointUser extends _i1.EndpointRef {
 
   /// 現在ログイン中のユーザー情報を取得する
   /// ログインしていない場合はnullを返す
-  _i2.Future<_i5.UserInfo?> fetchCurrentUser() =>
-      caller.callServerEndpoint<_i5.UserInfo?>(
+  _i2.Future<_i6.UserInfo?> fetchCurrentUser() =>
+      caller.callServerEndpoint<_i6.UserInfo?>(
         'user',
         'fetchCurrentUser',
         {},
@@ -127,8 +127,8 @@ class EndpointUser extends _i1.EndpointRef {
 
   /// 現在のログイン中のユーザーのニックネームを変更するためのエンドポイント
   /// [nickname]に変更後のニックネームを指定する
-  _i2.Future<_i5.UserInfo?> changeUserNickname({required String nickname}) =>
-      caller.callServerEndpoint<_i5.UserInfo?>(
+  _i2.Future<_i6.UserInfo?> changeUserNickname({required String nickname}) =>
+      caller.callServerEndpoint<_i6.UserInfo?>(
         'user',
         'changeUserNickname',
         {'nickname': nickname},
@@ -154,8 +154,8 @@ class EndpointUserExerciseHist extends _i1.EndpointRef {
         {},
       );
 
-  _i2.Future<_i6.UserExerciseHist> myExerciseHist() =>
-      caller.callServerEndpoint<_i6.UserExerciseHist>(
+  _i2.Future<_i5.UserExerciseHist> myExerciseHist() =>
+      caller.callServerEndpoint<_i5.UserExerciseHist>(
         'userExerciseHist',
         'myExerciseHist',
         {},
@@ -164,10 +164,10 @@ class EndpointUserExerciseHist extends _i1.EndpointRef {
 
 class _Modules {
   _Modules(Client client) {
-    auth = _i5.Caller(client);
+    auth = _i6.Caller(client);
   }
 
-  late final _i5.Caller auth;
+  late final _i6.Caller auth;
 }
 
 class Client extends _i1.ServerpodClient {

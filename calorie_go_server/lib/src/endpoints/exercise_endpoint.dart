@@ -50,8 +50,26 @@ class ExerciseEndpoint extends Endpoint {
     if (current == null) {
       return null;
     }
+
     current.totalSteps = stepCount;
     final result = await Exercise.db.updateRow(session, current);
+
+
+    // 運動が終わるたびに、ユーザーの運動履歴を更新する
+    final currentUserExerciseHist = await UserExerciseHist.db.find(
+      session,
+      where: (p0) => p0.userId.equals(au.userId),
+    );
+    final hist = currentUserExerciseHist.firstOrNull;
+    if (hist == null) return null;
+    UserExerciseHist.db.updateRow(
+      session,
+      UserExerciseHist(
+        userId: au.userId,
+        steps: hist.steps + stepCount,
+        updatedAt: DateTime.now(),
+      ),
+    );
 
     return result;
   }

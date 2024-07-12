@@ -21,7 +21,8 @@ import 'user_exercise_hist.dart' as _i9;
 import 'user_monster_feature.dart' as _i10;
 import 'user_ticket.dart' as _i11;
 import 'package:calorie_go_client/src/protocol/exercise.dart' as _i12;
-import 'package:serverpod_auth_client/serverpod_auth_client.dart' as _i13;
+import 'package:calorie_go_client/src/protocol/user_exercise_hist.dart' as _i13;
+import 'package:serverpod_auth_client/serverpod_auth_client.dart' as _i14;
 export 'calorie_go_user.dart';
 export 'example.dart';
 export 'exercise.dart';
@@ -112,13 +113,15 @@ class Protocol extends _i1.SerializationManager {
       return (data as List).map((e) => deserialize<_i12.Exercise>(e)).toList()
           as dynamic;
     }
-    if (t == _i1.getType<List<_i13.UserInfo>?>()) {
+    if (t == _i1.getType<List<_i13.UserExerciseHist>?>()) {
       return (data != null
-          ? (data as List).map((e) => deserialize<_i13.UserInfo>(e)).toList()
+          ? (data as List)
+              .map((e) => deserialize<_i13.UserExerciseHist>(e))
+              .toList()
           : null) as dynamic;
     }
     try {
-      return _i13.Protocol().deserialize<T>(data, t);
+      return _i14.Protocol().deserialize<T>(data, t);
     } on _i1.DeserializationTypeNotFoundException catch (_) {}
     return super.deserialize<T>(data, t);
   }
@@ -126,7 +129,7 @@ class Protocol extends _i1.SerializationManager {
   @override
   String? getClassNameForObject(Object data) {
     String? className;
-    className = _i13.Protocol().getClassNameForObject(data);
+    className = _i14.Protocol().getClassNameForObject(data);
     if (className != null) {
       return 'serverpod_auth.$className';
     }
@@ -167,7 +170,7 @@ class Protocol extends _i1.SerializationManager {
   dynamic deserializeByClassName(Map<String, dynamic> data) {
     if (data['className'].startsWith('serverpod_auth.')) {
       data['className'] = data['className'].substring(15);
-      return _i13.Protocol().deserializeByClassName(data);
+      return _i14.Protocol().deserializeByClassName(data);
     }
     if (data['className'] == 'CalorieGoUser') {
       return deserialize<_i2.CalorieGoUser>(data['data']);

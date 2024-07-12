@@ -3,7 +3,7 @@ import 'package:serverpod/serverpod.dart';
 import 'package:serverpod_auth_server/module.dart';
 
 class RankingEndpoint extends Endpoint {
-  Future<List<UserInfo>?> getRanking(Session session) async {
+  Future<List<UserExerciseHist>?> getRanking(Session session) async {
     if (!await session.isUserSignedIn) {
       return null;
     }
@@ -16,17 +16,20 @@ class RankingEndpoint extends Endpoint {
     final ranking = await UserExerciseHist.db.find(
       session,
       orderBy: (p0) => p0.steps,
+      include: UserExerciseHist.include(
+        user: UserInfo.include(),
+      ),
     );
 
-    var users = <UserInfo>[];
-    for (final r in ranking) {
-      final user = await Users.findUserByUserId(session, r.userId);
-      if (user != null) {
-        users.add(user);
-      }
-    }
+    // var users = <UserInfo>[];
+    // for (final r in ranking) {
+    //   final user = await Users.findUserByUserId(session, r.userId);
+    //   if (user != null) {
+    //     users.add(user);
+    //   }
+    // }
 
-    return users;
+    return ranking;
   }
 
   Future<int> myRanking(Session session) async {
