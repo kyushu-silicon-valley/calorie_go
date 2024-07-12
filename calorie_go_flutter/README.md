@@ -1,15 +1,32 @@
 # calorie_go_flutter
 
-A new Flutter project with Serverpod.
+## 実行する (flutter run)
+```
+make dev
+```
 
-## Getting Started
+## コード生成を監視する
+```
+make watch
+```
 
-This project is a starting point for a Flutter application that is using
-Serverpod.
+## コードを生成する（1回きり）
+```
+make build_runner
+```
 
-A great starting point for learning Serverpod is our documentation site at:
-[https://docs.serverpod.dev](https://docs.serverpod.dev).
+## クリーンビルドする（キャッシュを消してビルド）
+```
+make clean_build
+```
 
-To run the project, first make sure that the server is running, then do:
+## キャッシュを消す
+```
+make clean
+```
 
-    flutter run
+## 画像やフォントのアセットを追加するとき
+- `calorie_go_flutter/assets` ディレクトリに画像を追加する
+- 画像を追加したディレクトリが`pubspec.yaml`に追加されていることを確認する(追加されていない場合は追加する)
+- `make build_runner` でビルドする
+- `lib/gen`にAssetsクラスが自動で生成されているので、このクラスを経由して画像を参照する

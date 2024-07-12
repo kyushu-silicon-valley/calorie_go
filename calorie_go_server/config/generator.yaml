@@ -1,3 +1,7 @@
 type: server
 
 client_package_path: ../calorie_go_client
+
+modules:
+  serverpod_auth:
+    nickname: auth
