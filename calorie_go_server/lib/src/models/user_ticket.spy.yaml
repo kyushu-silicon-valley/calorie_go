@@ -1,0 +1,7 @@
+class: UsertTicket
+table: user_ticket
+fields:
+    user: CalorieGoUser?, relation
+    ticketMaster: TicketMaster?, relation
+
+

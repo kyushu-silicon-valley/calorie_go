@@ -1,0 +1,6 @@
+class: UserExerciseHist
+table: user_exercise_hist
+fields:
+    user: CalorieGoUser?, relation
+    updatedAt: DateTime
+    steps: int

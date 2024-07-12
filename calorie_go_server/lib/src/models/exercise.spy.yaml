@@ -1,0 +1,7 @@
+class: Exercise
+table: exercise
+fields:
+  user: CalorieGoUser?, relation
+  startedAt: DateTime
+  endedAt: DateTime?
+  totalSteps: int
