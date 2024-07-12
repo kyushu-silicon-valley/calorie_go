@@ -1,6 +1,5 @@
 import 'package:calorie_go_flutter/gen/assets.gen.dart';
 import 'package:calorie_go_flutter/pages/sample/sample_page_controller.dart';
-import 'package:calorie_go_flutter/repositories/monster_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
