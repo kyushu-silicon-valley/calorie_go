@@ -1,0 +1,4 @@
+class: MonsterImage
+table: monster_image
+fields:
+    imageUrl: String

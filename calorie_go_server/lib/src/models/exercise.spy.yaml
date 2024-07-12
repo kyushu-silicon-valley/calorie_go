@@ -1,0 +1,7 @@
+class: Exercise
+table: exercise
+fields:
+  user: module:auth:UserInfo?, relation
+  startedAt: DateTime
+  endedAt: DateTime?
+  totalSteps: int
