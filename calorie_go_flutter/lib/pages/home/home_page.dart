@@ -40,7 +40,7 @@ class HomePage extends HookConsumerWidget {
               width: double.infinity,
               padding: const EdgeInsets.all(16),
               decoration: BoxDecoration(
-                color: Colors.red,
+                color: Colors.lightBlue,
                 borderRadius: BorderRadius.circular(10),
               ),
               child: const Text(
