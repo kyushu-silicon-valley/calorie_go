@@ -1,7 +1,7 @@
 class: UsertTicket
 table: user_ticket
 fields:
-    user: CalorieGoUser?, relation
+    user: module:auth:UserInfo?, relation
     ticketMaster: TicketMaster?, relation
 
 

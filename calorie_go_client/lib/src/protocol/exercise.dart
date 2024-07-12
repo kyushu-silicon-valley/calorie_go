@@ -9,7 +9,7 @@
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:serverpod_client/serverpod_client.dart' as _i1;
-import 'protocol.dart' as _i2;
+import 'package:serverpod_auth_client/serverpod_auth_client.dart' as _i2;
 
 abstract class Exercise implements _i1.SerializableModel {
   Exercise._({
@@ -24,7 +24,7 @@ abstract class Exercise implements _i1.SerializableModel {
   factory Exercise({
     int? id,
     required int userId,
-    _i2.CalorieGoUser? user,
+    _i2.UserInfo? user,
     required DateTime startedAt,
     DateTime? endedAt,
     required int totalSteps,
@@ -36,7 +36,7 @@ abstract class Exercise implements _i1.SerializableModel {
       userId: jsonSerialization['userId'] as int,
       user: jsonSerialization['user'] == null
           ? null
-          : _i2.CalorieGoUser.fromJson(
+          : _i2.UserInfo.fromJson(
               (jsonSerialization['user'] as Map<String, dynamic>)),
       startedAt:
           _i1.DateTimeJsonExtension.fromJson(jsonSerialization['startedAt']),
@@ -54,7 +54,7 @@ abstract class Exercise implements _i1.SerializableModel {
 
   int userId;
 
-  _i2.CalorieGoUser? user;
+  _i2.UserInfo? user;
 
   DateTime startedAt;
 
@@ -65,7 +65,7 @@ abstract class Exercise implements _i1.SerializableModel {
   Exercise copyWith({
     int? id,
     int? userId,
-    _i2.CalorieGoUser? user,
+    _i2.UserInfo? user,
     DateTime? startedAt,
     DateTime? endedAt,
     int? totalSteps,
@@ -94,7 +94,7 @@ class _ExerciseImpl extends Exercise {
   _ExerciseImpl({
     int? id,
     required int userId,
-    _i2.CalorieGoUser? user,
+    _i2.UserInfo? user,
     required DateTime startedAt,
     DateTime? endedAt,
     required int totalSteps,
@@ -119,7 +119,7 @@ class _ExerciseImpl extends Exercise {
     return Exercise(
       id: id is int? ? id : this.id,
       userId: userId ?? this.userId,
-      user: user is _i2.CalorieGoUser? ? user : this.user?.copyWith(),
+      user: user is _i2.UserInfo? ? user : this.user?.copyWith(),
       startedAt: startedAt ?? this.startedAt,
       endedAt: endedAt is DateTime? ? endedAt : this.endedAt,
       totalSteps: totalSteps ?? this.totalSteps,

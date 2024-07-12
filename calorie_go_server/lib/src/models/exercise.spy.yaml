@@ -1,7 +1,7 @@
 class: Exercise
 table: exercise
 fields:
-  user: CalorieGoUser?, relation
+  user: module:auth:UserInfo?, relation
   startedAt: DateTime
   endedAt: DateTime?
   totalSteps: int

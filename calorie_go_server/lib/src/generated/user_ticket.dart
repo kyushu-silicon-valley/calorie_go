@@ -9,7 +9,8 @@
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:serverpod/serverpod.dart' as _i1;
-import 'protocol.dart' as _i2;
+import 'package:serverpod_auth_server/serverpod_auth_server.dart' as _i2;
+import 'protocol.dart' as _i3;
 
 abstract class UsertTicket extends _i1.TableRow
     implements _i1.ProtocolSerialization {
@@ -24,9 +25,9 @@ abstract class UsertTicket extends _i1.TableRow
   factory UsertTicket({
     int? id,
     required int userId,
-    _i2.CalorieGoUser? user,
+    _i2.UserInfo? user,
     required int ticketMasterId,
-    _i2.TicketMaster? ticketMaster,
+    _i3.TicketMaster? ticketMaster,
   }) = _UsertTicketImpl;
 
   factory UsertTicket.fromJson(Map<String, dynamic> jsonSerialization) {
@@ -35,12 +36,12 @@ abstract class UsertTicket extends _i1.TableRow
       userId: jsonSerialization['userId'] as int,
       user: jsonSerialization['user'] == null
           ? null
-          : _i2.CalorieGoUser.fromJson(
+          : _i2.UserInfo.fromJson(
               (jsonSerialization['user'] as Map<String, dynamic>)),
       ticketMasterId: jsonSerialization['ticketMasterId'] as int,
       ticketMaster: jsonSerialization['ticketMaster'] == null
           ? null
-          : _i2.TicketMaster.fromJson(
+          : _i3.TicketMaster.fromJson(
               (jsonSerialization['ticketMaster'] as Map<String, dynamic>)),
     );
   }
@@ -51,11 +52,11 @@ abstract class UsertTicket extends _i1.TableRow
 
   int userId;
 
-  _i2.CalorieGoUser? user;
+  _i2.UserInfo? user;
 
   int ticketMasterId;
 
-  _i2.TicketMaster? ticketMaster;
+  _i3.TicketMaster? ticketMaster;
 
   @override
   _i1.Table get table => t;
@@ -63,9 +64,9 @@ abstract class UsertTicket extends _i1.TableRow
   UsertTicket copyWith({
     int? id,
     int? userId,
-    _i2.CalorieGoUser? user,
+    _i2.UserInfo? user,
     int? ticketMasterId,
-    _i2.TicketMaster? ticketMaster,
+    _i3.TicketMaster? ticketMaster,
   });
   @override
   Map<String, dynamic> toJson() {
@@ -91,8 +92,8 @@ abstract class UsertTicket extends _i1.TableRow
   }
 
   static UsertTicketInclude include({
-    _i2.CalorieGoUserInclude? user,
-    _i2.TicketMasterInclude? ticketMaster,
+    _i2.UserInfoInclude? user,
+    _i3.TicketMasterInclude? ticketMaster,
   }) {
     return UsertTicketInclude._(
       user: user,
@@ -132,9 +133,9 @@ class _UsertTicketImpl extends UsertTicket {
   _UsertTicketImpl({
     int? id,
     required int userId,
-    _i2.CalorieGoUser? user,
+    _i2.UserInfo? user,
     required int ticketMasterId,
-    _i2.TicketMaster? ticketMaster,
+    _i3.TicketMaster? ticketMaster,
   }) : super._(
           id: id,
           userId: userId,
@@ -154,9 +155,9 @@ class _UsertTicketImpl extends UsertTicket {
     return UsertTicket(
       id: id is int? ? id : this.id,
       userId: userId ?? this.userId,
-      user: user is _i2.CalorieGoUser? ? user : this.user?.copyWith(),
+      user: user is _i2.UserInfo? ? user : this.user?.copyWith(),
       ticketMasterId: ticketMasterId ?? this.ticketMasterId,
-      ticketMaster: ticketMaster is _i2.TicketMaster?
+      ticketMaster: ticketMaster is _i3.TicketMaster?
           ? ticketMaster
           : this.ticketMaster?.copyWith(),
     );
@@ -177,34 +178,34 @@ class UsertTicketTable extends _i1.Table {
 
   late final _i1.ColumnInt userId;
 
-  _i2.CalorieGoUserTable? _user;
+  _i2.UserInfoTable? _user;
 
   late final _i1.ColumnInt ticketMasterId;
 
-  _i2.TicketMasterTable? _ticketMaster;
+  _i3.TicketMasterTable? _ticketMaster;
 
-  _i2.CalorieGoUserTable get user {
+  _i2.UserInfoTable get user {
     if (_user != null) return _user!;
     _user = _i1.createRelationTable(
       relationFieldName: 'user',
       field: UsertTicket.t.userId,
-      foreignField: _i2.CalorieGoUser.t.id,
+      foreignField: _i2.UserInfo.t.id,
       tableRelation: tableRelation,
       createTable: (foreignTableRelation) =>
-          _i2.CalorieGoUserTable(tableRelation: foreignTableRelation),
+          _i2.UserInfoTable(tableRelation: foreignTableRelation),
     );
     return _user!;
   }
 
-  _i2.TicketMasterTable get ticketMaster {
+  _i3.TicketMasterTable get ticketMaster {
     if (_ticketMaster != null) return _ticketMaster!;
     _ticketMaster = _i1.createRelationTable(
       relationFieldName: 'ticketMaster',
       field: UsertTicket.t.ticketMasterId,
-      foreignField: _i2.TicketMaster.t.id,
+      foreignField: _i3.TicketMaster.t.id,
       tableRelation: tableRelation,
       createTable: (foreignTableRelation) =>
-          _i2.TicketMasterTable(tableRelation: foreignTableRelation),
+          _i3.TicketMasterTable(tableRelation: foreignTableRelation),
     );
     return _ticketMaster!;
   }
@@ -230,16 +231,16 @@ class UsertTicketTable extends _i1.Table {
 
 class UsertTicketInclude extends _i1.IncludeObject {
   UsertTicketInclude._({
-    _i2.CalorieGoUserInclude? user,
-    _i2.TicketMasterInclude? ticketMaster,
+    _i2.UserInfoInclude? user,
+    _i3.TicketMasterInclude? ticketMaster,
   }) {
     _user = user;
     _ticketMaster = ticketMaster;
   }
 
-  _i2.CalorieGoUserInclude? _user;
+  _i2.UserInfoInclude? _user;
 
-  _i2.TicketMasterInclude? _ticketMaster;
+  _i3.TicketMasterInclude? _ticketMaster;
 
   @override
   Map<String, _i1.Include?> get includes => {
@@ -434,7 +435,7 @@ class UsertTicketAttachRowRepository {
   Future<void> user(
     _i1.Session session,
     UsertTicket usertTicket,
-    _i2.CalorieGoUser user,
+    _i2.UserInfo user,
   ) async {
     if (usertTicket.id == null) {
       throw ArgumentError.notNull('usertTicket.id');
@@ -453,7 +454,7 @@ class UsertTicketAttachRowRepository {
   Future<void> ticketMaster(
     _i1.Session session,
     UsertTicket usertTicket,
-    _i2.TicketMaster ticketMaster,
+    _i3.TicketMaster ticketMaster,
   ) async {
     if (usertTicket.id == null) {
       throw ArgumentError.notNull('usertTicket.id');

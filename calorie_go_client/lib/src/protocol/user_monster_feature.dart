@@ -10,38 +10,31 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:serverpod_client/serverpod_client.dart' as _i1;
 import 'package:serverpod_auth_client/serverpod_auth_client.dart' as _i2;
-import 'protocol.dart' as _i3;
 
-abstract class UsertTicket implements _i1.SerializableModel {
-  UsertTicket._({
+abstract class UserMonsterFeature implements _i1.SerializableModel {
+  UserMonsterFeature._({
     this.id,
     required this.userId,
     this.user,
-    required this.ticketMasterId,
-    this.ticketMaster,
+    required this.feature,
   });
 
-  factory UsertTicket({
+  factory UserMonsterFeature({
     int? id,
     required int userId,
     _i2.UserInfo? user,
-    required int ticketMasterId,
-    _i3.TicketMaster? ticketMaster,
-  }) = _UsertTicketImpl;
+    required String feature,
+  }) = _UserMonsterFeatureImpl;
 
-  factory UsertTicket.fromJson(Map<String, dynamic> jsonSerialization) {
-    return UsertTicket(
+  factory UserMonsterFeature.fromJson(Map<String, dynamic> jsonSerialization) {
+    return UserMonsterFeature(
       id: jsonSerialization['id'] as int?,
       userId: jsonSerialization['userId'] as int,
       user: jsonSerialization['user'] == null
           ? null
           : _i2.UserInfo.fromJson(
               (jsonSerialization['user'] as Map<String, dynamic>)),
-      ticketMasterId: jsonSerialization['ticketMasterId'] as int,
-      ticketMaster: jsonSerialization['ticketMaster'] == null
-          ? null
-          : _i3.TicketMaster.fromJson(
-              (jsonSerialization['ticketMaster'] as Map<String, dynamic>)),
+      feature: jsonSerialization['feature'] as String,
     );
   }
 
@@ -54,16 +47,13 @@ abstract class UsertTicket implements _i1.SerializableModel {
 
   _i2.UserInfo? user;
 
-  int ticketMasterId;
+  String feature;
 
-  _i3.TicketMaster? ticketMaster;
-
-  UsertTicket copyWith({
+  UserMonsterFeature copyWith({
     int? id,
     int? userId,
     _i2.UserInfo? user,
-    int? ticketMasterId,
-    _i3.TicketMaster? ticketMaster,
+    String? feature,
   });
   @override
   Map<String, dynamic> toJson() {
@@ -71,8 +61,7 @@ abstract class UsertTicket implements _i1.SerializableModel {
       if (id != null) 'id': id,
       'userId': userId,
       if (user != null) 'user': user?.toJson(),
-      'ticketMasterId': ticketMasterId,
-      if (ticketMaster != null) 'ticketMaster': ticketMaster?.toJson(),
+      'feature': feature,
     };
   }
 
@@ -84,37 +73,31 @@ abstract class UsertTicket implements _i1.SerializableModel {
 
 class _Undefined {}
 
-class _UsertTicketImpl extends UsertTicket {
-  _UsertTicketImpl({
+class _UserMonsterFeatureImpl extends UserMonsterFeature {
+  _UserMonsterFeatureImpl({
     int? id,
     required int userId,
     _i2.UserInfo? user,
-    required int ticketMasterId,
-    _i3.TicketMaster? ticketMaster,
+    required String feature,
   }) : super._(
           id: id,
           userId: userId,
           user: user,
-          ticketMasterId: ticketMasterId,
-          ticketMaster: ticketMaster,
+          feature: feature,
         );
 
   @override
-  UsertTicket copyWith({
+  UserMonsterFeature copyWith({
     Object? id = _Undefined,
     int? userId,
     Object? user = _Undefined,
-    int? ticketMasterId,
-    Object? ticketMaster = _Undefined,
+    String? feature,
   }) {
-    return UsertTicket(
+    return UserMonsterFeature(
       id: id is int? ? id : this.id,
       userId: userId ?? this.userId,
       user: user is _i2.UserInfo? ? user : this.user?.copyWith(),
-      ticketMasterId: ticketMasterId ?? this.ticketMasterId,
-      ticketMaster: ticketMaster is _i3.TicketMaster?
-          ? ticketMaster
-          : this.ticketMaster?.copyWith(),
+      feature: feature ?? this.feature,
     );
   }
 }

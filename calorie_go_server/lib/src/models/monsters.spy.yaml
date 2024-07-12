@@ -3,3 +3,4 @@ table: monster
 fields:
   name: String
   monsterImageId: MonsterImage?, relation
+  user: module:auth:UserInfo?, relation

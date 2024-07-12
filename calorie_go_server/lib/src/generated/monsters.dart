@@ -10,6 +10,7 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:serverpod/serverpod.dart' as _i1;
 import 'protocol.dart' as _i2;
+import 'package:serverpod_auth_server/serverpod_auth_server.dart' as _i3;
 
 abstract class Monster extends _i1.TableRow
     implements _i1.ProtocolSerialization {
@@ -18,6 +19,8 @@ abstract class Monster extends _i1.TableRow
     required this.name,
     required this.monsterImageIdId,
     this.monsterImageId,
+    required this.userId,
+    this.user,
   }) : super(id);
 
   factory Monster({
@@ -25,6 +28,8 @@ abstract class Monster extends _i1.TableRow
     required String name,
     required int monsterImageIdId,
     _i2.MonsterImage? monsterImageId,
+    required int userId,
+    _i3.UserInfo? user,
   }) = _MonsterImpl;
 
   factory Monster.fromJson(Map<String, dynamic> jsonSerialization) {
@@ -36,6 +41,11 @@ abstract class Monster extends _i1.TableRow
           ? null
           : _i2.MonsterImage.fromJson(
               (jsonSerialization['monsterImageId'] as Map<String, dynamic>)),
+      userId: jsonSerialization['userId'] as int,
+      user: jsonSerialization['user'] == null
+          ? null
+          : _i3.UserInfo.fromJson(
+              (jsonSerialization['user'] as Map<String, dynamic>)),
     );
   }
 
@@ -49,6 +59,10 @@ abstract class Monster extends _i1.TableRow
 
   _i2.MonsterImage? monsterImageId;
 
+  int userId;
+
+  _i3.UserInfo? user;
+
   @override
   _i1.Table get table => t;
 
@@ -57,6 +71,8 @@ abstract class Monster extends _i1.TableRow
     String? name,
     int? monsterImageIdId,
     _i2.MonsterImage? monsterImageId,
+    int? userId,
+    _i3.UserInfo? user,
   });
   @override
   Map<String, dynamic> toJson() {
@@ -65,6 +81,8 @@ abstract class Monster extends _i1.TableRow
       'name': name,
       'monsterImageIdId': monsterImageIdId,
       if (monsterImageId != null) 'monsterImageId': monsterImageId?.toJson(),
+      'userId': userId,
+      if (user != null) 'user': user?.toJson(),
     };
   }
 
@@ -76,11 +94,19 @@ abstract class Monster extends _i1.TableRow
       'monsterImageIdId': monsterImageIdId,
       if (monsterImageId != null)
         'monsterImageId': monsterImageId?.toJsonForProtocol(),
+      'userId': userId,
+      if (user != null) 'user': user?.toJsonForProtocol(),
     };
   }
 
-  static MonsterInclude include({_i2.MonsterImageInclude? monsterImageId}) {
-    return MonsterInclude._(monsterImageId: monsterImageId);
+  static MonsterInclude include({
+    _i2.MonsterImageInclude? monsterImageId,
+    _i3.UserInfoInclude? user,
+  }) {
+    return MonsterInclude._(
+      monsterImageId: monsterImageId,
+      user: user,
+    );
   }
 
   static MonsterIncludeList includeList({
@@ -117,11 +143,15 @@ class _MonsterImpl extends Monster {
     required String name,
     required int monsterImageIdId,
     _i2.MonsterImage? monsterImageId,
+    required int userId,
+    _i3.UserInfo? user,
   }) : super._(
           id: id,
           name: name,
           monsterImageIdId: monsterImageIdId,
           monsterImageId: monsterImageId,
+          userId: userId,
+          user: user,
         );
 
   @override
@@ -130,6 +160,8 @@ class _MonsterImpl extends Monster {
     String? name,
     int? monsterImageIdId,
     Object? monsterImageId = _Undefined,
+    int? userId,
+    Object? user = _Undefined,
   }) {
     return Monster(
       id: id is int? ? id : this.id,
@@ -138,6 +170,8 @@ class _MonsterImpl extends Monster {
       monsterImageId: monsterImageId is _i2.MonsterImage?
           ? monsterImageId
           : this.monsterImageId?.copyWith(),
+      userId: userId ?? this.userId,
+      user: user is _i3.UserInfo? ? user : this.user?.copyWith(),
     );
   }
 }
@@ -152,6 +186,10 @@ class MonsterTable extends _i1.Table {
       'monsterImageIdId',
       this,
     );
+    userId = _i1.ColumnInt(
+      'userId',
+      this,
+    );
   }
 
   late final _i1.ColumnString name;
@@ -159,6 +197,10 @@ class MonsterTable extends _i1.Table {
   late final _i1.ColumnInt monsterImageIdId;
 
   _i2.MonsterImageTable? _monsterImageId;
+
+  late final _i1.ColumnInt userId;
+
+  _i3.UserInfoTable? _user;
 
   _i2.MonsterImageTable get monsterImageId {
     if (_monsterImageId != null) return _monsterImageId!;
@@ -173,11 +215,25 @@ class MonsterTable extends _i1.Table {
     return _monsterImageId!;
   }
 
+  _i3.UserInfoTable get user {
+    if (_user != null) return _user!;
+    _user = _i1.createRelationTable(
+      relationFieldName: 'user',
+      field: Monster.t.userId,
+      foreignField: _i3.UserInfo.t.id,
+      tableRelation: tableRelation,
+      createTable: (foreignTableRelation) =>
+          _i3.UserInfoTable(tableRelation: foreignTableRelation),
+    );
+    return _user!;
+  }
+
   @override
   List<_i1.Column> get columns => [
         id,
         name,
         monsterImageIdId,
+        userId,
       ];
 
   @override
@@ -185,19 +241,31 @@ class MonsterTable extends _i1.Table {
     if (relationField == 'monsterImageId') {
       return monsterImageId;
     }
+    if (relationField == 'user') {
+      return user;
+    }
     return null;
   }
 }
 
 class MonsterInclude extends _i1.IncludeObject {
-  MonsterInclude._({_i2.MonsterImageInclude? monsterImageId}) {
+  MonsterInclude._({
+    _i2.MonsterImageInclude? monsterImageId,
+    _i3.UserInfoInclude? user,
+  }) {
     _monsterImageId = monsterImageId;
+    _user = user;
   }
 
   _i2.MonsterImageInclude? _monsterImageId;
 
+  _i3.UserInfoInclude? _user;
+
   @override
-  Map<String, _i1.Include?> get includes => {'monsterImageId': _monsterImageId};
+  Map<String, _i1.Include?> get includes => {
+        'monsterImageId': _monsterImageId,
+        'user': _user,
+      };
 
   @override
   _i1.Table get table => Monster.t;
@@ -399,6 +467,25 @@ class MonsterAttachRowRepository {
     await session.db.updateRow<Monster>(
       $monster,
       columns: [Monster.t.monsterImageIdId],
+    );
+  }
+
+  Future<void> user(
+    _i1.Session session,
+    Monster monster,
+    _i3.UserInfo user,
+  ) async {
+    if (monster.id == null) {
+      throw ArgumentError.notNull('monster.id');
+    }
+    if (user.id == null) {
+      throw ArgumentError.notNull('user.id');
+    }
+
+    var $monster = monster.copyWith(userId: user.id);
+    await session.db.updateRow<Monster>(
+      $monster,
+      columns: [Monster.t.userId],
     );
   }
 }

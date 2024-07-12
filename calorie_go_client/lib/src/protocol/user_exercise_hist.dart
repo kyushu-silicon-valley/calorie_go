@@ -9,7 +9,7 @@
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:serverpod_client/serverpod_client.dart' as _i1;
-import 'protocol.dart' as _i2;
+import 'package:serverpod_auth_client/serverpod_auth_client.dart' as _i2;
 
 abstract class UserExerciseHist implements _i1.SerializableModel {
   UserExerciseHist._({
@@ -23,7 +23,7 @@ abstract class UserExerciseHist implements _i1.SerializableModel {
   factory UserExerciseHist({
     int? id,
     required int userId,
-    _i2.CalorieGoUser? user,
+    _i2.UserInfo? user,
     required DateTime updatedAt,
     required int steps,
   }) = _UserExerciseHistImpl;
@@ -34,7 +34,7 @@ abstract class UserExerciseHist implements _i1.SerializableModel {
       userId: jsonSerialization['userId'] as int,
       user: jsonSerialization['user'] == null
           ? null
-          : _i2.CalorieGoUser.fromJson(
+          : _i2.UserInfo.fromJson(
               (jsonSerialization['user'] as Map<String, dynamic>)),
       updatedAt:
           _i1.DateTimeJsonExtension.fromJson(jsonSerialization['updatedAt']),
@@ -49,7 +49,7 @@ abstract class UserExerciseHist implements _i1.SerializableModel {
 
   int userId;
 
-  _i2.CalorieGoUser? user;
+  _i2.UserInfo? user;
 
   DateTime updatedAt;
 
@@ -58,7 +58,7 @@ abstract class UserExerciseHist implements _i1.SerializableModel {
   UserExerciseHist copyWith({
     int? id,
     int? userId,
-    _i2.CalorieGoUser? user,
+    _i2.UserInfo? user,
     DateTime? updatedAt,
     int? steps,
   });
@@ -85,7 +85,7 @@ class _UserExerciseHistImpl extends UserExerciseHist {
   _UserExerciseHistImpl({
     int? id,
     required int userId,
-    _i2.CalorieGoUser? user,
+    _i2.UserInfo? user,
     required DateTime updatedAt,
     required int steps,
   }) : super._(
@@ -107,7 +107,7 @@ class _UserExerciseHistImpl extends UserExerciseHist {
     return UserExerciseHist(
       id: id is int? ? id : this.id,
       userId: userId ?? this.userId,
-      user: user is _i2.CalorieGoUser? ? user : this.user?.copyWith(),
+      user: user is _i2.UserInfo? ? user : this.user?.copyWith(),
       updatedAt: updatedAt ?? this.updatedAt,
       steps: steps ?? this.steps,
     );

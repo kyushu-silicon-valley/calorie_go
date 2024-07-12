@@ -1,2 +1,19 @@
 example:
   - hello:
+exercise:
+  - startExercise:
+  - finishExercise:
+  - myExerciseHist:
+monster:
+  - fetchCurrentUserMonster:
+ranking:
+  - getRanking:
+  - myRanking:
+ticket:
+user:
+  - fetchCurrentUser:
+  - changeUserNickname:
+  - firstSignInProcess:
+userExerciseHist:
+  - create:
+  - myExerciseHist:

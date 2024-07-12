@@ -9,7 +9,7 @@
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:serverpod/serverpod.dart' as _i1;
-import 'protocol.dart' as _i2;
+import 'package:serverpod_auth_server/serverpod_auth_server.dart' as _i2;
 import 'package:serverpod_serialization/serverpod_serialization.dart';
 
 abstract class UserExerciseHist extends _i1.TableRow
@@ -25,7 +25,7 @@ abstract class UserExerciseHist extends _i1.TableRow
   factory UserExerciseHist({
     int? id,
     required int userId,
-    _i2.CalorieGoUser? user,
+    _i2.UserInfo? user,
     required DateTime updatedAt,
     required int steps,
   }) = _UserExerciseHistImpl;
@@ -36,7 +36,7 @@ abstract class UserExerciseHist extends _i1.TableRow
       userId: jsonSerialization['userId'] as int,
       user: jsonSerialization['user'] == null
           ? null
-          : _i2.CalorieGoUser.fromJson(
+          : _i2.UserInfo.fromJson(
               (jsonSerialization['user'] as Map<String, dynamic>)),
       updatedAt:
           _i1.DateTimeJsonExtension.fromJson(jsonSerialization['updatedAt']),
@@ -50,7 +50,7 @@ abstract class UserExerciseHist extends _i1.TableRow
 
   int userId;
 
-  _i2.CalorieGoUser? user;
+  _i2.UserInfo? user;
 
   DateTime updatedAt;
 
@@ -62,7 +62,7 @@ abstract class UserExerciseHist extends _i1.TableRow
   UserExerciseHist copyWith({
     int? id,
     int? userId,
-    _i2.CalorieGoUser? user,
+    _i2.UserInfo? user,
     DateTime? updatedAt,
     int? steps,
   });
@@ -88,7 +88,7 @@ abstract class UserExerciseHist extends _i1.TableRow
     };
   }
 
-  static UserExerciseHistInclude include({_i2.CalorieGoUserInclude? user}) {
+  static UserExerciseHistInclude include({_i2.UserInfoInclude? user}) {
     return UserExerciseHistInclude._(user: user);
   }
 
@@ -124,7 +124,7 @@ class _UserExerciseHistImpl extends UserExerciseHist {
   _UserExerciseHistImpl({
     int? id,
     required int userId,
-    _i2.CalorieGoUser? user,
+    _i2.UserInfo? user,
     required DateTime updatedAt,
     required int steps,
   }) : super._(
@@ -146,7 +146,7 @@ class _UserExerciseHistImpl extends UserExerciseHist {
     return UserExerciseHist(
       id: id is int? ? id : this.id,
       userId: userId ?? this.userId,
-      user: user is _i2.CalorieGoUser? ? user : this.user?.copyWith(),
+      user: user is _i2.UserInfo? ? user : this.user?.copyWith(),
       updatedAt: updatedAt ?? this.updatedAt,
       steps: steps ?? this.steps,
     );
@@ -172,21 +172,21 @@ class UserExerciseHistTable extends _i1.Table {
 
   late final _i1.ColumnInt userId;
 
-  _i2.CalorieGoUserTable? _user;
+  _i2.UserInfoTable? _user;
 
   late final _i1.ColumnDateTime updatedAt;
 
   late final _i1.ColumnInt steps;
 
-  _i2.CalorieGoUserTable get user {
+  _i2.UserInfoTable get user {
     if (_user != null) return _user!;
     _user = _i1.createRelationTable(
       relationFieldName: 'user',
       field: UserExerciseHist.t.userId,
-      foreignField: _i2.CalorieGoUser.t.id,
+      foreignField: _i2.UserInfo.t.id,
       tableRelation: tableRelation,
       createTable: (foreignTableRelation) =>
-          _i2.CalorieGoUserTable(tableRelation: foreignTableRelation),
+          _i2.UserInfoTable(tableRelation: foreignTableRelation),
     );
     return _user!;
   }
@@ -209,11 +209,11 @@ class UserExerciseHistTable extends _i1.Table {
 }
 
 class UserExerciseHistInclude extends _i1.IncludeObject {
-  UserExerciseHistInclude._({_i2.CalorieGoUserInclude? user}) {
+  UserExerciseHistInclude._({_i2.UserInfoInclude? user}) {
     _user = user;
   }
 
-  _i2.CalorieGoUserInclude? _user;
+  _i2.UserInfoInclude? _user;
 
   @override
   Map<String, _i1.Include?> get includes => {'user': _user};
@@ -405,7 +405,7 @@ class UserExerciseHistAttachRowRepository {
   Future<void> user(
     _i1.Session session,
     UserExerciseHist userExerciseHist,
-    _i2.CalorieGoUser user,
+    _i2.UserInfo user,
   ) async {
     if (userExerciseHist.id == null) {
       throw ArgumentError.notNull('userExerciseHist.id');

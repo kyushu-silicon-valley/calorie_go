@@ -9,7 +9,7 @@
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:serverpod/serverpod.dart' as _i1;
-import 'protocol.dart' as _i2;
+import 'package:serverpod_auth_server/serverpod_auth_server.dart' as _i2;
 import 'package:serverpod_serialization/serverpod_serialization.dart';
 
 abstract class Exercise extends _i1.TableRow
@@ -26,7 +26,7 @@ abstract class Exercise extends _i1.TableRow
   factory Exercise({
     int? id,
     required int userId,
-    _i2.CalorieGoUser? user,
+    _i2.UserInfo? user,
     required DateTime startedAt,
     DateTime? endedAt,
     required int totalSteps,
@@ -38,7 +38,7 @@ abstract class Exercise extends _i1.TableRow
       userId: jsonSerialization['userId'] as int,
       user: jsonSerialization['user'] == null
           ? null
-          : _i2.CalorieGoUser.fromJson(
+          : _i2.UserInfo.fromJson(
               (jsonSerialization['user'] as Map<String, dynamic>)),
       startedAt:
           _i1.DateTimeJsonExtension.fromJson(jsonSerialization['startedAt']),
@@ -55,7 +55,7 @@ abstract class Exercise extends _i1.TableRow
 
   int userId;
 
-  _i2.CalorieGoUser? user;
+  _i2.UserInfo? user;
 
   DateTime startedAt;
 
@@ -69,7 +69,7 @@ abstract class Exercise extends _i1.TableRow
   Exercise copyWith({
     int? id,
     int? userId,
-    _i2.CalorieGoUser? user,
+    _i2.UserInfo? user,
     DateTime? startedAt,
     DateTime? endedAt,
     int? totalSteps,
@@ -98,7 +98,7 @@ abstract class Exercise extends _i1.TableRow
     };
   }
 
-  static ExerciseInclude include({_i2.CalorieGoUserInclude? user}) {
+  static ExerciseInclude include({_i2.UserInfoInclude? user}) {
     return ExerciseInclude._(user: user);
   }
 
@@ -134,7 +134,7 @@ class _ExerciseImpl extends Exercise {
   _ExerciseImpl({
     int? id,
     required int userId,
-    _i2.CalorieGoUser? user,
+    _i2.UserInfo? user,
     required DateTime startedAt,
     DateTime? endedAt,
     required int totalSteps,
@@ -159,7 +159,7 @@ class _ExerciseImpl extends Exercise {
     return Exercise(
       id: id is int? ? id : this.id,
       userId: userId ?? this.userId,
-      user: user is _i2.CalorieGoUser? ? user : this.user?.copyWith(),
+      user: user is _i2.UserInfo? ? user : this.user?.copyWith(),
       startedAt: startedAt ?? this.startedAt,
       endedAt: endedAt is DateTime? ? endedAt : this.endedAt,
       totalSteps: totalSteps ?? this.totalSteps,
@@ -189,7 +189,7 @@ class ExerciseTable extends _i1.Table {
 
   late final _i1.ColumnInt userId;
 
-  _i2.CalorieGoUserTable? _user;
+  _i2.UserInfoTable? _user;
 
   late final _i1.ColumnDateTime startedAt;
 
@@ -197,15 +197,15 @@ class ExerciseTable extends _i1.Table {
 
   late final _i1.ColumnInt totalSteps;
 
-  _i2.CalorieGoUserTable get user {
+  _i2.UserInfoTable get user {
     if (_user != null) return _user!;
     _user = _i1.createRelationTable(
       relationFieldName: 'user',
       field: Exercise.t.userId,
-      foreignField: _i2.CalorieGoUser.t.id,
+      foreignField: _i2.UserInfo.t.id,
       tableRelation: tableRelation,
       createTable: (foreignTableRelation) =>
-          _i2.CalorieGoUserTable(tableRelation: foreignTableRelation),
+          _i2.UserInfoTable(tableRelation: foreignTableRelation),
     );
     return _user!;
   }
@@ -229,11 +229,11 @@ class ExerciseTable extends _i1.Table {
 }
 
 class ExerciseInclude extends _i1.IncludeObject {
-  ExerciseInclude._({_i2.CalorieGoUserInclude? user}) {
+  ExerciseInclude._({_i2.UserInfoInclude? user}) {
     _user = user;
   }
 
-  _i2.CalorieGoUserInclude? _user;
+  _i2.UserInfoInclude? _user;
 
   @override
   Map<String, _i1.Include?> get includes => {'user': _user};
@@ -425,7 +425,7 @@ class ExerciseAttachRowRepository {
   Future<void> user(
     _i1.Session session,
     Exercise exercise,
-    _i2.CalorieGoUser user,
+    _i2.UserInfo user,
   ) async {
     if (exercise.id == null) {
       throw ArgumentError.notNull('exercise.id');

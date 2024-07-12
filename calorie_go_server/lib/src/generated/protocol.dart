@@ -20,7 +20,9 @@ import 'monsters.dart' as _i8;
 import 'ticket_master.dart' as _i9;
 import 'ticket_type.dart' as _i10;
 import 'user_exercise_hist.dart' as _i11;
-import 'user_ticket.dart' as _i12;
+import 'user_monster_feature.dart' as _i12;
+import 'user_ticket.dart' as _i13;
+import 'package:calorie_go_server/src/generated/exercise.dart' as _i14;
 export 'calorie_go_user.dart';
 export 'example.dart';
 export 'exercise.dart';
@@ -29,6 +31,7 @@ export 'monsters.dart';
 export 'ticket_master.dart';
 export 'ticket_type.dart';
 export 'user_exercise_hist.dart';
+export 'user_monster_feature.dart';
 export 'user_ticket.dart';
 
 class Protocol extends _i1.SerializationManagerServer {
@@ -125,7 +128,7 @@ class Protocol extends _i1.SerializationManagerServer {
         _i2.ForeignKeyDefinition(
           constraintName: 'exercise_fk_0',
           columns: ['userId'],
-          referenceTable: 'calorie_go_user',
+          referenceTable: 'serverpod_user_info',
           referenceTableSchema: 'public',
           referenceColumns: ['id'],
           onUpdate: _i2.ForeignKeyAction.noAction,
@@ -175,6 +178,12 @@ class Protocol extends _i1.SerializationManagerServer {
           isNullable: false,
           dartType: 'int',
         ),
+        _i2.ColumnDefinition(
+          name: 'userId',
+          columnType: _i2.ColumnType.bigint,
+          isNullable: false,
+          dartType: 'int',
+        ),
       ],
       foreignKeys: [
         _i2.ForeignKeyDefinition(
@@ -186,7 +195,17 @@ class Protocol extends _i1.SerializationManagerServer {
           onUpdate: _i2.ForeignKeyAction.noAction,
           onDelete: _i2.ForeignKeyAction.noAction,
           matchType: null,
-        )
+        ),
+        _i2.ForeignKeyDefinition(
+          constraintName: 'monster_fk_1',
+          columns: ['userId'],
+          referenceTable: 'serverpod_user_info',
+          referenceTableSchema: 'public',
+          referenceColumns: ['id'],
+          onUpdate: _i2.ForeignKeyAction.noAction,
+          onDelete: _i2.ForeignKeyAction.noAction,
+          matchType: null,
+        ),
       ],
       indexes: [
         _i2.IndexDefinition(
@@ -335,7 +354,7 @@ class Protocol extends _i1.SerializationManagerServer {
         _i2.ForeignKeyDefinition(
           constraintName: 'user_exercise_hist_fk_0',
           columns: ['userId'],
-          referenceTable: 'calorie_go_user',
+          referenceTable: 'serverpod_user_info',
           referenceTableSchema: 'public',
           referenceColumns: ['id'],
           onUpdate: _i2.ForeignKeyAction.noAction,
@@ -346,6 +365,61 @@ class Protocol extends _i1.SerializationManagerServer {
       indexes: [
         _i2.IndexDefinition(
           indexName: 'user_exercise_hist_pkey',
+          tableSpace: null,
+          elements: [
+            _i2.IndexElementDefinition(
+              type: _i2.IndexElementDefinitionType.column,
+              definition: 'id',
+            )
+          ],
+          type: 'btree',
+          isUnique: true,
+          isPrimary: true,
+        )
+      ],
+      managed: true,
+    ),
+    _i2.TableDefinition(
+      name: 'user_monster_feature',
+      dartName: 'UserMonsterFeature',
+      schema: 'public',
+      module: 'calorie_go',
+      columns: [
+        _i2.ColumnDefinition(
+          name: 'id',
+          columnType: _i2.ColumnType.bigint,
+          isNullable: false,
+          dartType: 'int?',
+          columnDefault: 'nextval(\'user_monster_feature_id_seq\'::regclass)',
+        ),
+        _i2.ColumnDefinition(
+          name: 'userId',
+          columnType: _i2.ColumnType.bigint,
+          isNullable: false,
+          dartType: 'int',
+        ),
+        _i2.ColumnDefinition(
+          name: 'feature',
+          columnType: _i2.ColumnType.text,
+          isNullable: false,
+          dartType: 'String',
+        ),
+      ],
+      foreignKeys: [
+        _i2.ForeignKeyDefinition(
+          constraintName: 'user_monster_feature_fk_0',
+          columns: ['userId'],
+          referenceTable: 'serverpod_user_info',
+          referenceTableSchema: 'public',
+          referenceColumns: ['id'],
+          onUpdate: _i2.ForeignKeyAction.noAction,
+          onDelete: _i2.ForeignKeyAction.noAction,
+          matchType: null,
+        )
+      ],
+      indexes: [
+        _i2.IndexDefinition(
+          indexName: 'user_monster_feature_pkey',
           tableSpace: null,
           elements: [
             _i2.IndexElementDefinition(
@@ -390,7 +464,7 @@ class Protocol extends _i1.SerializationManagerServer {
         _i2.ForeignKeyDefinition(
           constraintName: 'user_ticket_fk_0',
           columns: ['userId'],
-          referenceTable: 'calorie_go_user',
+          referenceTable: 'serverpod_user_info',
           referenceTableSchema: 'public',
           referenceColumns: ['id'],
           onUpdate: _i2.ForeignKeyAction.noAction,
@@ -459,8 +533,11 @@ class Protocol extends _i1.SerializationManagerServer {
     if (t == _i11.UserExerciseHist) {
       return _i11.UserExerciseHist.fromJson(data) as T;
     }
-    if (t == _i12.UsertTicket) {
-      return _i12.UsertTicket.fromJson(data) as T;
+    if (t == _i12.UserMonsterFeature) {
+      return _i12.UserMonsterFeature.fromJson(data) as T;
+    }
+    if (t == _i13.UsertTicket) {
+      return _i13.UsertTicket.fromJson(data) as T;
     }
     if (t == _i1.getType<_i4.CalorieGoUser?>()) {
       return (data != null ? _i4.CalorieGoUser.fromJson(data) : null) as T;
@@ -486,8 +563,21 @@ class Protocol extends _i1.SerializationManagerServer {
     if (t == _i1.getType<_i11.UserExerciseHist?>()) {
       return (data != null ? _i11.UserExerciseHist.fromJson(data) : null) as T;
     }
-    if (t == _i1.getType<_i12.UsertTicket?>()) {
-      return (data != null ? _i12.UsertTicket.fromJson(data) : null) as T;
+    if (t == _i1.getType<_i12.UserMonsterFeature?>()) {
+      return (data != null ? _i12.UserMonsterFeature.fromJson(data) : null)
+          as T;
+    }
+    if (t == _i1.getType<_i13.UsertTicket?>()) {
+      return (data != null ? _i13.UsertTicket.fromJson(data) : null) as T;
+    }
+    if (t == List<_i14.Exercise>) {
+      return (data as List).map((e) => deserialize<_i14.Exercise>(e)).toList()
+          as dynamic;
+    }
+    if (t == _i1.getType<List<_i3.UserInfo>?>()) {
+      return (data != null
+          ? (data as List).map((e) => deserialize<_i3.UserInfo>(e)).toList()
+          : null) as dynamic;
     }
     try {
       return _i3.Protocol().deserialize<T>(data, t);
@@ -529,7 +619,10 @@ class Protocol extends _i1.SerializationManagerServer {
     if (data is _i11.UserExerciseHist) {
       return 'UserExerciseHist';
     }
-    if (data is _i12.UsertTicket) {
+    if (data is _i12.UserMonsterFeature) {
+      return 'UserMonsterFeature';
+    }
+    if (data is _i13.UsertTicket) {
       return 'UsertTicket';
     }
     return super.getClassNameForObject(data);
@@ -565,8 +658,11 @@ class Protocol extends _i1.SerializationManagerServer {
     if (data['className'] == 'UserExerciseHist') {
       return deserialize<_i11.UserExerciseHist>(data['data']);
     }
+    if (data['className'] == 'UserMonsterFeature') {
+      return deserialize<_i12.UserMonsterFeature>(data['data']);
+    }
     if (data['className'] == 'UsertTicket') {
-      return deserialize<_i12.UsertTicket>(data['data']);
+      return deserialize<_i13.UsertTicket>(data['data']);
     }
     return super.deserializeByClassName(data);
   }
@@ -598,8 +694,10 @@ class Protocol extends _i1.SerializationManagerServer {
         return _i9.TicketMaster.t;
       case _i11.UserExerciseHist:
         return _i11.UserExerciseHist.t;
-      case _i12.UsertTicket:
-        return _i12.UsertTicket.t;
+      case _i12.UserMonsterFeature:
+        return _i12.UserMonsterFeature.t;
+      case _i13.UsertTicket:
+        return _i13.UsertTicket.t;
     }
     return null;
   }

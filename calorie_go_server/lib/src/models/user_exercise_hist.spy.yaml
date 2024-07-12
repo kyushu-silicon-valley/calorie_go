@@ -1,6 +1,6 @@
 class: UserExerciseHist
 table: user_exercise_hist
 fields:
-    user: CalorieGoUser?, relation
+    user: module:auth:UserInfo?, relation
     updatedAt: DateTime
     steps: int
