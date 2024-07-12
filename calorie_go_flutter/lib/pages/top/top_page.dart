@@ -7,6 +7,19 @@ import '../../constants.dart';
 import '../../gen/assets.gen.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+void main() => runApp(const MyApp());
+
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp.router(
+      routerConfig: routerConfig,
+    );
+  }
+}
+
 class TopPage extends HookConsumerWidget {
   const TopPage({super.key});
 
@@ -30,19 +43,26 @@ class TopPage extends HookConsumerWidget {
               SignInWithGoogleButton(
                 style: ElevatedButton.styleFrom(
                   minimumSize: const Size(300, 50),
-                  ),
+                ),
                 caller: client.modules.auth,
                 clientId: clientId,
                 redirectUri: Uri.parse('http://localhost:8082/googlesignin'),
                 onFailure: () =>
                     throw Exception('Failed to sign in with Google.'),
-                onSignedIn: () => context.go('/'),
+                onSignedIn: () => _showDialog(context),
               ),
               const SizedBox(height: 70),
             ],
           ),
         ),
       ),
+    );
+  }
+
+  void _showDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (_) => const SampleContent(),
     );
   }
 }
@@ -56,15 +76,62 @@ class _Header extends StatelessWidget {
         Container(child: Assets.images.top.topLogo.image()),
         Text(
           '動いて競って育てよう！',
-          style: GoogleFonts.bizUDPGothic(color: const Color(0xFF00008B), fontSize: 20,fontWeight: FontWeight.bold,shadows: <Shadow>[
-           const Shadow(
-             color: Colors.grey,
-             offset: Offset(5.0, 5.0),
-             blurRadius: 3.0,
-           ),
-         ],),
+          style: GoogleFonts.bizUDPGothic(
+            color: const Color(0xFF00008B),
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
+            shadows: <Shadow>[
+              const Shadow(
+                color: Colors.grey,
+                offset: Offset(5.0, 5.0),
+                blurRadius: 3.0,
+              ),
+            ],
+          ),
         ),
       ],
+    );
+  }
+}
+
+final routerConfig = GoRouter(
+  routes: [
+    GoRoute(
+      path: RoutingConfig.home.path,
+      name: RoutingConfig.home.name,
+      pageBuilder: (_, __) => const MaterialPage(child: TopPage()),
+    ),
+  ],
+);
+
+enum RoutingConfig {
+  home('/', 'home');
+
+  final String path;
+  final String name;
+
+  const RoutingConfig(this.path, this.name);
+}
+
+class SampleContent extends StatelessWidget {
+  const SampleContent({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return AlertDialog(
+      backgroundColor: Colors.white,
+      surfaceTintColor: Colors.transparent,
+      content: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          const Text('Sample Content'),
+          const SizedBox(height: 12),
+          ElevatedButton(
+            onPressed: () => Navigator.of(context).pop(),
+            child: const Text('Close'),
+          ),
+        ],
+      ),
     );
   }
 }
