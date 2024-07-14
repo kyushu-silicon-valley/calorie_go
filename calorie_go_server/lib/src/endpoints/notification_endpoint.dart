@@ -12,7 +12,10 @@ class NotificationEndpoint extends Endpoint {
       return null;
     }
 
-    final notifications = await Notification.db.find(session);
+    final notifications = await Notification.db.find(
+      session,
+      orderBy: (p0) => p0.createdAt,
+    );
     return notifications;
   }
 }

@@ -8,6 +8,7 @@ class NotificationRepository {
       final response = await client.notification.getNotification();
       return response;
     } catch (e) {
+      print('Error: $e');
       return null;
     }
   }
