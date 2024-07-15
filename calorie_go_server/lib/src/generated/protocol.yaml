@@ -6,6 +6,8 @@ exercise:
   - myExerciseHist:
 monster:
   - fetchCurrentUserMonster:
+notification:
+  - getNotification:
 ranking:
   - getRanking:
   - myRanking:

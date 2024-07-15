@@ -12,11 +12,12 @@ import 'package:serverpod/serverpod.dart' as _i1;
 import '../endpoints/example_endpoint.dart' as _i2;
 import '../endpoints/exercise_endpoint.dart' as _i3;
 import '../endpoints/monster_endpoint.dart' as _i4;
-import '../endpoints/ranking_endpoint.dart' as _i5;
-import '../endpoints/ticket_endpoint.dart' as _i6;
-import '../endpoints/user_endpoint.dart' as _i7;
-import '../endpoints/user_exercise_hist_endpoint.dart' as _i8;
-import 'package:serverpod_auth_server/serverpod_auth_server.dart' as _i9;
+import '../endpoints/notification_endpoint.dart' as _i5;
+import '../endpoints/ranking_endpoint.dart' as _i6;
+import '../endpoints/ticket_endpoint.dart' as _i7;
+import '../endpoints/user_endpoint.dart' as _i8;
+import '../endpoints/user_exercise_hist_endpoint.dart' as _i9;
+import 'package:serverpod_auth_server/serverpod_auth_server.dart' as _i10;
 
 class Endpoints extends _i1.EndpointDispatch {
   @override
@@ -40,25 +41,31 @@ class Endpoints extends _i1.EndpointDispatch {
           'monster',
           null,
         ),
-      'ranking': _i5.RankingEndpoint()
+      'notification': _i5.NotificationEndpoint()
+        ..initialize(
+          server,
+          'notification',
+          null,
+        ),
+      'ranking': _i6.RankingEndpoint()
         ..initialize(
           server,
           'ranking',
           null,
         ),
-      'ticket': _i6.TicketEndpoint()
+      'ticket': _i7.TicketEndpoint()
         ..initialize(
           server,
           'ticket',
           null,
         ),
-      'user': _i7.UserEndpoint()
+      'user': _i8.UserEndpoint()
         ..initialize(
           server,
           'user',
           null,
         ),
-      'userExerciseHist': _i8.UserExerciseHistEndpoint()
+      'userExerciseHist': _i9.UserExerciseHistEndpoint()
         ..initialize(
           server,
           'userExerciseHist',
@@ -155,6 +162,22 @@ class Endpoints extends _i1.EndpointDispatch {
         )
       },
     );
+    connectors['notification'] = _i1.EndpointConnector(
+      name: 'notification',
+      endpoint: endpoints['notification']!,
+      methodConnectors: {
+        'getNotification': _i1.MethodConnector(
+          name: 'getNotification',
+          params: {},
+          call: (
+            _i1.Session session,
+            Map<String, dynamic> params,
+          ) async =>
+              (endpoints['notification'] as _i5.NotificationEndpoint)
+                  .getNotification(session),
+        )
+      },
+    );
     connectors['ranking'] = _i1.EndpointConnector(
       name: 'ranking',
       endpoint: endpoints['ranking']!,
@@ -166,7 +189,7 @@ class Endpoints extends _i1.EndpointDispatch {
             _i1.Session session,
             Map<String, dynamic> params,
           ) async =>
-              (endpoints['ranking'] as _i5.RankingEndpoint).getRanking(session),
+              (endpoints['ranking'] as _i6.RankingEndpoint).getRanking(session),
         ),
         'myRanking': _i1.MethodConnector(
           name: 'myRanking',
@@ -175,7 +198,7 @@ class Endpoints extends _i1.EndpointDispatch {
             _i1.Session session,
             Map<String, dynamic> params,
           ) async =>
-              (endpoints['ranking'] as _i5.RankingEndpoint).myRanking(session),
+              (endpoints['ranking'] as _i6.RankingEndpoint).myRanking(session),
         ),
       },
     );
@@ -195,7 +218,7 @@ class Endpoints extends _i1.EndpointDispatch {
             _i1.Session session,
             Map<String, dynamic> params,
           ) async =>
-              (endpoints['user'] as _i7.UserEndpoint).fetchCurrentUser(session),
+              (endpoints['user'] as _i8.UserEndpoint).fetchCurrentUser(session),
         ),
         'changeUserNickname': _i1.MethodConnector(
           name: 'changeUserNickname',
@@ -210,7 +233,7 @@ class Endpoints extends _i1.EndpointDispatch {
             _i1.Session session,
             Map<String, dynamic> params,
           ) async =>
-              (endpoints['user'] as _i7.UserEndpoint).changeUserNickname(
+              (endpoints['user'] as _i8.UserEndpoint).changeUserNickname(
             session,
             nickname: params['nickname'],
           ),
@@ -222,7 +245,7 @@ class Endpoints extends _i1.EndpointDispatch {
             _i1.Session session,
             Map<String, dynamic> params,
           ) async =>
-              (endpoints['user'] as _i7.UserEndpoint)
+              (endpoints['user'] as _i8.UserEndpoint)
                   .firstSignInProcess(session),
         ),
       },
@@ -238,7 +261,7 @@ class Endpoints extends _i1.EndpointDispatch {
             _i1.Session session,
             Map<String, dynamic> params,
           ) async =>
-              (endpoints['userExerciseHist'] as _i8.UserExerciseHistEndpoint)
+              (endpoints['userExerciseHist'] as _i9.UserExerciseHistEndpoint)
                   .create(session),
         ),
         'myExerciseHist': _i1.MethodConnector(
@@ -248,11 +271,11 @@ class Endpoints extends _i1.EndpointDispatch {
             _i1.Session session,
             Map<String, dynamic> params,
           ) async =>
-              (endpoints['userExerciseHist'] as _i8.UserExerciseHistEndpoint)
+              (endpoints['userExerciseHist'] as _i9.UserExerciseHistEndpoint)
                   .myExerciseHist(session),
         ),
       },
     );
-    modules['serverpod_auth'] = _i9.Endpoints()..initializeEndpoints(server);
+    modules['serverpod_auth'] = _i10.Endpoints()..initializeEndpoints(server);
   }
 }
