@@ -6,6 +6,8 @@ exercise:
   - myExerciseHist:
 monster:
   - fetchCurrentUserMonster:
+notification:
+  - getNotification:
 ranking:
   - getRanking:
   - myRanking:
@@ -14,6 +16,7 @@ user:
   - fetchCurrentUser:
   - changeUserNickname:
   - firstSignInProcess:
+  - hasSignedUp:
 userExerciseHist:
   - create:
   - myExerciseHist:

@@ -41,6 +41,26 @@ class UserEndpoint extends Endpoint {
       au.userId,
       nickname,
     );
+    final calorieGoUser = await CalorieGoUser.db.find(
+      session,
+      where: (p0) => p0.authId.equals(au.userId.toString()),
+    );
+    if (calorieGoUser.isEmpty) {
+      await CalorieGoUser.db.insert(session, [
+        CalorieGoUser(
+          authId: au.userId.toString(),
+          nickname: nickname,
+        ),
+      ]);
+    } else {
+      await CalorieGoUser.db.update(session, [
+        CalorieGoUser(
+          id: calorieGoUser[0].id,
+          authId: au.userId.toString(),
+          nickname: nickname,
+        ),
+      ]);
+    }
     return u;
   }
 
@@ -118,5 +138,22 @@ class UserEndpoint extends Endpoint {
     } catch (e) {
       throw Exception(e);
     }
+  }
+
+  Future<bool> hasSignedUp(Session session) async {
+    if (!await session.isUserSignedIn) {
+      return false;
+    }
+
+    final au = await session.authenticated;
+    if (au == null) {
+      return false;
+    }
+
+    final user = await CalorieGoUser.db.find(
+      session,
+      where: (p0) => p0.authId.equals(au.userId.toString()),
+    );
+    return user.isNotEmpty;
   }
 }
