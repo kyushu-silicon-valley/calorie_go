@@ -7,7 +7,7 @@ part of 'notice_page_controller.dart';
 // **************************************************************************
 
 String _$noticePageControllerHash() =>
-    r'010f57dfe12030c2e4449e4e4b52bce8f532f02e';
+    r'213398e0faf4a79044ed036b25e24cb07d464d75';
 
 /// See also [NoticePageController].
 @ProviderFor(NoticePageController)

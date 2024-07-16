@@ -15,6 +15,9 @@ class $AssetsImagesGen {
   /// Directory path: assets/images/sample
   $AssetsImagesSampleGen get sample => const $AssetsImagesSampleGen();
 
+  /// Directory path: assets/images/ticket
+  $AssetsImagesTicketGen get ticket => const $AssetsImagesTicketGen();
+
   /// Directory path: assets/images/top
   $AssetsImagesTopGen get top => const $AssetsImagesTopGen();
 }
@@ -28,6 +31,32 @@ class $AssetsImagesSampleGen {
 
   /// List of all assets
   List<AssetGenImage> get values => [sampleImage];
+}
+
+class $AssetsImagesTicketGen {
+  const $AssetsImagesTicketGen();
+
+  /// File path: assets/images/ticket/beard.jpeg
+  AssetGenImage get beard =>
+      const AssetGenImage('assets/images/ticket/beard.jpeg');
+
+  /// File path: assets/images/ticket/clothes.jpeg
+  AssetGenImage get clothes =>
+      const AssetGenImage('assets/images/ticket/clothes.jpeg');
+
+  /// File path: assets/images/ticket/hat.jpeg
+  AssetGenImage get hat => const AssetGenImage('assets/images/ticket/hat.jpeg');
+
+  /// File path: assets/images/ticket/present_icon.jpg
+  AssetGenImage get presentIcon =>
+      const AssetGenImage('assets/images/ticket/present_icon.jpg');
+
+  /// File path: assets/images/ticket/shoes.jpeg
+  AssetGenImage get shoes =>
+      const AssetGenImage('assets/images/ticket/shoes.jpeg');
+
+  /// List of all assets
+  List<AssetGenImage> get values => [beard, clothes, hat, presentIcon, shoes];
 }
 
 class $AssetsImagesTopGen {
