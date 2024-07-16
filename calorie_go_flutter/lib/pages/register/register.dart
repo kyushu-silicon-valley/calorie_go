@@ -6,10 +6,10 @@ class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});
 
   @override
-  _RegisterPageState createState() => _RegisterPageState();
+  RegisterPageState createState() => RegisterPageState();
 }
 
-class _RegisterPageState extends State<RegisterPage> {
+class RegisterPageState extends State<RegisterPage> {
   String _nickname = '';
   bool _isNicknameValid = true;
 
@@ -116,7 +116,6 @@ class _Name extends StatefulWidget {
 }
 
 class _NameState extends State<_Name> {
-  String _nickname = '';
   bool _isNicknameValid = true;
 
   @override
@@ -164,7 +163,6 @@ class _NameState extends State<_Name> {
               onChanged: (text) {
                 bool isValid = text.isNotEmpty;
                 setState(() {
-                  _nickname = text;
                   _isNicknameValid = isValid;
                 });
                 widget.onNicknameChanged(text);
