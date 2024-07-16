@@ -2,11 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:serverpod_auth_google_flutter/serverpod_auth_google_flutter.dart';
-
-import '../../components/dialog.dart';
+import 'package:google_fonts/google_fonts.dart';
 import '../../constants.dart';
 import '../../gen/assets.gen.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class TopPage extends HookConsumerWidget {
   const TopPage({super.key});
@@ -37,16 +35,8 @@ class TopPage extends HookConsumerWidget {
                 redirectUri: Uri.parse('http://localhost:8082/googlesignin'),
                 onFailure: () =>
                     throw Exception('Failed to sign in with Google.'),
-                onSignedIn: () async {
-                  await showDialog(
-                    context: context,
-                    builder: (BuildContext context) {
-                      return const SampleContent();
-                    },
-                  );
-                  if (!context.mounted) return;
-                  context.go('/');
-                },
+                onSignedIn: () =>
+                context.go('/register'),
               ),
               const SizedBox(height: 70),
             ],

@@ -1,0 +1,5 @@
+enum: TicketType
+values:
+  - message
+  - customize
+  - other

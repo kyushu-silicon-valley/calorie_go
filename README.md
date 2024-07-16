@@ -33,7 +33,7 @@ make watch
    2 で使用したターミナルとは別のターミナルを開き、以下のコマンドを実行
 
 ```
-cd　calorie_go_flutter
+cd calorie_go_flutter
 flutter run
 ```
 
