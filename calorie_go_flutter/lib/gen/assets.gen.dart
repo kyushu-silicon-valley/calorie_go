@@ -14,6 +14,9 @@ class $AssetsImagesGen {
 
   /// Directory path: assets/images/sample
   $AssetsImagesSampleGen get sample => const $AssetsImagesSampleGen();
+
+  /// Directory path: assets/images/top
+  $AssetsImagesTopGen get top => const $AssetsImagesTopGen();
 }
 
 class $AssetsImagesSampleGen {
@@ -25,6 +28,21 @@ class $AssetsImagesSampleGen {
 
   /// List of all assets
   List<AssetGenImage> get values => [sampleImage];
+}
+
+class $AssetsImagesTopGen {
+  const $AssetsImagesTopGen();
+
+  /// File path: assets/images/top/top_image.webp
+  AssetGenImage get topImage =>
+      const AssetGenImage('assets/images/top/top_image.webp');
+
+  /// File path: assets/images/top/top_logo.png
+  AssetGenImage get topLogo =>
+      const AssetGenImage('assets/images/top/top_logo.png');
+
+  /// List of all assets
+  List<AssetGenImage> get values => [topImage, topLogo];
 }
 
 class Assets {

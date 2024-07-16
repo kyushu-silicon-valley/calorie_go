@@ -2,6 +2,7 @@ import 'package:calorie_go_flutter/constants.dart';
 import 'package:calorie_go_flutter/pages/exercise/exercise_page.dart';
 import 'package:calorie_go_flutter/pages/exercise/reward_page.dart';
 import 'package:calorie_go_flutter/pages/home/home_page.dart';
+import 'package:calorie_go_flutter/pages/notice/notice_page.dart';
 import 'package:calorie_go_flutter/pages/ranking/ranking.dart';
 import 'package:calorie_go_flutter/pages/sample/sample_page.dart';
 import 'package:calorie_go_flutter/pages/setting/setting_page.dart';
@@ -81,6 +82,13 @@ final goRouter = GoRouter(
       name: 'sample',
       pageBuilder: (context, state) => buildTransitionPage(
         child: const SamplePage(),
+      ),
+    ),
+    GoRoute(
+      path: '/notice',
+      name: 'notice',
+      pageBuilder: (context, state) => buildTransitionPage(
+        child: const NoticePage(),
       ),
     ),
   ],
