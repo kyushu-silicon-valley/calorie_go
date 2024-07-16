@@ -1,8 +1,8 @@
 import 'package:calorie_go_flutter/components/bottom_app_bar.dart';
-import 'package:calorie_go_flutter/constants.dart';
+//import 'package:calorie_go_flutter/constants.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
+//import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
   enum GenderValue { man, woman}
@@ -235,11 +235,12 @@ class SettingPage extends HookConsumerWidget {
                     ],
                   ),
                 ),
-              )
+              ),
             ],
           ),
         ),
       ),
+      bottomNavigationBar: const AppBottomNavigationBar(),
     );
   }
 }
