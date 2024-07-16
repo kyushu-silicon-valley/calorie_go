@@ -1,3 +1,4 @@
+import 'package:calorie_go_flutter/providers/calorie_go_user_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -27,17 +28,24 @@ class TopPage extends HookConsumerWidget {
               _Header(),
               const Spacer(),
               SignInWithGoogleButton(
-                style: ElevatedButton.styleFrom(
-                  minimumSize: const Size(300, 50),
-                ),
-                caller: client.modules.auth,
-                clientId: clientId,
-                redirectUri: Uri.parse('http://localhost:8082/googlesignin'),
-                onFailure: () =>
-                    throw Exception('Failed to sign in with Google.'),
-                onSignedIn: () =>
-                context.go('/register'),
-              ),
+                  style: ElevatedButton.styleFrom(
+                    minimumSize: const Size(300, 50),
+                  ),
+                  caller: client.modules.auth,
+                  clientId: clientId,
+                  redirectUri: Uri.parse('http://localhost:8082/googlesignin'),
+                  onFailure: () =>
+                      throw Exception('Failed to sign in with Google.'),
+                  onSignedIn: () async {
+                    final hasSignedUp =
+                        await ref.refresh(hasSignedUpProvider.future);
+                    if (!context.mounted) return;
+                    if (hasSignedUp) {
+                      context.go('/');
+                    } else {
+                      context.go('/register');
+                    }
+                  }),
               const SizedBox(height: 70),
             ],
           ),

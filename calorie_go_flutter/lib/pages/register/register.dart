@@ -1,3 +1,4 @@
+import 'package:calorie_go_flutter/repositories/user_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -17,60 +18,61 @@ class RegisterPageState extends State<RegisterPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      body:GestureDetector(
+      body: GestureDetector(
         onTap: () => FocusScope.of(context).unfocus(),
-        child: 
-        Container(
-        decoration: const BoxDecoration(
-          color: Color(0xFFE7DDC3),
-        ),
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const SizedBox(height: 70),
-              const _Header(),
-              const Spacer(),
-              _Name(
-                nickname: _nickname,
-                isNicknameValid: _isNicknameValid,
-                onNicknameChanged: (text) {
-                  setState(() {
-                    _nickname = text;
-                    _isNicknameValid = text.isNotEmpty;
-                  });
-                },
-              ),
-              const Spacer(),
-              const _Gender(),
-              const Spacer(),
-              ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  minimumSize: const Size(150, 50),
+        child: Container(
+          decoration: const BoxDecoration(
+            color: Color(0xFFE7DDC3),
+          ),
+          child: Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const SizedBox(height: 70),
+                const _Header(),
+                const Spacer(),
+                _Name(
+                  nickname: _nickname,
+                  isNicknameValid: _isNicknameValid,
+                  onNicknameChanged: (text) {
+                    setState(() {
+                      _nickname = text;
+                      _isNicknameValid = text.isNotEmpty;
+                    });
+                  },
                 ),
-                onPressed: () {
-                  if (_isNicknameValid) {
-                    context.go('/');
-                  } else {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
-                        content: Text('入力内容に誤りがあります。'),
-                        backgroundColor: Colors.red,
-                      ),
-                    );
-                  }
-                },
-                child: const Text('登録'),
-              ),
-              const SizedBox(height: 70),
-            ],
+                const Spacer(),
+                const _Gender(),
+                const Spacer(),
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    minimumSize: const Size(150, 50),
+                  ),
+                  onPressed: () async {
+                    if (_isNicknameValid) {
+                      await UserRepository().changeNickname(_nickname);
+                      if (!context.mounted) return;
+                      context.go('/');
+                    } else {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          content: Text('入力内容に誤りがあります。'),
+                          backgroundColor: Colors.red,
+                        ),
+                      );
+                    }
+                  },
+                  child: const Text('登録'),
+                ),
+                const SizedBox(height: 70),
+              ],
+            ),
           ),
         ),
       ),
-    ),
     );
   }
 }
@@ -109,7 +111,11 @@ class _Header extends StatelessWidget {
 class _Name extends StatefulWidget {
   final ValueChanged<String> onNicknameChanged;
 
-  const _Name({required this.onNicknameChanged, required String nickname, required bool isNicknameValid});
+  const _Name({
+    required this.onNicknameChanged,
+    required String nickname,
+    required bool isNicknameValid,
+  });
 
   @override
   _NameState createState() => _NameState();
@@ -157,7 +163,10 @@ class _NameState extends State<_Name> {
               decoration: InputDecoration(
                 hintText: '例 : ゴー太郎',
                 border: const OutlineInputBorder(),
-                contentPadding: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
+                contentPadding: const EdgeInsets.symmetric(
+                  vertical: 10,
+                  horizontal: 15,
+                ),
                 errorText: _isNicknameValid ? null : '一文字以上入力してください',
               ),
               onChanged: (text) {
@@ -174,7 +183,6 @@ class _NameState extends State<_Name> {
     );
   }
 }
-
 
 class _Gender extends StatefulWidget {
   const _Gender();

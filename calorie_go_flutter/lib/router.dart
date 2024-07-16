@@ -33,7 +33,7 @@ final goRouter = GoRouter(
         child: const TopPage(),
       ),
     ),
-     GoRoute(
+    GoRoute(
       path: '/register',
       builder: (context, state) => const RegisterPage(),
     ),
