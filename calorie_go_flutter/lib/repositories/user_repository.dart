@@ -28,4 +28,15 @@ class UserRepository {
       throw Exception(e);
     }
   }
+
+  /// すでにサインアップ済みかどうか
+  Future<bool> hasSignedUp() async {
+    // サインアップ済みかどうかの判定
+    try {
+      final flag = await client.user.hasSignedUp();
+      return flag;
+    } catch (e) {
+      throw Exception(e);
+    }
+  }
 }
