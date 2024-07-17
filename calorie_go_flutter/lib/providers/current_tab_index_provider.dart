@@ -2,7 +2,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'current_tab_index_provider.g.dart';
 
-@riverpod
+@Riverpod(keepAlive: true)
 class CurrentTabIndexNotifier extends _$CurrentTabIndexNotifier {
   @override
   int build() {

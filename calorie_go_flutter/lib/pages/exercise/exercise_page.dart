@@ -9,30 +9,21 @@ import 'package:go_router/go_router.dart';
 import 'package:health/health.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-enum ExerciseState {
-  started, // 運動開始状態
-  finished, // 運動終了状態
-}
 
-final exerciseStateProvider = StateProvider<ExerciseState>((ref) => ExerciseState.finished); // 運動中の状態を管理する変数
 final stepCountProvider = StateProvider<int?>((ref) => 0); // 歩数を管理する変数
-final startTimeProvider = StateProvider<DateTime?>((ref) => null); // 運動開始時刻を管理する変数
-final endTimeProvider = StateProvider<DateTime?>((ref) => null); // 運動終了時刻を管理する変数
- 
+
 class ExercisePage extends HookConsumerWidget {
   const ExercisePage({super.key});
-  
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final Health health = Health();
-    final stepCount = ref.watch(stepCountProvider);           // 歩数を管理する変数(画面に表示される)
+    final stepCount = ref.watch(stepCountProvider); // 歩数を管理する変数(画面に表示される)
     final exerciseState = ref.watch(exerciseStateProvider); // 運動中の状態を管理する変数
     const int rewardStepCount = 10; // チケットを獲得する歩数の閾値
 
-
     final isMonitoring = useState(false); // 監視状態を管理するためのuseState
 
-    final currentBottomTabIndex = ref.watch(currentTabIndexNotifierProvider.notifier); // 現在のタブのインデックスを取得
 
     // HealthKitに歩数に関する権限をリクエストする
     useEffect(() {
@@ -42,9 +33,11 @@ class ExercisePage extends HookConsumerWidget {
           // 他の必要なHealthDataTypeを追加
         ];
 
-        final permissions = types.map((type) => HealthDataAccess.READ_WRITE).toList();
+        final permissions =
+            types.map((type) => HealthDataAccess.READ_WRITE).toList();
 
-        bool requested = await health.requestAuthorization(types, permissions: permissions);
+        bool requested =
+            await health.requestAuthorization(types, permissions: permissions);
         if (kDebugMode) {
           print("HealthKit permissions requested: $requested");
         }
@@ -63,18 +56,18 @@ class ExercisePage extends HookConsumerWidget {
     // ヘルスケアから歩数データを取得
     Future<void> fetchStepsData(DateTime endTime) async {
       int? steps = await health.getTotalStepsInInterval(
-        ref.read(startTimeProvider.notifier).state!,
-        endTime,
+        DateTime(2024,07,16,18,0,0),
+        DateTime(2024,07,16,18,45,0),
       );
       ref.read(stepCountProvider.notifier).state = steps ?? 0;
     }
-
     // 歩数の変更を監視する関数
     useEffect(() {
       Timer? stepsSubscription;
       if (isMonitoring.value) {
         // 監視が有効な場合、タイマーを開始
-        stepsSubscription = Timer.periodic(const Duration(seconds: 1), (Timer timer) async {
+        stepsSubscription =
+            Timer.periodic(const Duration(seconds: 1), (Timer timer) async {
           await fetchStepsData(DateTime.now());
         });
       }
@@ -93,7 +86,7 @@ class ExercisePage extends HookConsumerWidget {
               title: Container(
                 padding: const EdgeInsets.all(8.0),
                 child: const Column(
-                  mainAxisSize: MainAxisSize.min, 
+                  mainAxisSize: MainAxisSize.min,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Icon(Icons.check_circle, color: Colors.green),
@@ -103,18 +96,18 @@ class ExercisePage extends HookConsumerWidget {
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                       ),
-                      textAlign: TextAlign.center, 
+                      textAlign: TextAlign.center,
                     ),
                   ],
                 ),
               ),
               content: Container(
-                padding: const EdgeInsets.all(8.0), 
+                padding: const EdgeInsets.all(8.0),
                 child: const Column(
-                  mainAxisSize: MainAxisSize.min, 
+                  mainAxisSize: MainAxisSize.min,
                   children: [
                     Text("おめでとうございます！"),
-                    SizedBox(height: 4), 
+                    SizedBox(height: 4),
                     Text("チケットを獲得しました"),
                   ],
                 ),
@@ -164,7 +157,8 @@ class ExercisePage extends HookConsumerWidget {
                   children: [
                     const Text("チケット獲得まで"),
                     const SizedBox(height: 4),
-                    Text("${rewardStepCount - stepCount}歩", style: const TextStyle(fontSize: 32)),
+                    Text("${rewardStepCount - stepCount}歩",
+                        style: const TextStyle(fontSize: 32)),
                     const SizedBox(height: 4),
                     const Text("引き続き頑張りましょう！"),
                     const SizedBox(height: 8),
@@ -174,7 +168,8 @@ class ExercisePage extends HookConsumerWidget {
               ),
               actions: [
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly, // ボタン間のスペースを均等にする
+                  mainAxisAlignment:
+                      MainAxisAlignment.spaceEvenly, // ボタン間のスペースを均等にする
                   children: [
                     Flexible(
                       child: ElevatedButton(
@@ -195,7 +190,8 @@ class ExercisePage extends HookConsumerWidget {
                           Navigator.of(context).pop(); // ダイアログを閉じる
                           currentBottomTabIndex.change(1);
                           ref.read(stepCountProvider.notifier).state = 0;
-                          ref.read(exerciseStateProvider.notifier).state = ExerciseState.finished;
+                          ref.read(exerciseStateProvider.notifier).state =
+                              ExerciseState.finished;
                           context.go('/exercise');
                           // 運動状態を更新する処理をここに追加
                         },
@@ -219,7 +215,8 @@ class ExercisePage extends HookConsumerWidget {
           ref.read(stepCountProvider.notifier).state = 0; // 歩数をリセット
           // startMonitoringSteps(); // 運動開始時に歩数の監視を開始
           isMonitoring.value = true;
-          ref.read(exerciseStateProvider.notifier).state = ExerciseState.started;
+          ref.read(exerciseStateProvider.notifier).state =
+              ExerciseState.started;
           break;
         case ExerciseState.started:
           // 運動終了処理
@@ -228,9 +225,10 @@ class ExercisePage extends HookConsumerWidget {
           // stopMonitoringSteps(); // 運動終了時に歩数の監視を停止
           isMonitoring.value = false;
           if (stepCount > rewardStepCount) {
-            ref.read(exerciseStateProvider.notifier).state = ExerciseState.finished;
+            ref.read(exerciseStateProvider.notifier).state =
+                ExerciseState.finished;
           }
-          break;  
+          break;
       }
     }
 
@@ -247,8 +245,10 @@ class ExercisePage extends HookConsumerWidget {
                 Row(
                   mainAxisSize: MainAxisSize.min, // 必要最小限の幅を使用
                   children: [
-                    Text('${stepCount ?? 0}', style: const TextStyle(fontSize: 64)),
-                    const Text(' 歩', style: TextStyle(fontSize: 24)), // "歩"の文字の大きさを小さく設定
+                    Text('${stepCount ?? 0}',
+                        style: const TextStyle(fontSize: 64)),
+                    const Text(' 歩',
+                        style: TextStyle(fontSize: 24)), // "歩"の文字の大きさを小さく設定
                   ],
                 ),
                 const SizedBox(height: 64), //ボタン間の間隔を設定
@@ -268,9 +268,10 @@ class ExercisePage extends HookConsumerWidget {
                 shape: WidgetStateProperty.all(const RoundedRectangleBorder(
                   borderRadius: BorderRadius.all(Radius.circular(8)),
                 )),
-                backgroundColor: WidgetStateProperty.all(const Color.fromARGB(255, 94, 233, 99)),
-                foregroundColor: WidgetStateProperty.all(Colors.black), 
-                  textStyle: WidgetStateProperty.all(const TextStyle(
+                backgroundColor: WidgetStateProperty.all(
+                    const Color.fromARGB(255, 94, 233, 99)),
+                foregroundColor: WidgetStateProperty.all(Colors.black),
+                textStyle: WidgetStateProperty.all(const TextStyle(
                   fontWeight: FontWeight.bold, // 文字を太くする
                 )),
               ),
@@ -282,7 +283,9 @@ class ExercisePage extends HookConsumerWidget {
           ),
         ],
       ),
-      bottomNavigationBar: exerciseState == ExerciseState.finished ? const AppBottomNavigationBar() : null,
+      bottomNavigationBar: exerciseState == ExerciseState.finished
+          ? const AppBottomNavigationBar()
+          : null,
     );
   }
 }
