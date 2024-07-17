@@ -89,7 +89,7 @@ class _TicketShapeBorder extends ShapeBorder {
     final rs = radius! / 2; // 区切り部分の半径
     final w = rect.size.width; // 全体の横幅
     final h = rect.size.height; // 全体の縦幅
-    final wl = w / 3; // ロゴ部分の横幅
+    final wl = w / 3; // 左側の横幅
     return Path()
       ..addPath(
         Path()
@@ -145,6 +145,8 @@ class _Ticket extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () async {
+        final currentContext = context;
+
         final result = await showDialog<bool>(
           context: context,
           builder: (context) => AlertDialog(
@@ -162,21 +164,17 @@ class _Ticket extends StatelessWidget {
             ],
           ),
         );
-        if (result == true) {
-          context.go('/custom');
+         if (result == true && currentContext.mounted) {
+          currentContext.go('/custom');
         }
       },
       child: Container(
         width: double.infinity,
         height: 128,
-        decoration: BoxDecoration(
+        decoration: ShapeDecoration(
           color: Colors.white,
-          border: Border.all(
-            color: kColorTicketBorder,
-            width: 2,
-          ),
-          borderRadius: BorderRadius.circular(16.0),
-          boxShadow: [
+          shape: const _TicketShapeBorder(width: 2, radius: 16.0), // ここで _TicketShapeBorder を使用
+          shadows: [
             BoxShadow(
               color: Colors.black.withOpacity(0.1),
               blurRadius: 10,
@@ -228,8 +226,6 @@ class _Ticket extends StatelessWidget {
     );
   }
 }
-
-
 
 class TicketList extends StatelessWidget {
   const TicketList({super.key});
