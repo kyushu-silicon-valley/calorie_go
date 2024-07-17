@@ -1,0 +1,5 @@
+class: UserMonsterFeature
+table: user_monster_feature
+fields:
+    user: module:auth:UserInfo?, relation
+    feature: String

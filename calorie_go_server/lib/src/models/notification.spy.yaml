@@ -1,0 +1,6 @@
+class: Notification
+table: notification
+fields:
+    title: String
+    body: String
+    createdAt: DateTime

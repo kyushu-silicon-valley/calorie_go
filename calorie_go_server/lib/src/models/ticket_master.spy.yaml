@@ -1,0 +1,7 @@
+class: TicketMaster
+table: ticketm_master
+fields:
+    name: String
+    desctiption: String
+    prompt: String
+    ticketType: TicketType
