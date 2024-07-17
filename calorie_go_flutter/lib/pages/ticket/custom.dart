@@ -1,6 +1,5 @@
 import 'package:calorie_go_flutter/components/dialog.dart';
 import 'package:flutter/material.dart';
-
 import 'package:calorie_go_flutter/components/bottom_app_bar.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
