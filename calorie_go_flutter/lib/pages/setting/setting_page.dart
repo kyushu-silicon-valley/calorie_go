@@ -5,14 +5,19 @@ import 'package:flutter/material.dart';
 //import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-  enum GenderValue { man, woman}
+final genderValueProvider = StateProvider<String>(
+  (ref) {
+    return 'man';
+  }
+);
 
 class SettingPage extends HookConsumerWidget {
   const SettingPage({super.key});
-
+  
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final gendervalue = ref.watch(genderValueProvider);
     return Scaffold(
       appBar: AppBar(
         elevation: 10,
@@ -43,11 +48,11 @@ class SettingPage extends HookConsumerWidget {
                             color: const Color.fromARGB(255, 226, 226, 226),
                             borderRadius: BorderRadius.circular(20),
                           ),
-                        child: const Padding(
-                          padding: EdgeInsets.all(8.0),
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
                           child: Column(
                             children: [
-                              Align(
+                              const Align(
                                 alignment: Alignment.topLeft,
                                 child: Text(
                                   'ニックネーム',
@@ -56,14 +61,14 @@ class SettingPage extends HookConsumerWidget {
                                   ),
                                 ),
                               ),
-                              TextField(
+                              const TextField(
                                 decoration: InputDecoration(
                                   border: OutlineInputBorder(
                                   borderRadius: BorderRadius.all(Radius.circular(4.0)),
                                   ),
                                 ),
                               ),
-                              Align(
+                              const Align(
                                 alignment: Alignment.topLeft,
                                 child: Text(
                                   '性別',
@@ -78,21 +83,27 @@ class SettingPage extends HookConsumerWidget {
                                   Row(
                                     children: [
                                       Radio(
-                                      value: GenderValue.man,
-                                      groupValue: GenderValue.man,
-                                      onChanged: null,
-                                    ),
-                                    Text('男性'),
+                                        value: 'man',
+                                        groupValue: gendervalue,
+                                        onChanged: (val)  {
+                                          final notifier = ref.read(genderValueProvider.notifier);
+                                          notifier.state = 'man';
+                                        },
+                                      ),
+                                      const Text('男性'),
                                     ]   
                                   ),
                                   Row(
                                     children: [
                                       Radio(
-                                      value: GenderValue.man,
-                                      groupValue: GenderValue.woman,
-                                      onChanged: null,
-                                    ),
-                                    Text('女性'),
+                                        value: 'woman',
+                                        groupValue: gendervalue,
+                                        onChanged: (val)  {
+                                          final notifier = ref.read(genderValueProvider.notifier);
+                                          notifier.state = 'woman';
+                                        },
+                                      ),
+                                      const Text('女性'),
                                     ]   
                                   ),
                                 ],
