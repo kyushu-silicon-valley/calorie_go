@@ -155,6 +155,12 @@ class EndpointUser extends _i1.EndpointRef {
         'firstSignInProcess',
         {},
       );
+
+  _i2.Future<bool> hasSignedUp() => caller.callServerEndpoint<bool>(
+        'user',
+        'hasSignedUp',
+        {},
+      );
 }
 
 /// {@category Endpoint}

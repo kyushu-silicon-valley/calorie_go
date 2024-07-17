@@ -1,9 +1,11 @@
+
 import 'package:calorie_go_flutter/gen/assets.gen.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 class CustomDialog extends StatelessWidget {
   const CustomDialog({super.key});
+
 
   @override
   Widget build(BuildContext context) {
@@ -13,6 +15,7 @@ class CustomDialog extends StatelessWidget {
       content: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
+
           const Text('どのようにカスタマイズしますか？'),
           const SizedBox(height: 12),
           const Text('カスタマイズできる部品：帽子'),
@@ -72,6 +75,7 @@ class SelectstyleDialog extends StatelessWidget {
           ElevatedButton(
             onPressed: () => context.go('/'),
             child: const Text('決定'),
+
           ),
         ],
       ),

@@ -62,6 +62,10 @@ class $AssetsImagesTicketGen {
 class $AssetsImagesTopGen {
   const $AssetsImagesTopGen();
 
+  /// File path: assets/images/top/image 11.png
+  AssetGenImage get image11 =>
+      const AssetGenImage('assets/images/top/image 11.png');
+
   /// File path: assets/images/top/top_image.webp
   AssetGenImage get topImage =>
       const AssetGenImage('assets/images/top/top_image.webp');
@@ -71,7 +75,7 @@ class $AssetsImagesTopGen {
       const AssetGenImage('assets/images/top/top_logo.png');
 
   /// List of all assets
-  List<AssetGenImage> get values => [topImage, topLogo];
+  List<AssetGenImage> get values => [image11, topImage, topLogo];
 }
 
 class Assets {
