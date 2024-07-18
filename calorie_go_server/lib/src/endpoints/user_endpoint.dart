@@ -127,16 +127,22 @@ class UserEndpoint extends Endpoint {
       );
 
       // 運動のレコードを作成し、合計歩数を0で初期化する
-      await UserExerciseHist.db.insert(
+      final myRecord = await UserExerciseHist.db.find(
         session,
-        [
-          UserExerciseHist(
-            userId: au.userId,
-            updatedAt: DateTime.now(),
-            steps: 0,
-          )
-        ],
+        where: (p0) => p0.userId.equals(au.userId),
       );
+      if (myRecord.isEmpty) {
+        await UserExerciseHist.db.insert(
+          session,
+          [
+            UserExerciseHist(
+              userId: au.userId,
+              updatedAt: DateTime.now(),
+              steps: 0,
+            )
+          ],
+        );
+      }
     } catch (e) {
       throw Exception(e);
     }

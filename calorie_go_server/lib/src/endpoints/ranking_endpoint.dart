@@ -16,6 +16,7 @@ class RankingEndpoint extends Endpoint {
     final ranking = await UserExerciseHist.db.find(
       session,
       orderBy: (p0) => p0.steps,
+      orderDescending: true,
     );
     print(ranking);
     var rankedUserNames = <String>[];
