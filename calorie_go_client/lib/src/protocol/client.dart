@@ -110,14 +110,15 @@ class EndpointRanking extends _i1.EndpointRef {
   @override
   String get name => 'ranking';
 
-  _i2.Future<List<_i6.UserExerciseHist>?> getRanking() =>
-      caller.callServerEndpoint<List<_i6.UserExerciseHist>?>(
+  _i2.Future<List<String>?> getRanking() =>
+      caller.callServerEndpoint<List<String>?>(
         'ranking',
         'getRanking',
         {},
       );
 
-  _i2.Future<int> myRanking() => caller.callServerEndpoint<int>(
+  _i2.Future<_i6.UserExerciseHist?> myRanking() =>
+      caller.callServerEndpoint<_i6.UserExerciseHist?>(
         'ranking',
         'myRanking',
         {},
