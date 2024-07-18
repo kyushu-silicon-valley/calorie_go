@@ -215,7 +215,26 @@ class Endpoints extends _i1.EndpointDispatch {
     connectors['ticket'] = _i1.EndpointConnector(
       name: 'ticket',
       endpoint: endpoints['ticket']!,
-      methodConnectors: {},
+      methodConnectors: {
+        'generateNextImage': _i1.MethodConnector(
+          name: 'generateNextImage',
+          params: {
+            'newFeature': _i1.ParameterDescription(
+              name: 'newFeature',
+              type: _i1.getType<String>(),
+              nullable: false,
+            )
+          },
+          call: (
+            _i1.Session session,
+            Map<String, dynamic> params,
+          ) async =>
+              (endpoints['ticket'] as _i7.TicketEndpoint).generateNextImage(
+            session,
+            params['newFeature'],
+          ),
+        )
+      },
     );
     connectors['user'] = _i1.EndpointConnector(
       name: 'user',

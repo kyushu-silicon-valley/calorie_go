@@ -13,6 +13,7 @@ ranking:
   - getRanking:
   - myRanking:
 ticket:
+  - generateNextImage:
 user:
   - fetchCurrentUser:
   - changeUserNickname:
