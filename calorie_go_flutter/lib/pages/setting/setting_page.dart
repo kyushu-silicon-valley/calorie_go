@@ -1,23 +1,24 @@
 import 'package:calorie_go_flutter/components/bottom_app_bar.dart';
+import 'package:calorie_go_flutter/main.dart';
+import 'package:calorie_go_flutter/pages/setting/setting_page_controller.dart';
 //import 'package:calorie_go_flutter/constants.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
+//import 'package:flutter_hooks/flutter_hooks.dart';
 //import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-final genderValueProvider = StateProvider<String>(
-  (ref) {
-    return 'man';
-  }
-);
 
 class SettingPage extends HookConsumerWidget {
   const SettingPage({super.key});
-  
+
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final gendervalue = ref.watch(genderValueProvider);
+    final thememode = useState<bool>(false);
+
     return Scaffold(
       appBar: AppBar(
         elevation: 10,
@@ -58,6 +59,7 @@ class SettingPage extends HookConsumerWidget {
                                   'ニックネーム',
                                   style: TextStyle(
                                     fontSize: 20,
+                                    color: Colors.black,
                                   ),
                                 ),
                               ),
@@ -74,6 +76,7 @@ class SettingPage extends HookConsumerWidget {
                                   '性別',
                                   style: TextStyle(
                                     fontSize: 20,
+                                    color: Colors.black,
                                   ),
                                 ),
                               ),
@@ -83,27 +86,41 @@ class SettingPage extends HookConsumerWidget {
                                   Row(
                                     children: [
                                       Radio(
-                                        value: 'man',
+                                        activeColor: Colors.black,
+                                        hoverColor: Colors.black,
+                                        value: Gender.man,
                                         groupValue: gendervalue,
                                         onChanged: (val)  {
                                           final notifier = ref.read(genderValueProvider.notifier);
-                                          notifier.state = 'man';
+                                          notifier.state = Gender.man;
                                         },
                                       ),
-                                      const Text('男性'),
+                                      const Text(
+                                        '男性',
+                                        style: TextStyle(
+                                          color: Colors.black,
+                                        ),
+                                      ),
                                     ]   
                                   ),
                                   Row(
                                     children: [
                                       Radio(
-                                        value: 'woman',
+                                        activeColor: Colors.black,
+                                        hoverColor: Colors.black,
+                                        value: Gender.woman,
                                         groupValue: gendervalue,
                                         onChanged: (val)  {
                                           final notifier = ref.read(genderValueProvider.notifier);
-                                          notifier.state = 'woman';
+                                          notifier.state = Gender.woman;
                                         },
                                       ),
-                                      const Text('女性'),
+                                      const Text(
+                                        '女性',
+                                        style: TextStyle(
+                                          color: Colors.black,
+                                        ),
+                                      ),
                                     ]   
                                   ),
                                 ],
@@ -116,14 +133,16 @@ class SettingPage extends HookConsumerWidget {
                         padding: const EdgeInsets.all(8.0),
                         child: Container(
                           decoration: BoxDecoration(
-                            color: Colors.black,
+                            color: !thememode.value? Colors.black: Colors.white,
                             borderRadius: BorderRadius.circular(20),
                           ),
-                          child: const ElevatedButton(
+                          child: ElevatedButton(
                             onPressed: null,
                             child: Text(
                               '登録',
-                              style: TextStyle(color: Colors.white),
+                              style: TextStyle(
+                                color: !thememode.value? Colors.white : Colors.black,
+                              ),
                             ),
                           ),
                         ),
@@ -144,18 +163,30 @@ class SettingPage extends HookConsumerWidget {
                             color: const Color.fromARGB(255, 226, 226, 226),
                             borderRadius: BorderRadius.circular(20),
                           ),
-                          child: const Padding(
-                            padding: EdgeInsets.all(8.0),
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Text(
+                                const Text(
                                   'ダークモード',
-                                  style: TextStyle(fontSize: 20),
+                                  style: TextStyle(
+                                    fontSize: 20,
+                                    color: Colors.black,
+                                  ),
                                 ),
                                 CupertinoSwitch(
-                                  value: false,
-                                  onChanged: null,
+                                  value: thememode.value,
+                                  onChanged: (value) {
+                                    thememode.value = value;
+                                    if (value){
+                                      final notifier = ref.read(themeModeProvider.notifier);
+                                      notifier.state = ThemeMode.dark;
+                                    } else {
+                                      final notifier = ref.read(themeModeProvider.notifier);
+                                      notifier.state = ThemeMode.light;
+                                    }
+                                  },
                                 )
                               ],
                             ),
@@ -179,6 +210,7 @@ class SettingPage extends HookConsumerWidget {
                                     'シリアルコード',
                                     style: TextStyle(
                                       fontSize: 20,
+                                      color: Colors.black,
                                     ),
                                   ),
                                 ),
@@ -197,6 +229,7 @@ class SettingPage extends HookConsumerWidget {
                                       '問い合わせ',
                                       style: TextStyle(
                                         fontSize: 20,
+                                        color: Colors.black,
                                       ),
                                     ),
                                   ),
@@ -209,6 +242,7 @@ class SettingPage extends HookConsumerWidget {
                                       'キャッシュ削除',
                                       style: TextStyle(
                                         fontSize: 20,
+                                        color: Colors.black,
                                       ),
                                     ),
                                   ),
@@ -221,6 +255,7 @@ class SettingPage extends HookConsumerWidget {
                                       'ログアウトする',
                                       style: TextStyle(
                                         fontSize: 20,
+                                        color: Colors.black,
                                       ),
                                     ),
                                   ),
