@@ -48,7 +48,8 @@ class UserEndpoint extends Endpoint {
     if (calorieGoUser.isEmpty) {
       await CalorieGoUser.db.insert(session, [
         CalorieGoUser(
-          authId: au.userId.toString(),
+          authId: 'DEPRECATED',
+          authUserId: au.userId,
           nickname: nickname,
         ),
       ]);
@@ -56,7 +57,8 @@ class UserEndpoint extends Endpoint {
       await CalorieGoUser.db.update(session, [
         CalorieGoUser(
           id: calorieGoUser[0].id,
-          authId: au.userId.toString(),
+          authId: 'DEPRECATED',
+          authUserId: au.userId,
           nickname: nickname,
         ),
       ]);
@@ -81,7 +83,7 @@ class UserEndpoint extends Endpoint {
         session,
         where: (p0) => p0.userId.equals(au.userId),
       );
-      if (existMonster.isNotEmpty) return null;
+      if (existMonster.isNotEmpty) return;
 
       final feature = PromptGenerator().getFirstFeature();
       // 特徴をDBに保存する
@@ -101,14 +103,14 @@ class UserEndpoint extends Endpoint {
         prompt: prompt,
         n: 1,
         size: OpenAIImageSize.size1024,
-        responseFormat: OpenAIImageResponseFormat.url,
+        responseFormat: OpenAIImageResponseFormat.b64Json,
       );
-      final url = generatedImage.data[0].url;
-      if (url == null) return;
+      final b64json = generatedImage.data[0].b64Json;
+      if (b64json == null) return;
 
       // 画像を登録し、現在のユーザとリレーションする
-      final monsterImages =
-          await MonsterImage.db.insert(session, [MonsterImage(imageUrl: url)]);
+      final monsterImages = await MonsterImage.db
+          .insert(session, [MonsterImage(imageUrl: b64json)]);
       final monsterImage = monsterImages[0];
       if (monsterImage.id == null) {
         return;

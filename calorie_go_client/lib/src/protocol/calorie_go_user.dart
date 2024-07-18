@@ -14,12 +14,14 @@ abstract class CalorieGoUser implements _i1.SerializableModel {
   CalorieGoUser._({
     this.id,
     required this.authId,
+    required this.authUserId,
     required this.nickname,
   });
 
   factory CalorieGoUser({
     int? id,
     required String authId,
+    required int authUserId,
     required String nickname,
   }) = _CalorieGoUserImpl;
 
@@ -27,6 +29,7 @@ abstract class CalorieGoUser implements _i1.SerializableModel {
     return CalorieGoUser(
       id: jsonSerialization['id'] as int?,
       authId: jsonSerialization['authId'] as String,
+      authUserId: jsonSerialization['authUserId'] as int,
       nickname: jsonSerialization['nickname'] as String,
     );
   }
@@ -38,11 +41,14 @@ abstract class CalorieGoUser implements _i1.SerializableModel {
 
   String authId;
 
+  int authUserId;
+
   String nickname;
 
   CalorieGoUser copyWith({
     int? id,
     String? authId,
+    int? authUserId,
     String? nickname,
   });
   @override
@@ -50,6 +56,7 @@ abstract class CalorieGoUser implements _i1.SerializableModel {
     return {
       if (id != null) 'id': id,
       'authId': authId,
+      'authUserId': authUserId,
       'nickname': nickname,
     };
   }
@@ -66,10 +73,12 @@ class _CalorieGoUserImpl extends CalorieGoUser {
   _CalorieGoUserImpl({
     int? id,
     required String authId,
+    required int authUserId,
     required String nickname,
   }) : super._(
           id: id,
           authId: authId,
+          authUserId: authUserId,
           nickname: nickname,
         );
 
@@ -77,11 +86,13 @@ class _CalorieGoUserImpl extends CalorieGoUser {
   CalorieGoUser copyWith({
     Object? id = _Undefined,
     String? authId,
+    int? authUserId,
     String? nickname,
   }) {
     return CalorieGoUser(
       id: id is int? ? id : this.id,
       authId: authId ?? this.authId,
+      authUserId: authUserId ?? this.authUserId,
       nickname: nickname ?? this.nickname,
     );
   }

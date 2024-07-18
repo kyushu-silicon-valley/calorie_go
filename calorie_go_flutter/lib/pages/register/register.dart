@@ -55,6 +55,8 @@ class RegisterPageState extends State<RegisterPage> {
                     if (_isNicknameValid) {
                       await UserRepository().changeNickname(_nickname);
                       if (!context.mounted) return;
+                      await UserRepository().firstSignInProcess();
+                      if (!context.mounted) return;
                       context.go('/');
                     } else {
                       ScaffoldMessenger.of(context).showSnackBar(

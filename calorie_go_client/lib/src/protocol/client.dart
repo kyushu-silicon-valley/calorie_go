@@ -79,6 +79,13 @@ class EndpointMonster extends _i1.EndpointRef {
         'fetchCurrentUserMonster',
         {},
       );
+
+  _i2.Future<String> fetchCurrentUserMonsterImage() =>
+      caller.callServerEndpoint<String>(
+        'monster',
+        'fetchCurrentUserMonsterImage',
+        {},
+      );
 }
 
 /// {@category Endpoint}

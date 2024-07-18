@@ -11,4 +11,13 @@ class MonsterRepository {
       throw Exception(e);
     }
   }
+
+  Future<String> getUserMonsterImage() async {
+    try {
+      final imageUrl = await client.monster.fetchCurrentUserMonsterImage();
+      return imageUrl;
+    } catch (e) {
+      throw Exception(e);
+    }
+  }
 }

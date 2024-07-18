@@ -159,7 +159,17 @@ class Endpoints extends _i1.EndpointDispatch {
           ) async =>
               (endpoints['monster'] as _i4.MonsterEndpoint)
                   .fetchCurrentUserMonster(session),
-        )
+        ),
+        'fetchCurrentUserMonsterImage': _i1.MethodConnector(
+          name: 'fetchCurrentUserMonsterImage',
+          params: {},
+          call: (
+            _i1.Session session,
+            Map<String, dynamic> params,
+          ) async =>
+              (endpoints['monster'] as _i4.MonsterEndpoint)
+                  .fetchCurrentUserMonsterImage(session),
+        ),
       },
     );
     connectors['notification'] = _i1.EndpointConnector(

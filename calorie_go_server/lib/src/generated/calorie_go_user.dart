@@ -15,12 +15,14 @@ abstract class CalorieGoUser extends _i1.TableRow
   CalorieGoUser._({
     int? id,
     required this.authId,
+    required this.authUserId,
     required this.nickname,
   }) : super(id);
 
   factory CalorieGoUser({
     int? id,
     required String authId,
+    required int authUserId,
     required String nickname,
   }) = _CalorieGoUserImpl;
 
@@ -28,6 +30,7 @@ abstract class CalorieGoUser extends _i1.TableRow
     return CalorieGoUser(
       id: jsonSerialization['id'] as int?,
       authId: jsonSerialization['authId'] as String,
+      authUserId: jsonSerialization['authUserId'] as int,
       nickname: jsonSerialization['nickname'] as String,
     );
   }
@@ -38,6 +41,8 @@ abstract class CalorieGoUser extends _i1.TableRow
 
   String authId;
 
+  int authUserId;
+
   String nickname;
 
   @override
@@ -46,6 +51,7 @@ abstract class CalorieGoUser extends _i1.TableRow
   CalorieGoUser copyWith({
     int? id,
     String? authId,
+    int? authUserId,
     String? nickname,
   });
   @override
@@ -53,6 +59,7 @@ abstract class CalorieGoUser extends _i1.TableRow
     return {
       if (id != null) 'id': id,
       'authId': authId,
+      'authUserId': authUserId,
       'nickname': nickname,
     };
   }
@@ -62,6 +69,7 @@ abstract class CalorieGoUser extends _i1.TableRow
     return {
       if (id != null) 'id': id,
       'authId': authId,
+      'authUserId': authUserId,
       'nickname': nickname,
     };
   }
@@ -102,10 +110,12 @@ class _CalorieGoUserImpl extends CalorieGoUser {
   _CalorieGoUserImpl({
     int? id,
     required String authId,
+    required int authUserId,
     required String nickname,
   }) : super._(
           id: id,
           authId: authId,
+          authUserId: authUserId,
           nickname: nickname,
         );
 
@@ -113,11 +123,13 @@ class _CalorieGoUserImpl extends CalorieGoUser {
   CalorieGoUser copyWith({
     Object? id = _Undefined,
     String? authId,
+    int? authUserId,
     String? nickname,
   }) {
     return CalorieGoUser(
       id: id is int? ? id : this.id,
       authId: authId ?? this.authId,
+      authUserId: authUserId ?? this.authUserId,
       nickname: nickname ?? this.nickname,
     );
   }
@@ -130,6 +142,10 @@ class CalorieGoUserTable extends _i1.Table {
       'authId',
       this,
     );
+    authUserId = _i1.ColumnInt(
+      'authUserId',
+      this,
+    );
     nickname = _i1.ColumnString(
       'nickname',
       this,
@@ -138,12 +154,15 @@ class CalorieGoUserTable extends _i1.Table {
 
   late final _i1.ColumnString authId;
 
+  late final _i1.ColumnInt authUserId;
+
   late final _i1.ColumnString nickname;
 
   @override
   List<_i1.Column> get columns => [
         id,
         authId,
+        authUserId,
         nickname,
       ];
 }
