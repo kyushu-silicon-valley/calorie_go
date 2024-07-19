@@ -16,13 +16,14 @@ import 'package:calorie_go_client/src/protocol/notification.dart' as _i5;
 import 'package:calorie_go_client/src/protocol/response/ranking_item_reponse.dart'
     as _i6;
 import 'package:calorie_go_client/src/protocol/user_exercise_hist.dart' as _i7;
+import 'package:calorie_go_client/src/protocol/user_ticket.dart' as _i8;
 import 'package:calorie_go_client/src/protocol/response/generated_monsters.dart'
-    as _i8;
-import 'package:calorie_go_client/src/protocol/response/user_response.dart'
     as _i9;
-import 'package:serverpod_auth_client/serverpod_auth_client.dart' as _i10;
-import 'package:calorie_go_client/src/protocol/gender.dart' as _i11;
-import 'protocol.dart' as _i12;
+import 'package:calorie_go_client/src/protocol/response/user_response.dart'
+    as _i10;
+import 'package:serverpod_auth_client/serverpod_auth_client.dart' as _i11;
+import 'package:calorie_go_client/src/protocol/gender.dart' as _i12;
+import 'protocol.dart' as _i13;
 
 /// {@category Endpoint}
 class EndpointExample extends _i1.EndpointRef {
@@ -93,6 +94,13 @@ class EndpointMonster extends _i1.EndpointRef {
         'fetchCurrentUserMonsterImage',
         {},
       );
+
+  _i2.Future<_i4.Monster?> changeCurrentMonster(int newMonsterId) =>
+      caller.callServerEndpoint<_i4.Monster?>(
+        'monster',
+        'changeCurrentMonster',
+        {'newMonsterId': newMonsterId},
+      );
 }
 
 /// {@category Endpoint}
@@ -139,11 +147,31 @@ class EndpointTicket extends _i1.EndpointRef {
   @override
   String get name => 'ticket';
 
-  _i2.Future<_i8.GeneratedMonsters?> generateNextImage(String newFeature) =>
-      caller.callServerEndpoint<_i8.GeneratedMonsters?>(
+  _i2.Future<List<_i8.UsertTicket>> getMyTicker() =>
+      caller.callServerEndpoint<List<_i8.UsertTicket>>(
         'ticket',
-        'generateNextImage',
-        {'newFeature': newFeature},
+        'getMyTicker',
+        {},
+      );
+
+  _i2.Future<_i9.GeneratedMonsters?> useTicket(
+    int ticketId,
+    String prompt,
+  ) =>
+      caller.callServerEndpoint<_i9.GeneratedMonsters?>(
+        'ticket',
+        'useTicket',
+        {
+          'ticketId': ticketId,
+          'prompt': prompt,
+        },
+      );
+
+  _i2.Future<_i8.UsertTicket?> giveTicket(int userId) =>
+      caller.callServerEndpoint<_i8.UsertTicket?>(
+        'ticket',
+        'giveTicket',
+        {'userId': userId},
       );
 }
 
@@ -156,19 +184,19 @@ class EndpointUser extends _i1.EndpointRef {
 
   /// 現在ログイン中のユーザー情報を取得する
   /// ログインしていない場合はnullを返す
-  _i2.Future<_i9.UserResponse?> fetchCurrentUser() =>
-      caller.callServerEndpoint<_i9.UserResponse?>(
+  _i2.Future<_i10.UserResponse?> fetchCurrentUser() =>
+      caller.callServerEndpoint<_i10.UserResponse?>(
         'user',
         'fetchCurrentUser',
         {},
       );
 
   /// 現在のログイン中のユーザーのニックネームを変更するためのエンドポイント
-  _i2.Future<_i10.UserInfo?> editUserInfo({
+  _i2.Future<_i11.UserInfo?> editUserInfo({
     required String nickname,
-    required _i11.Gender gender,
+    required _i12.Gender gender,
   }) =>
-      caller.callServerEndpoint<_i10.UserInfo?>(
+      caller.callServerEndpoint<_i11.UserInfo?>(
         'user',
         'editUserInfo',
         {
@@ -213,10 +241,10 @@ class EndpointUserExerciseHist extends _i1.EndpointRef {
 
 class _Modules {
   _Modules(Client client) {
-    auth = _i10.Caller(client);
+    auth = _i11.Caller(client);
   }
 
-  late final _i10.Caller auth;
+  late final _i11.Caller auth;
 }
 
 class Client extends _i1.ServerpodClient {
@@ -234,7 +262,7 @@ class Client extends _i1.ServerpodClient {
     Function(_i1.MethodCallContext)? onSucceededCall,
   }) : super(
           host,
-          _i12.Protocol(),
+          _i13.Protocol(),
           securityContext: securityContext,
           authenticationKeyManager: authenticationKeyManager,
           streamingConnectionTimeout: streamingConnectionTimeout,

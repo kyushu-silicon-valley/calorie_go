@@ -1,0 +1,60 @@
+BEGIN;
+
+--
+-- ACTION DROP TABLE
+--
+DROP TABLE "user_ticket" CASCADE;
+
+--
+-- ACTION CREATE TABLE
+--
+CREATE TABLE "user_ticket" (
+    "id" bigserial PRIMARY KEY,
+    "userId" bigint NOT NULL,
+    "ticketMasterId" bigint NOT NULL,
+    "used" boolean NOT NULL
+);
+
+--
+-- ACTION CREATE FOREIGN KEY
+--
+ALTER TABLE ONLY "user_ticket"
+    ADD CONSTRAINT "user_ticket_fk_0"
+    FOREIGN KEY("userId")
+    REFERENCES "serverpod_user_info"("id")
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION;
+ALTER TABLE ONLY "user_ticket"
+    ADD CONSTRAINT "user_ticket_fk_1"
+    FOREIGN KEY("ticketMasterId")
+    REFERENCES "ticketm_master"("id")
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION;
+
+
+--
+-- MIGRATION VERSION FOR calorie_go
+--
+INSERT INTO "serverpod_migrations" ("module", "version", "timestamp")
+    VALUES ('calorie_go', '20240719130024848', now())
+    ON CONFLICT ("module")
+    DO UPDATE SET "version" = '20240719130024848', "timestamp" = now();
+
+--
+-- MIGRATION VERSION FOR serverpod
+--
+INSERT INTO "serverpod_migrations" ("module", "version", "timestamp")
+    VALUES ('serverpod', '20240516151843329', now())
+    ON CONFLICT ("module")
+    DO UPDATE SET "version" = '20240516151843329', "timestamp" = now();
+
+--
+-- MIGRATION VERSION FOR serverpod_auth
+--
+INSERT INTO "serverpod_migrations" ("module", "version", "timestamp")
+    VALUES ('serverpod_auth', '20240520102713718', now())
+    ON CONFLICT ("module")
+    DO UPDATE SET "version" = '20240520102713718', "timestamp" = now();
+
+
+COMMIT;

@@ -7,7 +7,7 @@ part of 'ranking_page_controller.dart';
 // **************************************************************************
 
 String _$rankingPageControllerHash() =>
-    r'6ed9c59a757c7f23c2d406c87c9ae5f71b3d2c21';
+    r'f7d0a8e41f6222b822e0021c0ee7a2a0dae124c6';
 
 /// See also [RankingPageController].
 @ProviderFor(RankingPageController)

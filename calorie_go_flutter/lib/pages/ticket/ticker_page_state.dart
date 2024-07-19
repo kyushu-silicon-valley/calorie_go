@@ -1,33 +1,35 @@
-// import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:calorie_go_client/calorie_go_client.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 
-// part 'ticket_page_state.freezed.dart';
+part 'ticker_page_state.freezed.dart';
 
-// @freezed
-// class TicketPageState with _$TicketPageState {
-//   const factory TicketPageState({
-//     required TicketIndexPageState ticketIndexPageState,
-//     required TicketCustomPageState ticketCustomPageState,
-//     required TicketCustomPageState ticketCustomPageState,
-//   }) = _TicketPageState;
-// }
+@freezed
+class TicketPageState with _$TicketPageState {
+  const factory TicketPageState({
+    required TicketIndexPageState ticketIndexPageState,
+    required CustomPageState customPageState,
+    required SelectStylePageState selectStylePageState,
+  }) = _TicketPageState;
+}
 
-// @freezed
-// class TicketIndexPageState with _$TicketIndexPageState {
-//   const factory TicketIndexPageState({
-//     required List<MonsterImage> monsterImages,
-//   }) = _TicketIndexPageState;
-// }
+@freezed
+class TicketIndexPageState with _$TicketIndexPageState {
+  const factory TicketIndexPageState({
+    required List<UsertTicket> tickets,
+  }) = _TicketIndexPageState;
+}
 
-// @freezed
-// class TicketCustomPageState with _$TicketCustomPageState {
-//   const factory TicketCustomPageState({
-//     required List<MonsterImage> monsterImages,
-//   }) = _TicketCustomPageState;
-// }
+@freezed
+class CustomPageState with _$CustomPageState {
+  const factory CustomPageState({
+    @Default('') String prompt,
+    @Default(-1) int usingTicketId,
+  }) = _CustomPageState;
+}
 
-// @freezed
-// class TicketSelectStylePageState with _$TicketSelectStylePageState {
-//   const factory TicketSelectStylePageState({
-//     required List<MonsterImage> monsterImages,
-//   }) = _TicketSelectStylePageState;
-// }
+@freezed
+class SelectStylePageState with _$SelectStylePageState {
+  const factory SelectStylePageState({
+    GeneratedMonsters? monsters,
+  }) = _SelectStylePageState;
+}

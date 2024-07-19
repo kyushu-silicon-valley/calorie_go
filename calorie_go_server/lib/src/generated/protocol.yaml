@@ -7,13 +7,16 @@ exercise:
 monster:
   - fetchCurrentUserMonster:
   - fetchCurrentUserMonsterImage:
+  - changeCurrentMonster:
 notification:
   - getNotification:
 ranking:
   - getRanking:
   - myRanking:
 ticket:
-  - generateNextImage:
+  - getMyTicker:
+  - useTicket:
+  - giveTicket:
 user:
   - fetchCurrentUser:
   - editUserInfo:

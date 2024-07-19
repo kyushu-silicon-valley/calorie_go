@@ -171,6 +171,25 @@ class Endpoints extends _i1.EndpointDispatch {
               (endpoints['monster'] as _i4.MonsterEndpoint)
                   .fetchCurrentUserMonsterImage(session),
         ),
+        'changeCurrentMonster': _i1.MethodConnector(
+          name: 'changeCurrentMonster',
+          params: {
+            'newMonsterId': _i1.ParameterDescription(
+              name: 'newMonsterId',
+              type: _i1.getType<int>(),
+              nullable: false,
+            )
+          },
+          call: (
+            _i1.Session session,
+            Map<String, dynamic> params,
+          ) async =>
+              (endpoints['monster'] as _i4.MonsterEndpoint)
+                  .changeCurrentMonster(
+            session,
+            params['newMonsterId'],
+          ),
+        ),
       },
     );
     connectors['notification'] = _i1.EndpointConnector(
@@ -217,12 +236,45 @@ class Endpoints extends _i1.EndpointDispatch {
       name: 'ticket',
       endpoint: endpoints['ticket']!,
       methodConnectors: {
-        'generateNextImage': _i1.MethodConnector(
-          name: 'generateNextImage',
+        'getMyTicker': _i1.MethodConnector(
+          name: 'getMyTicker',
+          params: {},
+          call: (
+            _i1.Session session,
+            Map<String, dynamic> params,
+          ) async =>
+              (endpoints['ticket'] as _i7.TicketEndpoint).getMyTicker(session),
+        ),
+        'useTicket': _i1.MethodConnector(
+          name: 'useTicket',
           params: {
-            'newFeature': _i1.ParameterDescription(
-              name: 'newFeature',
+            'ticketId': _i1.ParameterDescription(
+              name: 'ticketId',
+              type: _i1.getType<int>(),
+              nullable: false,
+            ),
+            'prompt': _i1.ParameterDescription(
+              name: 'prompt',
               type: _i1.getType<String>(),
+              nullable: false,
+            ),
+          },
+          call: (
+            _i1.Session session,
+            Map<String, dynamic> params,
+          ) async =>
+              (endpoints['ticket'] as _i7.TicketEndpoint).useTicket(
+            session,
+            params['ticketId'],
+            params['prompt'],
+          ),
+        ),
+        'giveTicket': _i1.MethodConnector(
+          name: 'giveTicket',
+          params: {
+            'userId': _i1.ParameterDescription(
+              name: 'userId',
+              type: _i1.getType<int>(),
               nullable: false,
             )
           },
@@ -230,11 +282,11 @@ class Endpoints extends _i1.EndpointDispatch {
             _i1.Session session,
             Map<String, dynamic> params,
           ) async =>
-              (endpoints['ticket'] as _i7.TicketEndpoint).generateNextImage(
+              (endpoints['ticket'] as _i7.TicketEndpoint).giveTicket(
             session,
-            params['newFeature'],
+            params['userId'],
           ),
-        )
+        ),
       },
     );
     connectors['user'] = _i1.EndpointConnector(

@@ -32,6 +32,7 @@ import 'package:calorie_go_server/src/generated/exercise.dart' as _i20;
 import 'package:calorie_go_server/src/generated/notification.dart' as _i21;
 import 'package:calorie_go_server/src/generated/response/ranking_item_reponse.dart'
     as _i22;
+import 'package:calorie_go_server/src/generated/user_ticket.dart' as _i23;
 export 'calorie_go_user.dart';
 export 'example.dart';
 export 'exercise.dart';
@@ -536,6 +537,12 @@ class Protocol extends _i1.SerializationManagerServer {
           isNullable: false,
           dartType: 'int',
         ),
+        _i2.ColumnDefinition(
+          name: 'used',
+          columnType: _i2.ColumnType.boolean,
+          isNullable: false,
+          dartType: 'bool',
+        ),
       ],
       foreignKeys: [
         _i2.ForeignKeyDefinition(
@@ -702,6 +709,11 @@ class Protocol extends _i1.SerializationManagerServer {
               .map((e) => deserialize<_i22.RankingItemResponse>(e))
               .toList()
           : null) as dynamic;
+    }
+    if (t == List<_i23.UsertTicket>) {
+      return (data as List)
+          .map((e) => deserialize<_i23.UsertTicket>(e))
+          .toList() as dynamic;
     }
     try {
       return _i3.Protocol().deserialize<T>(data, t);

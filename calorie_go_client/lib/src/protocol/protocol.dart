@@ -30,7 +30,8 @@ import 'package:calorie_go_client/src/protocol/exercise.dart' as _i18;
 import 'package:calorie_go_client/src/protocol/notification.dart' as _i19;
 import 'package:calorie_go_client/src/protocol/response/ranking_item_reponse.dart'
     as _i20;
-import 'package:serverpod_auth_client/serverpod_auth_client.dart' as _i21;
+import 'package:calorie_go_client/src/protocol/user_ticket.dart' as _i21;
+import 'package:serverpod_auth_client/serverpod_auth_client.dart' as _i22;
 export 'calorie_go_user.dart';
 export 'example.dart';
 export 'exercise.dart';
@@ -179,8 +180,13 @@ class Protocol extends _i1.SerializationManager {
               .toList()
           : null) as dynamic;
     }
+    if (t == List<_i21.UsertTicket>) {
+      return (data as List)
+          .map((e) => deserialize<_i21.UsertTicket>(e))
+          .toList() as dynamic;
+    }
     try {
-      return _i21.Protocol().deserialize<T>(data, t);
+      return _i22.Protocol().deserialize<T>(data, t);
     } on _i1.DeserializationTypeNotFoundException catch (_) {}
     return super.deserialize<T>(data, t);
   }
@@ -188,7 +194,7 @@ class Protocol extends _i1.SerializationManager {
   @override
   String? getClassNameForObject(Object data) {
     String? className;
-    className = _i21.Protocol().getClassNameForObject(data);
+    className = _i22.Protocol().getClassNameForObject(data);
     if (className != null) {
       return 'serverpod_auth.$className';
     }
@@ -247,7 +253,7 @@ class Protocol extends _i1.SerializationManager {
   dynamic deserializeByClassName(Map<String, dynamic> data) {
     if (data['className'].startsWith('serverpod_auth.')) {
       data['className'] = data['className'].substring(15);
-      return _i21.Protocol().deserializeByClassName(data);
+      return _i22.Protocol().deserializeByClassName(data);
     }
     if (data['className'] == 'CalorieGoUser') {
       return deserialize<_i2.CalorieGoUser>(data['data']);

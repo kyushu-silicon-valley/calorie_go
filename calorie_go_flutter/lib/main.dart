@@ -13,6 +13,7 @@ void main() async {
   client = Client(
     'http://$ipAddress:8080/',
     authenticationKeyManager: FlutterAuthenticationKeyManager(),
+    connectionTimeout: const Duration(seconds: 60),
   )..connectivityMonitor = FlutterConnectivityMonitor();
   sessionManager = SessionManager(
     caller: client.modules.auth,

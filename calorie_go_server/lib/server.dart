@@ -34,7 +34,7 @@ void run(List<String> args) async {
   final env = DotEnv(includePlatformEnvironment: true)..load(['.env']);
   final openAIKey = env['OPENAI_API_KEY'];
   OpenAI.apiKey = openAIKey ?? '';
-  OpenAI.requestsTimeOut = Duration(seconds: 30);
+  OpenAI.requestsTimeOut = Duration(seconds: 60);
 
   // Start the server.
   await pod.start();
