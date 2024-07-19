@@ -21,10 +21,13 @@ class TicketPage extends HookConsumerWidget {
       appBar: AppBar(
         title: const Text('チケット'),
       ),
-      body: const Column(
-        children: [
-          TicketList(),
-        ],
+      body: Container(
+        color: const Color(0xFFE7DDC3),
+        child: const Column(
+          children: [
+            TicketList(),
+          ],
+        ),
       ),
       bottomNavigationBar: const AppBottomNavigationBar(),
     );
@@ -34,10 +37,12 @@ class TicketPage extends HookConsumerWidget {
 class _TicketShapeBorder extends ShapeBorder {
   final double? width;
   final double? radius;
+  final Color color;
 
   const _TicketShapeBorder({
     required this.width,
     required this.radius,
+    required this.color,
   });
 
   @override
@@ -50,6 +55,7 @@ class _TicketShapeBorder extends ShapeBorder {
     return _TicketShapeBorder(
       width: width! * t,
       radius: radius! * t,
+      color: color,
     );
   }
 
@@ -59,6 +65,7 @@ class _TicketShapeBorder extends ShapeBorder {
       return _TicketShapeBorder(
         width: lerpDouble(a.width, width, t),
         radius: lerpDouble(a.radius, radius, t),
+        color: Color.lerp(a.color, color, t)!,
       );
     }
     return super.lerpFrom(a, t);
@@ -70,6 +77,7 @@ class _TicketShapeBorder extends ShapeBorder {
       return _TicketShapeBorder(
         width: lerpDouble(width, b.width, t),
         radius: lerpDouble(radius, b.radius, t),
+        color: Color.lerp(color, b.color, t)!,
       );
     }
     return super.lerpTo(b, t);
@@ -90,6 +98,7 @@ class _TicketShapeBorder extends ShapeBorder {
     final w = rect.size.width; // 全体の横幅
     final h = rect.size.height; // 全体の縦幅
     final wl = w / 3; // 左側の横幅
+
     return Path()
       ..addPath(
         Path()
@@ -123,7 +132,7 @@ class _TicketShapeBorder extends ShapeBorder {
     final paint = Paint()
       ..style = PaintingStyle.stroke
       ..strokeWidth = width!
-      ..color = kColorTicketBorder;
+      ..color = color;
     canvas.drawPath(
       getOuterPath(
         rect.deflate(width! / 2.0),
@@ -136,36 +145,63 @@ class _TicketShapeBorder extends ShapeBorder {
 
 class _Ticket extends StatelessWidget {
   final Widget image;
+  final Color borderColor;
+  final Color textColor;
+  final String ticketText;
+  final String partName;
 
   const _Ticket({
     required this.image,
+    required this.borderColor,
+    required this.textColor,
+    required this.ticketText,
+    required this.partName,
   });
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () async {
-        final currentContext = context;
-
         final result = await showDialog<bool>(
           context: context,
           builder: (context) => AlertDialog(
-            title: const Text('確認'),
+            backgroundColor: Colors.white,
+            title: const Text('確認', style: TextStyle(
+                  fontSize: 30,
+                  fontWeight: FontWeight.bold,
+                ),
+                ),
             content: const Text('本当にこのチケットを使用しますか？'),
             actions: [
-              TextButton(
+              ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                foregroundColor: Colors.white,
+                backgroundColor: Colors.black,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                minimumSize: const Size(40, 40),
+              ),
                 onPressed: () => Navigator.of(context).pop(true),
                 child: const Text('はい'),
+                ),
+              ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                foregroundColor: Colors.black,
+                backgroundColor: Colors.grey,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                minimumSize: const Size(40, 40),
               ),
-              TextButton(
                 onPressed: () => Navigator.of(context).pop(false),
                 child: const Text('いいえ'),
               ),
             ],
           ),
         );
-         if (result == true && currentContext.mounted) {
-          currentContext.go('/custom');
+        if (result == true && context.mounted) {
+          context.go('/custom', extra: partName);
         }
       },
       child: Container(
@@ -173,7 +209,7 @@ class _Ticket extends StatelessWidget {
         height: 128,
         decoration: ShapeDecoration(
           color: Colors.white,
-          shape: const _TicketShapeBorder(width: 2, radius: 16.0), // ここで _TicketShapeBorder を使用
+          shape: _TicketShapeBorder(width: 2, radius: 16.0, color: borderColor),
           shadows: [
             BoxShadow(
               color: Colors.black.withOpacity(0.1),
@@ -196,20 +232,21 @@ class _Ticket extends StatelessWidget {
               width: 1,
               height: double.infinity,
               margin: const EdgeInsets.symmetric(vertical: 8.0),
-              color: kColorTicketBorder,
+              color: borderColor,
             ),
             Expanded(
               flex: 2,
               child: Container(
                 padding: const EdgeInsets.symmetric(horizontal: 24),
                 child: Table(
-                  children: const [
+                  children: [
                     TableRow(
                       children: [
                         Text(
-                          'カスタマイズ券',
+                          ticketText,
+                          textAlign: TextAlign.center,
                           style: TextStyle(
-                            color: Color(0xFF00008B),
+                            color: textColor,
                             fontSize: 20,
                             fontWeight: FontWeight.bold,
                           ),
@@ -246,7 +283,7 @@ class TicketList extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  'チケット一覧',
+                  'カスタムチケット一覧',
                   style: TextStyle(
                     color: kColorTextDark,
                     fontSize: 18,
@@ -268,18 +305,34 @@ class TicketList extends StatelessWidget {
                   children: [
                     _Ticket(
                       image: Assets.images.ticket.clothes.image(),
+                      borderColor: Colors.blue,
+                      textColor: Colors.blue,
+                      ticketText: 'ウェア',
+                      partName: 'ウェア',
                     ),
                     const SizedBox(height: 8),
                     _Ticket(
                       image: Assets.images.ticket.hat.image(),
+                      borderColor: Colors.green,
+                      textColor: Colors.green,
+                      ticketText: 'ヘッドウェア',
+                      partName: 'ヘッドウェア',
                     ),
                     const SizedBox(height: 8),
                     _Ticket(
                       image: Assets.images.ticket.shoes.image(),
+                      borderColor: Colors.red,
+                      textColor: Colors.red,
+                      ticketText: 'シューズ',
+                      partName: 'シューズ',
                     ),
                     const SizedBox(height: 8),
                     _Ticket(
                       image: Assets.images.ticket.beard.image(),
+                      borderColor: Colors.purple,
+                      textColor: Colors.purple,
+                      ticketText: 'アクセサリー',
+                      partName: 'アクセサリー',
                     ),
                   ],
                 ),
