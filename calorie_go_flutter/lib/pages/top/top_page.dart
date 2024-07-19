@@ -24,7 +24,7 @@ class TopPage extends HookConsumerWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const SizedBox(height: 50),
+              const SizedBox(height: 70),
               _Header(),
               const Spacer(),
               SignInWithGoogleButton(
@@ -62,9 +62,10 @@ class _Header extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       children: [
         Container(child: Assets.images.top.topLogo.image()),
-        Text(
-          '動いて競って育てよう！',
-          style: GoogleFonts.bizUDPGothic(
+        RichText(
+      text: TextSpan(
+        children: [
+          TextSpan(text: '動いて競って大変身', style: GoogleFonts.bizUDPGothic(
             color: const Color(0xFF00008B),
             fontSize: 20,
             fontWeight: FontWeight.bold,
@@ -75,7 +76,21 @@ class _Header extends StatelessWidget {
                 blurRadius: 3.0,
               ),
             ],
-          ),
+          )),
+          TextSpan(text: '!?', style: GoogleFonts.bizUDPGothic(
+            color: const Color.fromARGB(255, 216, 6, 6),
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
+            shadows: <Shadow>[
+              const Shadow(
+                color: Colors.grey,
+                offset: Offset(5.0, 5.0),
+                blurRadius: 3.0,
+              ),
+            ],
+          )),
+        ],
+      ),
         ),
       ],
     );
