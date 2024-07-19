@@ -22,12 +22,11 @@ void main() async {
 }
 
 final themeModeProvider = StateProvider<ThemeMode>((ref) {
-   return ThemeMode.light;
+  return ThemeMode.light;
 });
 
 class MyApp extends ConsumerWidget {
   const MyApp({super.key});
-  
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -38,9 +37,15 @@ class MyApp extends ConsumerWidget {
       routeInformationProvider: goRouter.routeInformationProvider,
       title: 'Calorie Go',
       theme: ThemeData(
-        primarySwatch: Colors.teal,
+        colorSchemeSeed: Colors.teal,
+        useMaterial3: true,
+        brightness: Brightness.light,
       ),
-      darkTheme: ThemeData.dark(),
+      darkTheme: ThemeData(
+        colorSchemeSeed: Colors.teal,
+        useMaterial3: true,
+        brightness: Brightness.dark,
+      ),
       themeMode: themeMode,
     );
   }

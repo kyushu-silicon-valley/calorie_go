@@ -27,7 +27,9 @@ class HomePage extends HookConsumerWidget {
         ],
       ),
       body: state.isLoading
-          ? const CircularProgressIndicator()
+          ? const Center(
+              child: CircularProgressIndicator(),
+            )
           : Center(
               child: Column(
                 children: [
@@ -61,10 +63,36 @@ class HomePage extends HookConsumerWidget {
                       ),
                     ),
                   ),
+                  const SizedBox(height: 32),
+                  _StartExerciseButton(),
                 ],
               ),
             ),
       bottomNavigationBar: const AppBottomNavigationBar(),
+    );
+  }
+}
+
+class _StartExerciseButton extends StatelessWidget {
+  const _StartExerciseButton();
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 16),
+      width: double.infinity,
+      child: ElevatedButton(
+        onPressed: () {
+          context.go('/exercise');
+        },
+        style: ElevatedButton.styleFrom(
+          padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(15),
+          ),
+        ),
+        child: const Text('運動を始める'),
+      ),
     );
   }
 }

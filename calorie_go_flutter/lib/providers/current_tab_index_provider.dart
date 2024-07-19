@@ -18,12 +18,10 @@ class CurrentTabIndexNotifier extends _$CurrentTabIndexNotifier {
       case 0:
         return '/';
       case 1:
-        return '/exercise';
-      case 2:
         return '/ranking';
-      case 3:
+      case 2:
         return '/ticket';
-      case 4:
+      case 3:
         return '/setting';
       default:
         return '/home';

@@ -24,10 +24,6 @@ class AppBottomNavigationBar extends HookConsumerWidget {
           label: 'ホーム',
         ),
         BottomNavigationBarItem(
-          icon: Icon(Icons.directions_run),
-          label: '運動',
-        ),
-        BottomNavigationBarItem(
           icon: Icon(Icons.emoji_events),
           label: 'ランキング',
         ),

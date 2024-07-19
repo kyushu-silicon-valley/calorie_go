@@ -166,34 +166,36 @@ class _Ticket extends StatelessWidget {
           context: context,
           builder: (context) => AlertDialog(
             backgroundColor: Colors.white,
-            title: const Text('確認', style: TextStyle(
-                  fontSize: 30,
-                  fontWeight: FontWeight.bold,
-                ),
-                ),
+            title: const Text(
+              '確認',
+              style: TextStyle(
+                fontSize: 30,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
             content: const Text('本当にこのチケットを使用しますか？'),
             actions: [
               ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                foregroundColor: Colors.white,
-                backgroundColor: Colors.black,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10),
+                style: ElevatedButton.styleFrom(
+                  foregroundColor: Colors.white,
+                  backgroundColor: Colors.black,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  minimumSize: const Size(40, 40),
                 ),
-                minimumSize: const Size(40, 40),
-              ),
                 onPressed: () => Navigator.of(context).pop(true),
                 child: const Text('はい'),
-                ),
-              ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                foregroundColor: Colors.black,
-                backgroundColor: Colors.grey,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                minimumSize: const Size(40, 40),
               ),
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  foregroundColor: Colors.black,
+                  backgroundColor: Colors.grey,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  minimumSize: const Size(40, 40),
+                ),
                 onPressed: () => Navigator.of(context).pop(false),
                 child: const Text('いいえ'),
               ),
@@ -290,7 +292,6 @@ class TicketList extends StatelessWidget {
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                Icon(Icons.filter_list, color: kColorText),
               ],
             ),
           ),
@@ -303,6 +304,38 @@ class TicketList extends StatelessWidget {
                 ),
                 child: Column(
                   children: [
+                    _Ticket(
+                      image: Assets.images.ticket.clothes.image(),
+                      borderColor: Colors.blue,
+                      textColor: Colors.blue,
+                      ticketText: 'ウェア',
+                      partName: 'ウェア',
+                    ),
+                    const SizedBox(height: 8),
+                    _Ticket(
+                      image: Assets.images.ticket.hat.image(),
+                      borderColor: Colors.green,
+                      textColor: Colors.green,
+                      ticketText: 'ヘッドウェア',
+                      partName: 'ヘッドウェア',
+                    ),
+                    const SizedBox(height: 8),
+                    _Ticket(
+                      image: Assets.images.ticket.shoes.image(),
+                      borderColor: Colors.red,
+                      textColor: Colors.red,
+                      ticketText: 'シューズ',
+                      partName: 'シューズ',
+                    ),
+                    const SizedBox(height: 8),
+                    _Ticket(
+                      image: Assets.images.ticket.beard.image(),
+                      borderColor: Colors.purple,
+                      textColor: Colors.purple,
+                      ticketText: 'アクセサリー',
+                      partName: 'アクセサリー',
+                    ),
+                    const SizedBox(height: 8),
                     _Ticket(
                       image: Assets.images.ticket.clothes.image(),
                       borderColor: Colors.blue,
