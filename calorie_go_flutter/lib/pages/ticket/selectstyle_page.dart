@@ -4,8 +4,8 @@ import 'package:calorie_go_flutter/components/bottom_app_bar.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-class SelectstylePage extends HookConsumerWidget {
-  const SelectstylePage({super.key});
+class SelectStylePage extends HookConsumerWidget {
+  const SelectStylePage({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

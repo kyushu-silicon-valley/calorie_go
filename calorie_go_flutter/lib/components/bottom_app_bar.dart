@@ -15,7 +15,7 @@ class AppBottomNavigationBar extends HookConsumerWidget {
         context.go(notifier.getPath());
       },
       currentIndex: ref.watch(currentTabIndexNotifierProvider),
-      selectedItemColor: Colors.indigo,
+      selectedItemColor: Colors.teal,
       unselectedItemColor: Colors.grey,
       unselectedLabelStyle: const TextStyle(color: Colors.grey),
       items: const [

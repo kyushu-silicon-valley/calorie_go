@@ -32,7 +32,7 @@ class MyApp extends StatelessWidget {
       routeInformationProvider: goRouter.routeInformationProvider,
       title: 'Calorie Go',
       theme: ThemeData(
-        primarySwatch: Colors.indigo,
+        primarySwatch: Colors.teal,
       ),
     );
   }
