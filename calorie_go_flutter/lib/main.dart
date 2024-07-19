@@ -21,11 +21,17 @@ void main() async {
   runApp(const ProviderScope(child: MyApp()));
 }
 
-class MyApp extends StatelessWidget {
+final themeModeProvider = StateProvider<ThemeMode>((ref) {
+   return ThemeMode.light;
+});
+
+class MyApp extends ConsumerWidget {
   const MyApp({super.key});
+  
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final themeMode = ref.watch(themeModeProvider);
     return MaterialApp.router(
       routerDelegate: goRouter.routerDelegate,
       routeInformationParser: goRouter.routeInformationParser,
@@ -34,6 +40,8 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.indigo,
       ),
+      darkTheme: ThemeData.dark(),
+      themeMode: themeMode,
     );
   }
 }
