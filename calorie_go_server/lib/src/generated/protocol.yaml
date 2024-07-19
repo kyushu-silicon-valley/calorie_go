@@ -16,7 +16,7 @@ ticket:
   - generateNextImage:
 user:
   - fetchCurrentUser:
-  - changeUserNickname:
+  - editUserInfo:
   - firstSignInProcess:
   - hasSignedUp:
 userExerciseHist:

@@ -3,7 +3,7 @@ import 'package:serverpod/serverpod.dart';
 import 'package:serverpod_auth_server/module.dart';
 
 class RankingEndpoint extends Endpoint {
-  Future<List<String>?> getRanking(Session session) async {
+  Future<List<RankingItemResponse>?> getRanking(Session session) async {
     if (!await session.isUserSignedIn) {
       return null;
     }
@@ -18,9 +18,12 @@ class RankingEndpoint extends Endpoint {
       orderBy: (p0) => p0.steps,
       orderDescending: true,
     );
-    print(ranking);
     var rankedUserNames = <String>[];
+    var steps = <int>[];
+    var rankedMonsterImages = <String>[];
+
     for (final r in ranking) {
+      steps.add(r.steps);
       final user = await Users.findUserByUserId(session, r.userId);
       if (user == null) {
         continue;
@@ -32,9 +35,33 @@ class RankingEndpoint extends Endpoint {
       if (calorieGoUser.isNotEmpty) {
         rankedUserNames.add(calorieGoUser.first.nickname);
       }
-    }
 
-    return rankedUserNames;
+      final monsters = await Monster.db.find(
+        session,
+        where: (p0) => p0.userId.equals(user.id),
+      );
+
+      final monsterImageId = monsters.firstOrNull?.monsterImageIdId;
+      if (monsterImageId != null) {
+        final monsterImages = await MonsterImage.db.find(
+          session,
+          where: (p0) => p0.id.equals(monsterImageId),
+        );
+        if (monsterImages.isNotEmpty) {
+          final img = monsterImages.first;
+          rankedMonsterImages.add(img.imageUrl);
+        }
+      }
+    }
+    var response = <RankingItemResponse>[];
+    for (int i = 0; i < ranking.length; i++) {
+      response.add(RankingItemResponse(
+        userName: rankedUserNames[i],
+        totalSteps: steps[i],
+        monsterImageB64: rankedMonsterImages[i],
+      ));
+    }
+    return response;
   }
 
   Future<UserExerciseHist?> myRanking(Session session) async {

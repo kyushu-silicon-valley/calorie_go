@@ -2,7 +2,6 @@ import 'package:calorie_go_flutter/components/bottom_app_bar.dart';
 import 'package:calorie_go_flutter/pages/setting/setting_page_controller.dart';
 import 'package:calorie_go_flutter/providers/theme_data_provider.dart';
 import 'package:calorie_go_flutter/repositories/user_repository.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -229,11 +228,7 @@ class _UserSettingCard extends HookConsumerWidget {
             right: 16,
             child: IconButton(
               icon: const Icon(Icons.edit),
-              onPressed: () {
-                if (kDebugMode) {
-                  print('Hello');
-                }
-              },
+              onPressed: () {},
             ),
           ),
         ],

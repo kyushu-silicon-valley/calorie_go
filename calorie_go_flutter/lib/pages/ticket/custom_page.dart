@@ -1,5 +1,4 @@
 import 'package:calorie_go_flutter/components/bottom_app_bar.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -15,9 +14,6 @@ class CustomPage extends HookConsumerWidget {
     final focusNode = FocusNode();
 
     if (partName == null) {
-      if (kDebugMode) {
-        print('partName is null');
-      }
       return Scaffold(
         appBar: AppBar(
           title: const Text('チケット'),

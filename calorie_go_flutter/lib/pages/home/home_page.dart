@@ -70,7 +70,9 @@ class HomePage extends HookConsumerWidget {
                   const SizedBox(height: 32),
                   StartExerciseButton(
                     text: '運動を始める',
-                    onPressed: () => context.go('/exercise'),
+                    onPressed: () {
+                      context.go('/exercise');
+                    },
                   ),
                 ],
               ),

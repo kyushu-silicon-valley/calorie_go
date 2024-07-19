@@ -1,0 +1,3 @@
+class: UserMonsterResponse
+fields:
+    monsterImageB64: String

@@ -1,3 +1,4 @@
+import 'package:calorie_go_client/calorie_go_client.dart';
 import 'package:calorie_go_flutter/repositories/user_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -12,6 +13,7 @@ class RegisterPage extends StatefulWidget {
 
 class RegisterPageState extends State<RegisterPage> {
   String _nickname = '';
+  Gender _gender = Gender.other;
   bool _isNicknameValid = true;
 
   @override
@@ -42,7 +44,9 @@ class RegisterPageState extends State<RegisterPage> {
                   },
                 ),
                 const Spacer(),
-                const _Gender(),
+                _Gender(onSelected: (gender) {
+                  _gender = gender;
+                }),
                 const Spacer(),
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(
@@ -53,7 +57,7 @@ class RegisterPageState extends State<RegisterPage> {
                   ),
                   onPressed: () async {
                     if (_isNicknameValid) {
-                      await UserRepository().changeNickname(_nickname);
+                      await UserRepository().editUserInfo(_nickname, _gender);
                       if (!context.mounted) return;
                       await UserRepository().firstSignInProcess();
                       if (!context.mounted) return;
@@ -187,8 +191,8 @@ class _NameState extends State<_Name> {
 }
 
 class _Gender extends StatefulWidget {
-  const _Gender();
-
+  const _Gender({required this.onSelected});
+  final ValueChanged<Gender> onSelected;
   @override
   _GenderState createState() => _GenderState();
 }
@@ -219,6 +223,7 @@ class _GenderState extends State<_Gender> {
               onSelected: (selected) {
                 setState(() {
                   _choiceIndex = selected ? 0 : -1;
+                  widget.onSelected(Gender.man);
                 });
               },
             ),
@@ -230,6 +235,7 @@ class _GenderState extends State<_Gender> {
               onSelected: (selected) {
                 setState(() {
                   _choiceIndex = selected ? 1 : 0;
+                  widget.onSelected(Gender.woman);
                 });
               },
             ),
@@ -241,6 +247,7 @@ class _GenderState extends State<_Gender> {
               onSelected: (selected) {
                 setState(() {
                   _choiceIndex = selected ? 2 : 0;
+                  widget.onSelected(Gender.other);
                 });
               },
             ),

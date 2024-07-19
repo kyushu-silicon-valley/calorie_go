@@ -2,9 +2,12 @@ import 'package:calorie_go_client/calorie_go_client.dart';
 import 'package:calorie_go_flutter/constants.dart';
 
 class RankingRepository {
-  Future<List<String>?> getRanking() async {
+  Future<List<RankingItemResponse>> getRanking() async {
     try {
       final ranking = await client.ranking.getRanking();
+      if (ranking == null) {
+        throw Exception('Failed To Fetch Ranking');
+      }
       return ranking;
     } catch (e) {
       throw Exception(e);

@@ -10,7 +10,7 @@ class StartExerciseButton extends StatelessWidget {
   });
 
   final String text;
-  final FutureOr onPressed;
+  final VoidCallback onPressed;
 
   @override
   Widget build(BuildContext context) {
@@ -18,9 +18,7 @@ class StartExerciseButton extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 16),
       width: double.infinity,
       child: ElevatedButton(
-        onPressed: () async {
-          await onPressed;
-        },
+        onPressed: onPressed,
         style: ElevatedButton.styleFrom(
           padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
           shape: RoundedRectangleBorder(

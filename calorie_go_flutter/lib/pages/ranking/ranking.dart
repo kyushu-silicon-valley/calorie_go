@@ -4,28 +4,15 @@ import 'package:calorie_go_flutter/providers/theme_data_provider.dart';
 import 'package:calorie_go_flutter/utils/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'dart:convert';
 
-class RankingTileMock {
+class RankingTileData {
   final String iconPath;
   final String name;
   final int steps;
 
-  RankingTileMock(this.iconPath, this.name, this.steps);
+  RankingTileData(this.iconPath, this.name, this.steps);
 }
-
-final rankingTileMock = [
-  RankingTileMock('https://picsum.photos/200/300', 'ヨシムラ', 10000),
-  RankingTileMock('https://picsum.photos/201/301', 'オトタケ', 9000),
-  RankingTileMock('https://picsum.photos/202/302', 'タナベ', 8000),
-  RankingTileMock('https://picsum.photos/203/303', 'タカハシ', 7000),
-  RankingTileMock('https://picsum.photos/204/304', 'ナカムラ', 6000),
-  RankingTileMock('https://picsum.photos/205/305', 'ツルタ', 5000),
-  RankingTileMock('https://picsum.photos/206/306', 'ナカニシ', 4000),
-  RankingTileMock('https://picsum.photos/207/307', 'サトウ', 3000),
-  RankingTileMock('https://picsum.photos/208/308', 'ウケゾノ', 2000),
-  RankingTileMock('https://picsum.photos/209/309', 'オノ', 1000),
-  RankingTileMock('https://picsum.photos/210/310', 'ヒロシゲ', 900),
-];
 
 class RankingPage extends HookConsumerWidget {
   const RankingPage({super.key});
@@ -43,7 +30,6 @@ class RankingPage extends HookConsumerWidget {
       body: RefreshIndicator(
         onRefresh: () async {
           await Future.delayed(const Duration(seconds: 1));
-          print('refreshing...');
         },
         child: SingleChildScrollView(
           child: ListView(
@@ -67,10 +53,14 @@ class RankingPage extends HookConsumerWidget {
                   ],
                 ),
               ),
-              for (final mockData in rankingTileMock)
+              for (int i = 0; i < state.ranking.length; i++)
                 _MockRanking(
-                  mockData: mockData,
-                  index: rankingTileMock.indexOf(mockData),
+                  data: RankingTileData(
+                    state.ranking[i].monsterImageB64,
+                    state.ranking[i].userName,
+                    state.ranking[i].totalSteps,
+                  ),
+                  index: i,
                 ),
             ],
           ),
@@ -83,11 +73,11 @@ class RankingPage extends HookConsumerWidget {
 
 class _MockRanking extends HookConsumerWidget {
   const _MockRanking({
-    required this.mockData,
+    required this.data,
     required this.index,
   });
 
-  final RankingTileMock mockData;
+  final RankingTileData data;
   final int index;
 
   @override
@@ -122,12 +112,12 @@ class _MockRanking extends HookConsumerWidget {
           ),
           const SizedBox(width: 10),
           CircleAvatar(
-            backgroundImage: NetworkImage(mockData.iconPath),
+            backgroundImage: MemoryImage(base64Decode(data.iconPath)),
           ),
         ],
       ),
-      title: Text(mockData.name),
-      subtitle: Text('${mockData.steps}歩'),
+      title: Text(data.name),
+      subtitle: Text('${data.steps}歩'),
     );
   }
 }

@@ -19,7 +19,7 @@ class RankingPageController extends _$RankingPageController {
 
   Future<void> fetchRanking() async {
     final ranking = await RankingRepository().getRanking();
-    state = state.copyWith(ranking: ranking ?? []);
+    state = state.copyWith(ranking: ranking);
   }
 
   Future<void> fetchMyRanking() async {

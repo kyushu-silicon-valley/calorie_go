@@ -16,7 +16,7 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$RankingPageState {
-  List<String> get ranking => throw _privateConstructorUsedError;
+  List<RankingItemResponse> get ranking => throw _privateConstructorUsedError;
   UserExerciseHist? get myRanking => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
@@ -30,7 +30,7 @@ abstract class $RankingPageStateCopyWith<$Res> {
           RankingPageState value, $Res Function(RankingPageState) then) =
       _$RankingPageStateCopyWithImpl<$Res, RankingPageState>;
   @useResult
-  $Res call({List<String> ranking, UserExerciseHist? myRanking});
+  $Res call({List<RankingItemResponse> ranking, UserExerciseHist? myRanking});
 }
 
 /// @nodoc
@@ -53,7 +53,7 @@ class _$RankingPageStateCopyWithImpl<$Res, $Val extends RankingPageState>
       ranking: null == ranking
           ? _value.ranking
           : ranking // ignore: cast_nullable_to_non_nullable
-              as List<String>,
+              as List<RankingItemResponse>,
       myRanking: freezed == myRanking
           ? _value.myRanking
           : myRanking // ignore: cast_nullable_to_non_nullable
@@ -70,7 +70,7 @@ abstract class _$$RankingPageStateImplCopyWith<$Res>
       __$$RankingPageStateImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({List<String> ranking, UserExerciseHist? myRanking});
+  $Res call({List<RankingItemResponse> ranking, UserExerciseHist? myRanking});
 }
 
 /// @nodoc
@@ -91,7 +91,7 @@ class __$$RankingPageStateImplCopyWithImpl<$Res>
       ranking: null == ranking
           ? _value._ranking
           : ranking // ignore: cast_nullable_to_non_nullable
-              as List<String>,
+              as List<RankingItemResponse>,
       myRanking: freezed == myRanking
           ? _value.myRanking
           : myRanking // ignore: cast_nullable_to_non_nullable
@@ -104,13 +104,14 @@ class __$$RankingPageStateImplCopyWithImpl<$Res>
 
 class _$RankingPageStateImpl implements _RankingPageState {
   const _$RankingPageStateImpl(
-      {final List<String> ranking = const [], this.myRanking = null})
+      {final List<RankingItemResponse> ranking = const [],
+      this.myRanking = null})
       : _ranking = ranking;
 
-  final List<String> _ranking;
+  final List<RankingItemResponse> _ranking;
   @override
   @JsonKey()
-  List<String> get ranking {
+  List<RankingItemResponse> get ranking {
     if (_ranking is EqualUnmodifiableListView) return _ranking;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_ranking);
@@ -149,11 +150,11 @@ class _$RankingPageStateImpl implements _RankingPageState {
 
 abstract class _RankingPageState implements RankingPageState {
   const factory _RankingPageState(
-      {final List<String> ranking,
+      {final List<RankingItemResponse> ranking,
       final UserExerciseHist? myRanking}) = _$RankingPageStateImpl;
 
   @override
-  List<String> get ranking;
+  List<RankingItemResponse> get ranking;
   @override
   UserExerciseHist? get myRanking;
   @override

@@ -6,7 +6,7 @@ part 'ranking_page_state.freezed.dart';
 @freezed
 class RankingPageState with _$RankingPageState {
   const factory RankingPageState({
-    @Default([]) List<String> ranking,
+    @Default([]) List<RankingItemResponse> ranking,
     @Default(null) UserExerciseHist? myRanking,
   }) = _RankingPageState;
 }

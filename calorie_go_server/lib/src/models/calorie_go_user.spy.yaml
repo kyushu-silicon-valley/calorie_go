@@ -4,3 +4,4 @@ fields:
     authId: String
     authUserId: int
     nickname: String
+    gender: Gender

@@ -4,14 +4,12 @@ import 'package:flutter/foundation.dart';
 
 class TicketRepository {
   /// チケットを使用する
-  Future<List<MonsterImage>> useTicket(int ticketId, String feature) async {
+  Future<GeneratedMonsters> useTicket(int ticketId, String feature) async {
     try {
       final monsterImages = await client.ticket.generateNextImage(feature);
+      if(monsterImages == null) throw Exception("Failed to generate monster images");
       return monsterImages;
     } catch (e) {
-      if (kDebugMode) {
-        print(e);
-      }
       throw Exception(e);
     }
   }

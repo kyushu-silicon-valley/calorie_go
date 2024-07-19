@@ -9,9 +9,6 @@ class NotificationRepository {
       final response = await client.notification.getNotification();
       return response;
     } catch (e) {
-      if (kDebugMode) {
-        print('Error: $e');
-      }
       return null;
     }
   }

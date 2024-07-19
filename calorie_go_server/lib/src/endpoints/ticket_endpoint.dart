@@ -4,17 +4,17 @@ import 'package:dart_openai/dart_openai.dart';
 import 'package:serverpod/serverpod.dart';
 
 class TicketEndpoint extends Endpoint {
-  Future<List<MonsterImage>> generateNextImage(
+  Future<GeneratedMonsters?> generateNextImage(
     Session session,
     String newFeature,
   ) async {
     if (!await session.isUserSignedIn) {
-      return [];
+      return null;
     }
 
     final au = await session.authenticated;
     if (au == null) {
-      return [];
+      return null;
     }
 
     // 新しい特徴をDbに保存する
@@ -53,7 +53,7 @@ class TicketEndpoint extends Endpoint {
       responseFormat: OpenAIImageResponseFormat.b64Json,
     );
     if (generatedImage.data.length != 2) {
-      return [];
+      return null;
     }
 
     final img1 = generatedImage.data[0].b64Json ?? '';
@@ -67,6 +67,13 @@ class TicketEndpoint extends Endpoint {
         MonsterImage(imageUrl: img2),
       ],
     );
-    return monsterImages;
+    if (monsterImages.length != 2) return null;
+    return GeneratedMonsters(
+      img1: img1,
+      img1Id: monsterImages[0].id!,
+      img2: img2,
+      img2Id: monsterImages[1].id!,
+      generateUserId: au.userId,
+    );
   }
 }

@@ -9,7 +9,7 @@ import 'package:serverpod_auth_server/module.dart';
 class UserEndpoint extends Endpoint {
   /// 現在ログイン中のユーザー情報を取得する
   /// ログインしていない場合はnullを返す
-  Future<UserInfo?> fetchCurrentUser(Session session) async {
+  Future<UserResponse?> fetchCurrentUser(Session session) async {
     if (!await session.isUserSignedIn) {
       return null;
     }
@@ -20,13 +20,32 @@ class UserEndpoint extends Endpoint {
     }
 
     final u = await Users.findUserByUserId(session, au.userId);
-    return u;
+    if (u == null || u.id == null) {
+      return null;
+    }
+    final cu = await CalorieGoUser.db.find(
+      session,
+      where: (p0) => p0.authUserId.equals(u.id),
+    );
+    if (cu.length != 1) return null;
+
+    final hists = await UserExerciseHist.db.find(
+      session,
+      where: (p0) => p0.userId.equals(u.id),
+    );
+    final hist = hists.firstOrNull;
+    if (hist == null) return null;
+
+    return UserResponse(
+      userId: u.id!,
+      userName: cu[0].nickname,
+      totalSteps: hist.steps,
+    );
   }
 
   /// 現在のログイン中のユーザーのニックネームを変更するためのエンドポイント
-  /// [nickname]に変更後のニックネームを指定する
-  Future<UserInfo?> changeUserNickname(Session session,
-      {required String nickname}) async {
+  Future<UserInfo?> editUserInfo(Session session,
+      {required String nickname, required Gender gender}) async {
     if (!await session.isUserSignedIn) {
       return null;
     }
@@ -48,19 +67,19 @@ class UserEndpoint extends Endpoint {
     if (calorieGoUser.isEmpty) {
       await CalorieGoUser.db.insert(session, [
         CalorieGoUser(
-          authId: 'DEPRECATED',
-          authUserId: au.userId,
-          nickname: nickname,
-        ),
+            authId: 'DEPRECATED',
+            authUserId: au.userId,
+            nickname: nickname,
+            gender: gender),
       ]);
     } else {
       await CalorieGoUser.db.update(session, [
         CalorieGoUser(
-          id: calorieGoUser[0].id,
-          authId: 'DEPRECATED',
-          authUserId: au.userId,
-          nickname: nickname,
-        ),
+            id: calorieGoUser[0].id,
+            authId: 'DEPRECATED',
+            authUserId: au.userId,
+            nickname: nickname,
+            gender: gender),
       ]);
     }
     return u;

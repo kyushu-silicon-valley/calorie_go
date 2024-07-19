@@ -17,7 +17,8 @@ import '../endpoints/ranking_endpoint.dart' as _i6;
 import '../endpoints/ticket_endpoint.dart' as _i7;
 import '../endpoints/user_endpoint.dart' as _i8;
 import '../endpoints/user_exercise_hist_endpoint.dart' as _i9;
-import 'package:serverpod_auth_server/serverpod_auth_server.dart' as _i10;
+import 'package:calorie_go_server/src/generated/gender.dart' as _i10;
+import 'package:serverpod_auth_server/serverpod_auth_server.dart' as _i11;
 
 class Endpoints extends _i1.EndpointDispatch {
   @override
@@ -249,22 +250,28 @@ class Endpoints extends _i1.EndpointDispatch {
           ) async =>
               (endpoints['user'] as _i8.UserEndpoint).fetchCurrentUser(session),
         ),
-        'changeUserNickname': _i1.MethodConnector(
-          name: 'changeUserNickname',
+        'editUserInfo': _i1.MethodConnector(
+          name: 'editUserInfo',
           params: {
             'nickname': _i1.ParameterDescription(
               name: 'nickname',
               type: _i1.getType<String>(),
               nullable: false,
-            )
+            ),
+            'gender': _i1.ParameterDescription(
+              name: 'gender',
+              type: _i1.getType<_i10.Gender>(),
+              nullable: false,
+            ),
           },
           call: (
             _i1.Session session,
             Map<String, dynamic> params,
           ) async =>
-              (endpoints['user'] as _i8.UserEndpoint).changeUserNickname(
+              (endpoints['user'] as _i8.UserEndpoint).editUserInfo(
             session,
             nickname: params['nickname'],
+            gender: params['gender'],
           ),
         ),
         'firstSignInProcess': _i1.MethodConnector(
@@ -314,6 +321,6 @@ class Endpoints extends _i1.EndpointDispatch {
         ),
       },
     );
-    modules['serverpod_auth'] = _i10.Endpoints()..initializeEndpoints(server);
+    modules['serverpod_auth'] = _i11.Endpoints()..initializeEndpoints(server);
   }
 }
