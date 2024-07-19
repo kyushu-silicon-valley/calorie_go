@@ -56,5 +56,10 @@
 				</array>
 			</dict>
 		</array>
+		<!-- health -->
+		<key>NSHealthShareUsageDescription</key>
+		<string>Health data will be shared with this app.</string>
+		<key>NSHealthUpdateUsageDescription</key>
+		<string>Health data will be updated by this app.</string>
 	</dict>
 </plist>
