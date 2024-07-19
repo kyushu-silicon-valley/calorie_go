@@ -4,7 +4,6 @@ import 'package:calorie_go_flutter/pages/setting/setting_page_controller.dart';
 //import 'package:calorie_go_flutter/constants.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
 //import 'package:flutter_hooks/flutter_hooks.dart';
 //import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -17,7 +16,7 @@ class SettingPage extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final gendervalue = ref.watch(genderValueProvider);
-    final thememode = useState<bool>(false);
+    final thememode = ref.watch(themeModeProvider);
 
     return Scaffold(
       appBar: AppBar(
@@ -133,7 +132,7 @@ class SettingPage extends HookConsumerWidget {
                         padding: const EdgeInsets.all(8.0),
                         child: Container(
                           decoration: BoxDecoration(
-                            color: !thememode.value? Colors.black: Colors.white,
+                            color: thememode == ThemeMode.light?  Colors.black: Colors.white,
                             borderRadius: BorderRadius.circular(20),
                           ),
                           child: ElevatedButton(
@@ -141,7 +140,7 @@ class SettingPage extends HookConsumerWidget {
                             child: Text(
                               '登録',
                               style: TextStyle(
-                                color: !thememode.value? Colors.white : Colors.black,
+                                color: thememode == ThemeMode.light? Colors.white : Colors.black,
                               ),
                             ),
                           ),
@@ -176,9 +175,8 @@ class SettingPage extends HookConsumerWidget {
                                   ),
                                 ),
                                 CupertinoSwitch(
-                                  value: thememode.value,
+                                  value: thememode == ThemeMode.dark? true:false,
                                   onChanged: (value) {
-                                    thememode.value = value;
                                     if (value){
                                       final notifier = ref.read(themeModeProvider.notifier);
                                       notifier.state = ThemeMode.dark;
