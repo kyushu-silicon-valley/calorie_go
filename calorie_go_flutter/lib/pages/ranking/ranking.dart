@@ -1,7 +1,31 @@
 import 'package:calorie_go_flutter/components/bottom_app_bar.dart';
 import 'package:calorie_go_flutter/pages/ranking/ranking_page_controller.dart';
+import 'package:calorie_go_flutter/providers/theme_data_provider.dart';
+import 'package:calorie_go_flutter/utils/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+
+class RankingTileMock {
+  final String iconPath;
+  final String name;
+  final int steps;
+
+  RankingTileMock(this.iconPath, this.name, this.steps);
+}
+
+final rankingTileMock = [
+  RankingTileMock('https://picsum.photos/200/300', 'ヨシムラ', 10000),
+  RankingTileMock('https://picsum.photos/201/301', 'オトタケ', 9000),
+  RankingTileMock('https://picsum.photos/202/302', 'タナベ', 8000),
+  RankingTileMock('https://picsum.photos/203/303', 'タカハシ', 7000),
+  RankingTileMock('https://picsum.photos/204/304', 'ナカムラ', 6000),
+  RankingTileMock('https://picsum.photos/205/305', 'ツルタ', 5000),
+  RankingTileMock('https://picsum.photos/206/306', 'ナカニシ', 4000),
+  RankingTileMock('https://picsum.photos/207/307', 'サトウ', 3000),
+  RankingTileMock('https://picsum.photos/208/308', 'ウケゾノ', 2000),
+  RankingTileMock('https://picsum.photos/209/309', 'オノ', 1000),
+  RankingTileMock('https://picsum.photos/210/310', 'ヒロシゲ', 900),
+];
 
 class RankingPage extends HookConsumerWidget {
   const RankingPage({super.key});
@@ -10,152 +34,100 @@ class RankingPage extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final state = ref.watch(rankingPageControllerProvider);
 
+    //TODO: デモ用
     return Scaffold(
       appBar: AppBar(
         elevation: 10,
         title: const Text('ランキング'),
       ),
-      body: Center(
-        child: SizedBox(
-          width: 400,
-          height: 700,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
+      body: RefreshIndicator(
+        onRefresh: () async {
+          await Future.delayed(const Duration(seconds: 1));
+          print('refreshing...');
+        },
+        child: SingleChildScrollView(
+          child: ListView(
+            physics: const NeverScrollableScrollPhysics(),
+            shrinkWrap: true,
             children: [
-              Center(
-                child: Container(
-                  color: Colors.yellow,
-                  width: 300,
-                  height: 80,
-                  child: const Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        '今日のランキング',
-                        style: TextStyle(
-                          fontSize: 25,
-                        ),
-                      ),
-                    ],
-                  ),
+              // 自分のランキングを出す
+              Padding(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 10, vertical: 16),
+                child: Row(
+                  children: [
+                    const Icon(Icons.star),
+                    const SizedBox(width: 10),
+                    const Text('自分の歩数'),
+                    const SizedBox(width: 10),
+                    Text(
+                      '${state.myRanking?.steps}歩',
+                      style: const TextStyle(fontSize: 20),
+                    ),
+                  ],
                 ),
               ),
-              Stack(
-                alignment: AlignmentDirectional.bottomCenter,
-                children: [
-                  LimitedBox(
-                    maxHeight: 500,
-                    child: ListView.builder(
-                      itemCount: state.ranking.length,
-                      itemBuilder: (context, index) {
-                        return Container(
-                          decoration: BoxDecoration(
-                              color: index == 0
-                                  ? Colors.yellow
-                                  : index == 1
-                                      ? Colors.grey
-                                      : index == 2
-                                          ? const Color.fromARGB(
-                                              255, 182, 149, 5)
-                                          : const Color.fromARGB(
-                                              255, 244, 236, 169),
-                              border: Border.all(color: Colors.yellowAccent),
-                              borderRadius: index == 0
-                                  ? const BorderRadius.vertical(
-                                      top: Radius.circular(20),
-                                    )
-                                  : index + 1 == state.ranking.length
-                                      ? const BorderRadius.vertical(
-                                          bottom: Radius.circular(20),
-                                        )
-                                      : null),
-                          child: SizedBox(
-                            height: 80,
-                            child: Center(
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  if (index == 0) ...[
-                                    Stack(
-                                      alignment: Alignment.center,
-                                      children: [
-                                        Text((index + 1).toString()),
-                                        const Icon(Icons.star_border_outlined,
-                                            size: 50),
-                                      ],
-                                    ),
-                                  ] else if (index == 1) ...[
-                                    Stack(
-                                      alignment: Alignment.center,
-                                      children: [
-                                        Text((index + 1).toString()),
-                                        const Icon(Icons.star_border_outlined,
-                                            size: 50),
-                                      ],
-                                    ),
-                                  ] else if (index == 2) ...[
-                                    Stack(
-                                      alignment: Alignment.center,
-                                      children: [
-                                        Text((index + 1).toString()),
-                                        const Icon(Icons.star_border_outlined,
-                                            size: 50),
-                                      ],
-                                    ),
-                                  ] else ...[
-                                    Text((index + 1).toString()),
-                                  ],
-                                  Container(
-                                    margin: const EdgeInsets.symmetric(
-                                        vertical: 10, horizontal: 50),
-                                    child: Text(
-                                      state.ranking[index],
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                        );
-                      },
-                    ),
-                  ),
-                  // TODO: バックエンドの工数的に実装を後回しにする
-                  // if (state.myRanking != null)
-                  //   Container(
-                  //     height: 100,
-                  //     decoration: BoxDecoration(
-                  //       borderRadius: BorderRadius.circular(20),
-                  //       color: const Color.fromARGB(255, 248, 227, 30),
-                  //     ),
-                  //     child: Row(
-                  //       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  //       children: [
-                  //         Column(
-                  //           mainAxisAlignment: MainAxisAlignment.center,
-                  //           children: [
-                  //             const Text('自分のランキング'),
-                  //             Text('${state.myRanking!.steps}位'),
-                  //           ],
-                  //         ),
-                  //         const VerticalDivider(),
-                  //         Column(
-                  //           mainAxisAlignment: MainAxisAlignment.center,
-                  //           children: [
-                  //             const Text('自分の歩数'),
-                  //             Text('${state.myRanking!.steps}歩'),
-                  //           ],
-                  //         ),
-                  //       ],
-                  //     ),
-                  //   ),
-                ],
-              ),
+              for (final mockData in rankingTileMock)
+                _MockRanking(
+                  mockData: mockData,
+                  index: rankingTileMock.indexOf(mockData),
+                ),
             ],
           ),
         ),
       ),
       bottomNavigationBar: const AppBottomNavigationBar(),
+    );
+  }
+}
+
+class _MockRanking extends HookConsumerWidget {
+  const _MockRanking({
+    required this.mockData,
+    required this.index,
+  });
+
+  final RankingTileMock mockData;
+  final int index;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    Color getRankColor(int rank, bool isDarkMode) {
+      if (rank == 1) {
+        return Colors.yellow[800]!;
+      } else if (rank == 2) {
+        return Colors.grey;
+      } else if (rank == 3) {
+        return const Color.fromARGB(255, 182, 149, 5);
+      } else {
+        return AppColors(isDarkMode: isDarkMode).textColor;
+      }
+    }
+
+    final themeMode = ref.watch(themeModeNotifierProvider);
+
+    return ListTile(
+      leading: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Text(
+            (index + 1).toString(),
+            style: TextStyle(
+              fontSize: 24,
+              color: getRankColor(
+                index + 1,
+                themeMode == ThemeMode.dark,
+              ),
+            ),
+          ),
+          const SizedBox(width: 10),
+          CircleAvatar(
+            backgroundImage: NetworkImage(mockData.iconPath),
+          ),
+        ],
+      ),
+      title: Text(mockData.name),
+      subtitle: Text('${mockData.steps}歩'),
     );
   }
 }

@@ -1,290 +1,243 @@
 import 'package:calorie_go_flutter/components/bottom_app_bar.dart';
-import 'package:calorie_go_flutter/main.dart';
 import 'package:calorie_go_flutter/pages/setting/setting_page_controller.dart';
-//import 'package:calorie_go_flutter/constants.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:calorie_go_flutter/providers/theme_data_provider.dart';
+import 'package:calorie_go_flutter/repositories/user_repository.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-//import 'package:flutter_hooks/flutter_hooks.dart';
-//import 'package:go_router/go_router.dart';
+import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-
 
 class SettingPage extends HookConsumerWidget {
   const SettingPage({super.key});
 
-
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final gendervalue = ref.watch(genderValueProvider);
-    final thememode = ref.watch(themeModeProvider);
-
+    final state = ref.watch(settingPageControllerProvider);
     return Scaffold(
       appBar: AppBar(
         elevation: 10,
         title: const Text('設定'),
       ),
-      body: Center(
-        child: SizedBox(
-          width: MediaQuery.of(context).size.width * 4/5,
-          child: ListView(
-            children: [
-              const Align(
-                alignment: Alignment.topLeft,
-                child: Text(
-                  'プロフィール情報',
-                  style: TextStyle(
-                    fontSize: 25,
-                  ),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(20),
-                child: SizedBox(
-                  width: MediaQuery.of(context).size.width * 4/5,
-                  child: Column(
-                    children: [
-                      Container(
-                        decoration: BoxDecoration(
-                            color: const Color.fromARGB(255, 226, 226, 226),
-                            borderRadius: BorderRadius.circular(20),
+      body: RefreshIndicator(
+        onRefresh: () async {},
+        child: ListView(
+          children: [
+            const SizedBox(height: 32),
+            _UserSettingCard(
+              userName: state.userName,
+              userIconUrl: state.userIconUrl,
+              userTotalSteps: state.userTotalSteps,
+            ),
+            const SizedBox(height: 32),
+            ListTile(
+              leading: const Icon(Icons.lightbulb_sharp),
+              title: const Text('テーマ'),
+              trailing: const Icon(Icons.chevron_right),
+              onTap: () async {
+                await showDialog(
+                  context: context,
+                  builder: (context) {
+                    return AlertDialog(
+                      content: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          const Icon(Icons.warning,
+                              color: Colors.amber, size: 48),
+                          const SizedBox(height: 16),
+                          const Text('テーマカラーを変更しますか？',
+                              style: TextStyle(fontSize: 16)),
+                          TextButton(
+                            child: const Text('変更する'),
+                            onPressed: () {
+                              ref
+                                  .read(themeModeNotifierProvider.notifier)
+                                  .toggleThemeMode();
+                              Navigator.of(context).pop();
+                            },
                           ),
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Column(
-                            children: [
-                              const Align(
-                                alignment: Alignment.topLeft,
-                                child: Text(
-                                  'ニックネーム',
-                                  style: TextStyle(
-                                    fontSize: 20,
-                                    color: Colors.black,
-                                  ),
-                                ),
-                              ),
-                              const TextField(
-                                decoration: InputDecoration(
-                                  border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.all(Radius.circular(4.0)),
-                                  ),
-                                ),
-                              ),
-                              const Align(
-                                alignment: Alignment.topLeft,
-                                child: Text(
-                                  '性別',
-                                  style: TextStyle(
-                                    fontSize: 20,
-                                    color: Colors.black,
-                                  ),
-                                ),
-                              ),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                children: [
-                                  Row(
-                                    children: [
-                                      Radio(
-                                        activeColor: Colors.black,
-                                        hoverColor: Colors.black,
-                                        value: Gender.man,
-                                        groupValue: gendervalue,
-                                        onChanged: (val)  {
-                                          final notifier = ref.read(genderValueProvider.notifier);
-                                          notifier.state = Gender.man;
-                                        },
-                                      ),
-                                      const Text(
-                                        '男性',
-                                        style: TextStyle(
-                                          color: Colors.black,
-                                        ),
-                                      ),
-                                    ]   
-                                  ),
-                                  Row(
-                                    children: [
-                                      Radio(
-                                        activeColor: Colors.black,
-                                        hoverColor: Colors.black,
-                                        value: Gender.woman,
-                                        groupValue: gendervalue,
-                                        onChanged: (val)  {
-                                          final notifier = ref.read(genderValueProvider.notifier);
-                                          notifier.state = Gender.woman;
-                                        },
-                                      ),
-                                      const Text(
-                                        '女性',
-                                        style: TextStyle(
-                                          color: Colors.black,
-                                        ),
-                                      ),
-                                    ]   
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-                        ),
+                        ],
                       ),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Container(
-                          decoration: BoxDecoration(
-                            color: thememode == ThemeMode.light?  Colors.black: Colors.white,
-                            borderRadius: BorderRadius.circular(20),
-                          ),
-                          child: ElevatedButton(
-                            onPressed: null,
-                            child: Text(
-                              '登録',
-                              style: TextStyle(
-                                color: thememode == ThemeMode.light? Colors.white : Colors.black,
-                              ),
-                            ),
-                          ),
-                        ),
+                    );
+                  },
+                );
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.abc),
+              title: const Text('シリアルコード'),
+              trailing: const Icon(Icons.chevron_right),
+              onTap: () async {},
+            ),
+            ListTile(
+              leading: const Icon(Icons.question_answer),
+              title: const Text('問い合わせ'),
+              trailing: const Icon(Icons.chevron_right),
+              onTap: () async {},
+            ),
+            ListTile(
+              leading: const Icon(Icons.exit_to_app),
+              title: const Text('ログアウト'),
+              trailing: const Icon(Icons.chevron_right),
+              onTap: () async {
+                await showDialog(
+                  context: context,
+                  builder: (context) => AlertDialog(
+                    title: const Text('ログアウトしますか？'),
+                    actions: [
+                      TextButton(
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
+                        child: const Text('キャンセル'),
                       ),
-                      const Align(
-                        alignment: Alignment.topLeft,
-                        child: Text(
-                          'アプリ設定',
-                          style: TextStyle(
-                            fontSize: 20,
-                          ),
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Container(
-                          decoration: BoxDecoration(
-                            color: const Color.fromARGB(255, 226, 226, 226),
-                            borderRadius: BorderRadius.circular(20),
-                          ),
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                const Text(
-                                  'ダークモード',
-                                  style: TextStyle(
-                                    fontSize: 20,
-                                    color: Colors.black,
-                                  ),
-                                ),
-                                CupertinoSwitch(
-                                  value: thememode == ThemeMode.dark? true:false,
-                                  onChanged: (value) {
-                                    if (value){
-                                      final notifier = ref.read(themeModeProvider.notifier);
-                                      notifier.state = ThemeMode.dark;
-                                    } else {
-                                      final notifier = ref.read(themeModeProvider.notifier);
-                                      notifier.state = ThemeMode.light;
-                                    }
-                                  },
-                                )
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Container(
-                          decoration: BoxDecoration(
-                            color: const Color.fromARGB(255, 226, 226, 226),
-                            borderRadius: BorderRadius.circular(20),
-                          ),
-                          child: const Padding(
-                            padding: EdgeInsets.all(8.0),
-                            child: Column(
-                              children: [
-                                Align(
-                                  alignment: Alignment.topLeft,
-                                  child: Text(
-                                    'シリアルコード',
-                                    style: TextStyle(
-                                      fontSize: 20,
-                                      color: Colors.black,
-                                    ),
-                                  ),
-                                ),
-                                TextField(
-                                  decoration: InputDecoration(
-                                    border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.all(Radius.circular(4.0)),
-                                    ),
-                                  ),
-                                ),
-                                Padding(
-                                  padding: EdgeInsets.all(8.0),
-                                  child: Align(
-                                    alignment: Alignment.topLeft,
-                                    child: Text(
-                                      '問い合わせ',
-                                      style: TextStyle(
-                                        fontSize: 20,
-                                        color: Colors.black,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                Padding(
-                                  padding: EdgeInsets.all(8.0),
-                                  child: Align(
-                                    alignment: Alignment.topLeft,
-                                    child: Text(
-                                      'キャッシュ削除',
-                                      style: TextStyle(
-                                        fontSize: 20,
-                                        color: Colors.black,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                Padding(
-                                  padding: EdgeInsets.all(8.0),
-                                  child: Align(
-                                    alignment: Alignment.topLeft,
-                                    child: Text(
-                                      'ログアウトする',
-                                      style: TextStyle(
-                                        fontSize: 20,
-                                        color: Colors.black,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                Padding(
-                                  padding: EdgeInsets.all(8.0),
-                                  child: Align(
-                                    alignment: Alignment.topLeft,
-                                    child: Text(
-                                      '退会する',
-                                      style: TextStyle(
-                                        color: Colors.red,
-                                        fontSize: 20,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
+                      TextButton(
+                        onPressed: () async {
+                          Navigator.of(context).pop();
+                          await UserRepository().signOut();
+                          if (!context.mounted) return;
+                          context.go('/top');
+                        },
+                        child: const Text(
+                          'ログアウト',
+                          style: TextStyle(color: Colors.red),
                         ),
                       ),
                     ],
                   ),
+                );
+              },
+            ),
+            ListTile(
+              leading: const Icon(
+                Icons.person_remove,
+                color: Colors.red,
+              ),
+              title: const Text(
+                '退会',
+                style: TextStyle(
+                  color: Colors.red,
                 ),
               ),
-            ],
-          ),
+              trailing: const Icon(
+                Icons.chevron_right,
+                color: Colors.red,
+              ),
+              onTap: () async {
+                await showDialog(
+                  context: context,
+                  builder: (context) => AlertDialog(
+                    title: const Text('本当に退会しますか？'),
+                    actions: [
+                      TextButton(
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
+                        child: const Text('キャンセル'),
+                      ),
+                      TextButton(
+                        onPressed: () async {
+                          Navigator.of(context).pop();
+                          await UserRepository().signOut();
+                          if (!context.mounted) return;
+                          context.go('/top');
+                        },
+                        child: const Text(
+                          '退会',
+                          style: TextStyle(color: Colors.red),
+                        ),
+                      ),
+                    ],
+                  ),
+                );
+              },
+            ),
+          ],
         ),
       ),
       bottomNavigationBar: const AppBottomNavigationBar(),
+    );
+  }
+}
+
+class _UserSettingCard extends HookConsumerWidget {
+  const _UserSettingCard({
+    required this.userName,
+    required this.userIconUrl,
+    required this.userTotalSteps,
+  });
+
+  final String userName;
+  final String userIconUrl;
+  final int userTotalSteps;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final isDarkMode = ref.watch(themeModeNotifierProvider) == ThemeMode.dark;
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16),
+      child: Stack(
+        children: [
+          Container(
+            decoration: BoxDecoration(
+              color: isDarkMode ? Colors.grey[800] : Colors.grey[100],
+              borderRadius: BorderRadius.circular(15),
+              boxShadow: [
+                if (isDarkMode)
+                  BoxShadow(
+                    color: Colors.grey[900]!,
+                    offset: const Offset(0, 2),
+                    blurRadius: 5,
+                  )
+                else
+                  BoxShadow(
+                    color: Colors.grey[300]!,
+                    offset: const Offset(0, 2),
+                    blurRadius: 5,
+                  ),
+              ],
+            ),
+            padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
+            child: Row(
+              children: [
+                CircleAvatar(
+                  radius: 50,
+                  backgroundImage: NetworkImage(userIconUrl),
+                ),
+                const SizedBox(width: 16),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text(
+                        userName,
+                        style: const TextStyle(
+                          fontSize: 24,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      const SizedBox(height: 8),
+                      Text('現在の歩数 : $userTotalSteps'),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+          Positioned(
+            top: 16,
+            right: 16,
+            child: IconButton(
+              icon: const Icon(Icons.edit),
+              onPressed: () {
+                if (kDebugMode) {
+                  print('Hello');
+                }
+              },
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

@@ -1,5 +1,6 @@
 import 'package:calorie_go_client/calorie_go_client.dart';
 import 'package:calorie_go_flutter/constants.dart';
+import 'package:calorie_go_flutter/providers/theme_data_provider.dart';
 import 'package:calorie_go_flutter/router.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -21,16 +22,13 @@ void main() async {
   runApp(const ProviderScope(child: MyApp()));
 }
 
-final themeModeProvider = StateProvider<ThemeMode>((ref) {
-  return ThemeMode.light;
-});
 
 class MyApp extends ConsumerWidget {
   const MyApp({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final themeMode = ref.watch(themeModeProvider);
+    final themeMode = ref.watch(themeModeNotifierProvider);
     return MaterialApp.router(
       routerDelegate: goRouter.routerDelegate,
       routeInformationParser: goRouter.routeInformationParser,

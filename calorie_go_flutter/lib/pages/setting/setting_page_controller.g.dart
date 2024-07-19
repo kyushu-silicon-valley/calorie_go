@@ -1,27 +1,27 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'current_tab_index_provider.dart';
+part of 'setting_page_controller.dart';
 
 // **************************************************************************
 // RiverpodGenerator
 // **************************************************************************
 
-String _$currentTabIndexNotifierHash() =>
-    r'88660cf64f08ca2a493b121e2aed61edf6626fff';
+String _$settingPageControllerHash() =>
+    r'f73b8041be6cb3362b4e239bd468ae3984512bd5';
 
-/// See also [CurrentTabIndexNotifier].
-@ProviderFor(CurrentTabIndexNotifier)
-final currentTabIndexNotifierProvider =
-    AutoDisposeNotifierProvider<CurrentTabIndexNotifier, int>.internal(
-  CurrentTabIndexNotifier.new,
-  name: r'currentTabIndexNotifierProvider',
+/// See also [SettingPageController].
+@ProviderFor(SettingPageController)
+final settingPageControllerProvider = AutoDisposeNotifierProvider<
+    SettingPageController, SettingPageState>.internal(
+  SettingPageController.new,
+  name: r'settingPageControllerProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
       ? null
-      : _$currentTabIndexNotifierHash,
+      : _$settingPageControllerHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );
 
-typedef _$CurrentTabIndexNotifier = AutoDisposeNotifier<int>;
+typedef _$SettingPageController = AutoDisposeNotifier<SettingPageState>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

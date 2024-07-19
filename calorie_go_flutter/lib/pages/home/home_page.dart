@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:calorie_go_flutter/components/app_main_button.dart';
 import 'package:calorie_go_flutter/components/bottom_app_bar.dart';
 import 'package:calorie_go_flutter/pages/home/home_page_controller.dart';
 import 'package:flutter/material.dart';
@@ -60,39 +61,21 @@ class HomePage extends HookConsumerWidget {
                       child: Text(
                         state.message,
                         textAlign: TextAlign.center,
+                        style: const TextStyle(
+                          color: Colors.black,
+                        ),
                       ),
                     ),
                   ),
                   const SizedBox(height: 32),
-                  _StartExerciseButton(),
+                  StartExerciseButton(
+                    text: '運動を始める',
+                    onPressed: () => context.go('/exercise'),
+                  ),
                 ],
               ),
             ),
       bottomNavigationBar: const AppBottomNavigationBar(),
-    );
-  }
-}
-
-class _StartExerciseButton extends StatelessWidget {
-  const _StartExerciseButton();
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 16),
-      width: double.infinity,
-      child: ElevatedButton(
-        onPressed: () {
-          context.go('/exercise');
-        },
-        style: ElevatedButton.styleFrom(
-          padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(15),
-          ),
-        ),
-        child: const Text('運動を始める'),
-      ),
     );
   }
 }
