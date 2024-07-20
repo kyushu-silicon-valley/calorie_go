@@ -1,5 +1,6 @@
 import 'package:calorie_go_flutter/components/bottom_app_bar.dart';
 import 'package:calorie_go_flutter/gen/assets.gen.dart';
+import 'package:calorie_go_flutter/pages/ticket/ticker_page_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -21,13 +22,10 @@ class TicketPage extends HookConsumerWidget {
       appBar: AppBar(
         title: const Text('チケット'),
       ),
-      body: Container(
-        color: const Color(0xFFE7DDC3),
-        child: const Column(
-          children: [
-            TicketList(),
-          ],
-        ),
+      body: const Column(
+        children: [
+          TicketList(),
+        ],
       ),
       bottomNavigationBar: const AppBottomNavigationBar(),
     );
@@ -143,57 +141,65 @@ class _TicketShapeBorder extends ShapeBorder {
   }
 }
 
-class _Ticket extends StatelessWidget {
+class _Ticket extends HookConsumerWidget {
   final Widget image;
   final Color borderColor;
   final Color textColor;
   final String ticketText;
-  final String partName;
+
+  final int ticketId;
 
   const _Ticket({
     required this.image,
     required this.borderColor,
     required this.textColor,
     required this.ticketText,
-    required this.partName,
+    required this.ticketId,
   });
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return GestureDetector(
       onTap: () async {
         final result = await showDialog<bool>(
           context: context,
           builder: (context) => AlertDialog(
             backgroundColor: Colors.white,
-            title: const Text('確認', style: TextStyle(
-                  fontSize: 30,
-                  fontWeight: FontWeight.bold,
-                ),
-                ),
+            title: const Text(
+              '確認',
+              style: TextStyle(
+                fontSize: 30,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
             content: const Text('本当にこのチケットを使用しますか？'),
             actions: [
               ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                foregroundColor: Colors.white,
-                backgroundColor: Colors.black,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10),
+                style: ElevatedButton.styleFrom(
+                  foregroundColor: Colors.white,
+                  backgroundColor: Colors.black,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  minimumSize: const Size(40, 40),
                 ),
-                minimumSize: const Size(40, 40),
-              ),
-                onPressed: () => Navigator.of(context).pop(true),
+                onPressed: () {
+                  ref.read(ticketPageControllerProvider.notifier).selectTicket(
+                        ticketId,
+                      );
+                  Navigator.of(context).pop(true);
+                },
                 child: const Text('はい'),
-                ),
-              ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                foregroundColor: Colors.black,
-                backgroundColor: Colors.grey,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                minimumSize: const Size(40, 40),
               ),
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  foregroundColor: Colors.black,
+                  backgroundColor: Colors.grey,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  minimumSize: const Size(40, 40),
+                ),
                 onPressed: () => Navigator.of(context).pop(false),
                 child: const Text('いいえ'),
               ),
@@ -201,7 +207,7 @@ class _Ticket extends StatelessWidget {
           ),
         );
         if (result == true && context.mounted) {
-          context.go('/custom', extra: partName);
+          context.go('/custom');
         }
       },
       child: Container(
@@ -264,11 +270,12 @@ class _Ticket extends StatelessWidget {
   }
 }
 
-class TicketList extends StatelessWidget {
+class TicketList extends HookConsumerWidget {
   const TicketList({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final state = ref.watch(ticketPageControllerProvider);
     return Expanded(
       child: Column(
         children: [
@@ -285,12 +292,10 @@ class TicketList extends StatelessWidget {
                 Text(
                   'カスタムチケット一覧',
                   style: TextStyle(
-                    color: kColorTextDark,
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                Icon(Icons.filter_list, color: kColorText),
               ],
             ),
           ),
@@ -303,37 +308,16 @@ class TicketList extends StatelessWidget {
                 ),
                 child: Column(
                   children: [
-                    _Ticket(
-                      image: Assets.images.ticket.clothes.image(),
-                      borderColor: Colors.blue,
-                      textColor: Colors.blue,
-                      ticketText: 'ウェア',
-                      partName: 'ウェア',
-                    ),
-                    const SizedBox(height: 8),
-                    _Ticket(
-                      image: Assets.images.ticket.hat.image(),
-                      borderColor: Colors.green,
-                      textColor: Colors.green,
-                      ticketText: 'ヘッドウェア',
-                      partName: 'ヘッドウェア',
-                    ),
-                    const SizedBox(height: 8),
-                    _Ticket(
-                      image: Assets.images.ticket.shoes.image(),
-                      borderColor: Colors.red,
-                      textColor: Colors.red,
-                      ticketText: 'シューズ',
-                      partName: 'シューズ',
-                    ),
-                    const SizedBox(height: 8),
-                    _Ticket(
-                      image: Assets.images.ticket.beard.image(),
-                      borderColor: Colors.purple,
-                      textColor: Colors.purple,
-                      ticketText: 'アクセサリー',
-                      partName: 'アクセサリー',
-                    ),
+                    for (final t in state.ticketIndexPageState.tickets) ...[
+                      _Ticket(
+                        image: Assets.images.ticket.clothes.image(),
+                        borderColor: Colors.teal,
+                        textColor: Colors.teal,
+                        ticketText: 'カスタマイズ',
+                        ticketId: t.id!,
+                      ),
+                      const SizedBox(height: 24),
+                    ],
                   ],
                 ),
               ),

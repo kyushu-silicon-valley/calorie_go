@@ -20,6 +20,7 @@ abstract class UsertTicket extends _i1.TableRow
     this.user,
     required this.ticketMasterId,
     this.ticketMaster,
+    required this.used,
   }) : super(id);
 
   factory UsertTicket({
@@ -28,6 +29,7 @@ abstract class UsertTicket extends _i1.TableRow
     _i2.UserInfo? user,
     required int ticketMasterId,
     _i3.TicketMaster? ticketMaster,
+    required bool used,
   }) = _UsertTicketImpl;
 
   factory UsertTicket.fromJson(Map<String, dynamic> jsonSerialization) {
@@ -43,6 +45,7 @@ abstract class UsertTicket extends _i1.TableRow
           ? null
           : _i3.TicketMaster.fromJson(
               (jsonSerialization['ticketMaster'] as Map<String, dynamic>)),
+      used: jsonSerialization['used'] as bool,
     );
   }
 
@@ -58,6 +61,8 @@ abstract class UsertTicket extends _i1.TableRow
 
   _i3.TicketMaster? ticketMaster;
 
+  bool used;
+
   @override
   _i1.Table get table => t;
 
@@ -67,6 +72,7 @@ abstract class UsertTicket extends _i1.TableRow
     _i2.UserInfo? user,
     int? ticketMasterId,
     _i3.TicketMaster? ticketMaster,
+    bool? used,
   });
   @override
   Map<String, dynamic> toJson() {
@@ -76,6 +82,7 @@ abstract class UsertTicket extends _i1.TableRow
       if (user != null) 'user': user?.toJson(),
       'ticketMasterId': ticketMasterId,
       if (ticketMaster != null) 'ticketMaster': ticketMaster?.toJson(),
+      'used': used,
     };
   }
 
@@ -88,6 +95,7 @@ abstract class UsertTicket extends _i1.TableRow
       'ticketMasterId': ticketMasterId,
       if (ticketMaster != null)
         'ticketMaster': ticketMaster?.toJsonForProtocol(),
+      'used': used,
     };
   }
 
@@ -136,12 +144,14 @@ class _UsertTicketImpl extends UsertTicket {
     _i2.UserInfo? user,
     required int ticketMasterId,
     _i3.TicketMaster? ticketMaster,
+    required bool used,
   }) : super._(
           id: id,
           userId: userId,
           user: user,
           ticketMasterId: ticketMasterId,
           ticketMaster: ticketMaster,
+          used: used,
         );
 
   @override
@@ -151,6 +161,7 @@ class _UsertTicketImpl extends UsertTicket {
     Object? user = _Undefined,
     int? ticketMasterId,
     Object? ticketMaster = _Undefined,
+    bool? used,
   }) {
     return UsertTicket(
       id: id is int? ? id : this.id,
@@ -160,6 +171,7 @@ class _UsertTicketImpl extends UsertTicket {
       ticketMaster: ticketMaster is _i3.TicketMaster?
           ? ticketMaster
           : this.ticketMaster?.copyWith(),
+      used: used ?? this.used,
     );
   }
 }
@@ -174,6 +186,10 @@ class UsertTicketTable extends _i1.Table {
       'ticketMasterId',
       this,
     );
+    used = _i1.ColumnBool(
+      'used',
+      this,
+    );
   }
 
   late final _i1.ColumnInt userId;
@@ -183,6 +199,8 @@ class UsertTicketTable extends _i1.Table {
   late final _i1.ColumnInt ticketMasterId;
 
   _i3.TicketMasterTable? _ticketMaster;
+
+  late final _i1.ColumnBool used;
 
   _i2.UserInfoTable get user {
     if (_user != null) return _user!;
@@ -215,6 +233,7 @@ class UsertTicketTable extends _i1.Table {
         id,
         userId,
         ticketMasterId,
+        used,
       ];
 
   @override

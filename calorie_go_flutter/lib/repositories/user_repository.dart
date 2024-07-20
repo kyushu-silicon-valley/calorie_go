@@ -1,3 +1,4 @@
+import 'package:calorie_go_client/calorie_go_client.dart';
 import 'package:calorie_go_flutter/constants.dart';
 import 'package:serverpod_auth_client/serverpod_auth_client.dart';
 
@@ -18,11 +19,13 @@ class UserRepository {
     }
   }
 
-  /// ニックネームの変更
-  Future<UserInfo?> changeNickname(String nickname) async {
-    // ニックネーム変更処理
+  Future<UserInfo?> editUserInfo(String nickname, Gender gender) async {
+    // ユーザー情報の変更
     try {
-      final user = await client.user.changeUserNickname(nickname: nickname);
+      final user = await client.user.editUserInfo(
+        nickname: nickname,
+        gender: gender,
+      );
       return user;
     } catch (e) {
       throw Exception(e);

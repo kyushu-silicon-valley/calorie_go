@@ -1,0 +1,5 @@
+class: RankingItemResponse
+fields:
+    userName: String
+    totalSteps: int
+    monsterImageB64: String

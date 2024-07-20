@@ -1,0 +1,5 @@
+enum: Gender
+values:
+  - man
+  - woman
+  - other

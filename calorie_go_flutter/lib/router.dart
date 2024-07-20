@@ -7,9 +7,8 @@ import 'package:calorie_go_flutter/pages/ranking/ranking.dart';
 import 'package:calorie_go_flutter/pages/register/register.dart';
 import 'package:calorie_go_flutter/pages/sample/sample_page.dart';
 import 'package:calorie_go_flutter/pages/setting/setting_page.dart';
-import 'package:calorie_go_flutter/pages/ticket/selectstyle.dart';
-import 'package:calorie_go_flutter/pages/ticket/ticket.dart';
-import 'package:calorie_go_flutter/pages/ticket/custom.dart';
+import 'package:calorie_go_flutter/pages/ticket/ticket_page.dart';
+import 'package:calorie_go_flutter/pages/ticket/custom_page.dart';
 import 'package:calorie_go_flutter/pages/top/top_page.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -84,13 +83,13 @@ final goRouter = GoRouter(
         child: const CustomPage(),
       ),
     ),
-    GoRoute(
-      path: '/selectstyle',
-      name: 'selectstyle',
-      pageBuilder: (context, state) => buildTransitionPage(
-        child: const SelectstylePage(),
-      ),
-    ),
+    // GoRoute(
+    //   path: '/selectstyle',
+    //   name: 'selectstyle',
+    //   pageBuilder: (context, state) => buildTransitionPage(
+    //     child: const SelectStylePage(),
+    //   ),
+    // ),
     GoRoute(
       path: '/setting',
       name: 'setting',

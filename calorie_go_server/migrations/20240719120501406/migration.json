@@ -1,0 +1,78 @@
+{
+  "actions": [
+    {
+      "type": "deleteTable",
+      "deleteTable": "calorie_go_user"
+    },
+    {
+      "type": "createTable",
+      "createTable": {
+        "name": "calorie_go_user",
+        "dartName": "CalorieGoUser",
+        "module": "calorie_go",
+        "schema": "public",
+        "columns": [
+          {
+            "name": "id",
+            "columnType": 6,
+            "isNullable": false,
+            "columnDefault": "nextval('calorie_go_user_id_seq'::regclass)",
+            "dartType": "int?"
+          },
+          {
+            "name": "authId",
+            "columnType": 0,
+            "isNullable": false,
+            "dartType": "String"
+          },
+          {
+            "name": "authUserId",
+            "columnType": 6,
+            "isNullable": false,
+            "dartType": "int"
+          },
+          {
+            "name": "nickname",
+            "columnType": 0,
+            "isNullable": false,
+            "dartType": "String"
+          },
+          {
+            "name": "gender",
+            "columnType": 6,
+            "isNullable": false,
+            "dartType": "protocol:Gender"
+          }
+        ],
+        "foreignKeys": [],
+        "indexes": [
+          {
+            "indexName": "calorie_go_user_pkey",
+            "elements": [
+              {
+                "type": 0,
+                "definition": "id"
+              }
+            ],
+            "type": "btree",
+            "isUnique": true,
+            "isPrimary": true
+          }
+        ],
+        "managed": true
+      }
+    }
+  ],
+  "warnings": [
+    {
+      "type": "tableDropped",
+      "message": "One or more columns are added to table \"calorie_go_user\" which cannot be added in a table migration. The complete table will be deleted and recreated.",
+      "table": "calorie_go_user",
+      "columns": [
+        "gender"
+      ],
+      "destrucive": true
+    }
+  ],
+  "migrationApiVersion": 1
+}

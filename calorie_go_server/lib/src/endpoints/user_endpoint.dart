@@ -9,7 +9,7 @@ import 'package:serverpod_auth_server/module.dart';
 class UserEndpoint extends Endpoint {
   /// 現在ログイン中のユーザー情報を取得する
   /// ログインしていない場合はnullを返す
-  Future<UserInfo?> fetchCurrentUser(Session session) async {
+  Future<UserResponse?> fetchCurrentUser(Session session) async {
     if (!await session.isUserSignedIn) {
       return null;
     }
@@ -20,13 +20,32 @@ class UserEndpoint extends Endpoint {
     }
 
     final u = await Users.findUserByUserId(session, au.userId);
-    return u;
+    if (u == null || u.id == null) {
+      return null;
+    }
+    final cu = await CalorieGoUser.db.find(
+      session,
+      where: (p0) => p0.authUserId.equals(u.id),
+    );
+    if (cu.length != 1) return null;
+
+    final hists = await UserExerciseHist.db.find(
+      session,
+      where: (p0) => p0.userId.equals(u.id),
+    );
+    final hist = hists.firstOrNull;
+    if (hist == null) return null;
+
+    return UserResponse(
+      userId: u.id!,
+      userName: cu[0].nickname,
+      totalSteps: hist.steps,
+    );
   }
 
   /// 現在のログイン中のユーザーのニックネームを変更するためのエンドポイント
-  /// [nickname]に変更後のニックネームを指定する
-  Future<UserInfo?> changeUserNickname(Session session,
-      {required String nickname}) async {
+  Future<UserInfo?> editUserInfo(Session session,
+      {required String nickname, required Gender gender}) async {
     if (!await session.isUserSignedIn) {
       return null;
     }
@@ -48,17 +67,19 @@ class UserEndpoint extends Endpoint {
     if (calorieGoUser.isEmpty) {
       await CalorieGoUser.db.insert(session, [
         CalorieGoUser(
-          authId: au.userId.toString(),
-          nickname: nickname,
-        ),
+            authId: 'DEPRECATED',
+            authUserId: au.userId,
+            nickname: nickname,
+            gender: gender),
       ]);
     } else {
       await CalorieGoUser.db.update(session, [
         CalorieGoUser(
-          id: calorieGoUser[0].id,
-          authId: au.userId.toString(),
-          nickname: nickname,
-        ),
+            id: calorieGoUser[0].id,
+            authId: 'DEPRECATED',
+            authUserId: au.userId,
+            nickname: nickname,
+            gender: gender),
       ]);
     }
     return u;
@@ -81,7 +102,7 @@ class UserEndpoint extends Endpoint {
         session,
         where: (p0) => p0.userId.equals(au.userId),
       );
-      if (existMonster.isNotEmpty) return null;
+      if (existMonster.isNotEmpty) return;
 
       final feature = PromptGenerator().getFirstFeature();
       // 特徴をDBに保存する
@@ -101,14 +122,14 @@ class UserEndpoint extends Endpoint {
         prompt: prompt,
         n: 1,
         size: OpenAIImageSize.size1024,
-        responseFormat: OpenAIImageResponseFormat.url,
+        responseFormat: OpenAIImageResponseFormat.b64Json,
       );
-      final url = generatedImage.data[0].url;
-      if (url == null) return;
+      final b64json = generatedImage.data[0].b64Json;
+      if (b64json == null) return;
 
       // 画像を登録し、現在のユーザとリレーションする
-      final monsterImages =
-          await MonsterImage.db.insert(session, [MonsterImage(imageUrl: url)]);
+      final monsterImages = await MonsterImage.db
+          .insert(session, [MonsterImage(imageUrl: b64json)]);
       final monsterImage = monsterImages[0];
       if (monsterImage.id == null) {
         return;
@@ -125,16 +146,22 @@ class UserEndpoint extends Endpoint {
       );
 
       // 運動のレコードを作成し、合計歩数を0で初期化する
-      await UserExerciseHist.db.insert(
+      final myRecord = await UserExerciseHist.db.find(
         session,
-        [
-          UserExerciseHist(
-            userId: au.userId,
-            updatedAt: DateTime.now(),
-            steps: 0,
-          )
-        ],
+        where: (p0) => p0.userId.equals(au.userId),
       );
+      if (myRecord.isEmpty) {
+        await UserExerciseHist.db.insert(
+          session,
+          [
+            UserExerciseHist(
+              userId: au.userId,
+              updatedAt: DateTime.now(),
+              steps: 0,
+            )
+          ],
+        );
+      }
     } catch (e) {
       throw Exception(e);
     }

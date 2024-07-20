@@ -11,17 +11,39 @@ class HomePageController extends _$HomePageController {
   HomePageState build() {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       getMonster();
+      setRandomMessage();
     });
     return const HomePageState();
   }
 
   Future<void> getMonster() async {
     try {
-      final monster = await MonsterRepository().getMonster();
-      if(monster == null) throw Exception('モンスターが見つかりませんでした');
-      state = state.copyWith(monster: AsyncValue.data(monster));
+      state = state.copyWith(isLoading: true);
+      final b64Image = await MonsterRepository().getUserMonsterImage();
+      if (b64Image == '') {
+        throw Exception('モンスターが見つかりませんでした');
+      }
+      state = state.copyWith(
+        b64Image: b64Image,
+      );
     } catch (e) {
       state = state.copyWith(errorMessage: '$e');
+    } finally {
+      state = state.copyWith(isLoading: false);
     }
+  }
+
+  // TODO: これはバックエンドで生成すべきだが、一旦mockで実装
+  void setRandomMessage() {
+    final List<String> messages = [
+      '今日も頑張りましょう！',
+      'お疲れ様です！',
+      '今日も楽しい一日にしましょう！',
+      'おはようございます！',
+      'こんにちは！',
+      'こんばんは！',
+    ];
+    final randomIndex = DateTime.now().millisecondsSinceEpoch % messages.length;
+    state = state.copyWith(message: messages[randomIndex]);
   }
 }

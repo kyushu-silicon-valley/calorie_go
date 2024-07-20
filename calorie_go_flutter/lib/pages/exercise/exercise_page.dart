@@ -63,8 +63,8 @@ class ExercisePage extends HookConsumerWidget {
     // ヘルスケアから歩数データを取得
     Future<void> fetchStepsData(DateTime endTime) async {
       int? steps = await health.getTotalStepsInInterval(
-        ref.read(startTimeProvider.notifier).state!,
-        endTime,
+        DateTime(2024,07,20,14,00),
+        DateTime(2024,07,20,15,30),
       );
       ref.read(stepCountProvider.notifier).state = steps ?? 0;
     }
@@ -93,7 +93,7 @@ class ExercisePage extends HookConsumerWidget {
               title: Container(
                 padding: const EdgeInsets.all(8.0),
                 child: const Column(
-                  mainAxisSize: MainAxisSize.min, 
+                  mainAxisSize: MainAxisSize.min,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Icon(Icons.check_circle, color: Colors.green),

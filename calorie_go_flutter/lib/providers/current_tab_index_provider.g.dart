@@ -7,12 +7,12 @@ part of 'current_tab_index_provider.dart';
 // **************************************************************************
 
 String _$currentTabIndexNotifierHash() =>
-    r'cf6869a1551102422dbec01ad1b7b29aeb962ea4';
+    r'fe59b2004642a7b3e297625bdb828a35dfa7a4a6';
 
 /// See also [CurrentTabIndexNotifier].
 @ProviderFor(CurrentTabIndexNotifier)
 final currentTabIndexNotifierProvider =
-    AutoDisposeNotifierProvider<CurrentTabIndexNotifier, int>.internal(
+    NotifierProvider<CurrentTabIndexNotifier, int>.internal(
   CurrentTabIndexNotifier.new,
   name: r'currentTabIndexNotifierProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
@@ -22,6 +22,6 @@ final currentTabIndexNotifierProvider =
   allTransitiveDependencies: null,
 );
 
-typedef _$CurrentTabIndexNotifier = AutoDisposeNotifier<int>;
+typedef _$CurrentTabIndexNotifier = Notifier<int>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

@@ -16,7 +16,9 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$HomePageState {
-  AsyncValue<Monster> get monster => throw _privateConstructorUsedError;
+  String get b64Image => throw _privateConstructorUsedError;
+  String get message => throw _privateConstructorUsedError;
+  bool get isLoading => throw _privateConstructorUsedError;
   String? get errorMessage => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
@@ -30,7 +32,8 @@ abstract class $HomePageStateCopyWith<$Res> {
           HomePageState value, $Res Function(HomePageState) then) =
       _$HomePageStateCopyWithImpl<$Res, HomePageState>;
   @useResult
-  $Res call({AsyncValue<Monster> monster, String? errorMessage});
+  $Res call(
+      {String b64Image, String message, bool isLoading, String? errorMessage});
 }
 
 /// @nodoc
@@ -46,14 +49,24 @@ class _$HomePageStateCopyWithImpl<$Res, $Val extends HomePageState>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? monster = null,
+    Object? b64Image = null,
+    Object? message = null,
+    Object? isLoading = null,
     Object? errorMessage = freezed,
   }) {
     return _then(_value.copyWith(
-      monster: null == monster
-          ? _value.monster
-          : monster // ignore: cast_nullable_to_non_nullable
-              as AsyncValue<Monster>,
+      b64Image: null == b64Image
+          ? _value.b64Image
+          : b64Image // ignore: cast_nullable_to_non_nullable
+              as String,
+      message: null == message
+          ? _value.message
+          : message // ignore: cast_nullable_to_non_nullable
+              as String,
+      isLoading: null == isLoading
+          ? _value.isLoading
+          : isLoading // ignore: cast_nullable_to_non_nullable
+              as bool,
       errorMessage: freezed == errorMessage
           ? _value.errorMessage
           : errorMessage // ignore: cast_nullable_to_non_nullable
@@ -70,7 +83,8 @@ abstract class _$$HomePageStateImplCopyWith<$Res>
       __$$HomePageStateImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({AsyncValue<Monster> monster, String? errorMessage});
+  $Res call(
+      {String b64Image, String message, bool isLoading, String? errorMessage});
 }
 
 /// @nodoc
@@ -84,14 +98,24 @@ class __$$HomePageStateImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? monster = null,
+    Object? b64Image = null,
+    Object? message = null,
+    Object? isLoading = null,
     Object? errorMessage = freezed,
   }) {
     return _then(_$HomePageStateImpl(
-      monster: null == monster
-          ? _value.monster
-          : monster // ignore: cast_nullable_to_non_nullable
-              as AsyncValue<Monster>,
+      b64Image: null == b64Image
+          ? _value.b64Image
+          : b64Image // ignore: cast_nullable_to_non_nullable
+              as String,
+      message: null == message
+          ? _value.message
+          : message // ignore: cast_nullable_to_non_nullable
+              as String,
+      isLoading: null == isLoading
+          ? _value.isLoading
+          : isLoading // ignore: cast_nullable_to_non_nullable
+              as bool,
       errorMessage: freezed == errorMessage
           ? _value.errorMessage
           : errorMessage // ignore: cast_nullable_to_non_nullable
@@ -104,17 +128,26 @@ class __$$HomePageStateImplCopyWithImpl<$Res>
 
 class _$HomePageStateImpl implements _HomePageState {
   const _$HomePageStateImpl(
-      {this.monster = const AsyncValue<Monster>.loading(), this.errorMessage});
+      {this.b64Image = '',
+      this.message = '',
+      this.isLoading = true,
+      this.errorMessage});
 
   @override
   @JsonKey()
-  final AsyncValue<Monster> monster;
+  final String b64Image;
+  @override
+  @JsonKey()
+  final String message;
+  @override
+  @JsonKey()
+  final bool isLoading;
   @override
   final String? errorMessage;
 
   @override
   String toString() {
-    return 'HomePageState(monster: $monster, errorMessage: $errorMessage)';
+    return 'HomePageState(b64Image: $b64Image, message: $message, isLoading: $isLoading, errorMessage: $errorMessage)';
   }
 
   @override
@@ -122,13 +155,18 @@ class _$HomePageStateImpl implements _HomePageState {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$HomePageStateImpl &&
-            (identical(other.monster, monster) || other.monster == monster) &&
+            (identical(other.b64Image, b64Image) ||
+                other.b64Image == b64Image) &&
+            (identical(other.message, message) || other.message == message) &&
+            (identical(other.isLoading, isLoading) ||
+                other.isLoading == isLoading) &&
             (identical(other.errorMessage, errorMessage) ||
                 other.errorMessage == errorMessage));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, monster, errorMessage);
+  int get hashCode =>
+      Object.hash(runtimeType, b64Image, message, isLoading, errorMessage);
 
   @JsonKey(ignore: true)
   @override
@@ -139,11 +177,17 @@ class _$HomePageStateImpl implements _HomePageState {
 
 abstract class _HomePageState implements HomePageState {
   const factory _HomePageState(
-      {final AsyncValue<Monster> monster,
+      {final String b64Image,
+      final String message,
+      final bool isLoading,
       final String? errorMessage}) = _$HomePageStateImpl;
 
   @override
-  AsyncValue<Monster> get monster;
+  String get b64Image;
+  @override
+  String get message;
+  @override
+  bool get isLoading;
   @override
   String? get errorMessage;
   @override

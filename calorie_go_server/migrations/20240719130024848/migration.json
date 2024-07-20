@@ -1,0 +1,99 @@
+{
+  "actions": [
+    {
+      "type": "deleteTable",
+      "deleteTable": "user_ticket"
+    },
+    {
+      "type": "createTable",
+      "createTable": {
+        "name": "user_ticket",
+        "dartName": "UsertTicket",
+        "module": "calorie_go",
+        "schema": "public",
+        "columns": [
+          {
+            "name": "id",
+            "columnType": 6,
+            "isNullable": false,
+            "columnDefault": "nextval('user_ticket_id_seq'::regclass)",
+            "dartType": "int?"
+          },
+          {
+            "name": "userId",
+            "columnType": 6,
+            "isNullable": false,
+            "dartType": "int"
+          },
+          {
+            "name": "ticketMasterId",
+            "columnType": 6,
+            "isNullable": false,
+            "dartType": "int"
+          },
+          {
+            "name": "used",
+            "columnType": 1,
+            "isNullable": false,
+            "dartType": "bool"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "constraintName": "user_ticket_fk_0",
+            "columns": [
+              "userId"
+            ],
+            "referenceTable": "serverpod_user_info",
+            "referenceTableSchema": "public",
+            "referenceColumns": [
+              "id"
+            ],
+            "onUpdate": 3,
+            "onDelete": 3
+          },
+          {
+            "constraintName": "user_ticket_fk_1",
+            "columns": [
+              "ticketMasterId"
+            ],
+            "referenceTable": "ticketm_master",
+            "referenceTableSchema": "public",
+            "referenceColumns": [
+              "id"
+            ],
+            "onUpdate": 3,
+            "onDelete": 3
+          }
+        ],
+        "indexes": [
+          {
+            "indexName": "user_ticket_pkey",
+            "elements": [
+              {
+                "type": 0,
+                "definition": "id"
+              }
+            ],
+            "type": "btree",
+            "isUnique": true,
+            "isPrimary": true
+          }
+        ],
+        "managed": true
+      }
+    }
+  ],
+  "warnings": [
+    {
+      "type": "tableDropped",
+      "message": "One or more columns are added to table \"user_ticket\" which cannot be added in a table migration. The complete table will be deleted and recreated.",
+      "table": "user_ticket",
+      "columns": [
+        "used"
+      ],
+      "destrucive": true
+    }
+  ],
+  "migrationApiVersion": 1
+}

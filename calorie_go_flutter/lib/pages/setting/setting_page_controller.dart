@@ -1,13 +1,16 @@
-import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:calorie_go_flutter/pages/setting/setting_page_state.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-enum Gender {
-  man,
-  woman,
-  other,
-}
+part 'setting_page_controller.g.dart';
 
-final genderValueProvider = StateProvider<Enum>(
-  (ref) {
-    return Gender.other;
+@riverpod
+class SettingPageController extends _$SettingPageController {
+  @override
+  SettingPageState build() {
+    return const SettingPageState(
+      userName: 'ユーザー名',
+      userIconUrl: 'https://picsum.photos/200',
+      userTotalSteps: 1000,
+    );
   }
-);
+}

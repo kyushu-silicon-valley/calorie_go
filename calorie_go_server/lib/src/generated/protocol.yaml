@@ -6,15 +6,20 @@ exercise:
   - myExerciseHist:
 monster:
   - fetchCurrentUserMonster:
+  - fetchCurrentUserMonsterImage:
+  - changeCurrentMonster:
 notification:
   - getNotification:
 ranking:
   - getRanking:
   - myRanking:
 ticket:
+  - getMyTicker:
+  - useTicket:
+  - giveTicket:
 user:
   - fetchCurrentUser:
-  - changeUserNickname:
+  - editUserInfo:
   - firstSignInProcess:
   - hasSignedUp:
 userExerciseHist:

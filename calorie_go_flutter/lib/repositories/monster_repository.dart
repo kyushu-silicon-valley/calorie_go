@@ -11,4 +11,23 @@ class MonsterRepository {
       throw Exception(e);
     }
   }
+
+  Future<String> getUserMonsterImage() async {
+    try {
+      final imageUrl = await client.monster.fetchCurrentUserMonsterImage();
+      return imageUrl;
+    } catch (e) {
+      throw Exception(e);
+    }
+  }
+
+  Future<Monster> updateCurrentMonsterImage(int newMonsterId) async {
+    try {
+      final monster = await client.monster.changeCurrentMonster(newMonsterId);
+      if(monster == null) throw Exception("Failed to change monster");
+      return monster;
+    } catch (e) {
+      throw Exception(e);
+    }
+  }
 }

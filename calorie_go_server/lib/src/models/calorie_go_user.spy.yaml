@@ -2,4 +2,6 @@ class: CalorieGoUser
 table: calorie_go_user
 fields:
     authId: String
+    authUserId: int
     nickname: String
+    gender: Gender

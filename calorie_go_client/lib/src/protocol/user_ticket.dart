@@ -19,6 +19,7 @@ abstract class UsertTicket implements _i1.SerializableModel {
     this.user,
     required this.ticketMasterId,
     this.ticketMaster,
+    required this.used,
   });
 
   factory UsertTicket({
@@ -27,6 +28,7 @@ abstract class UsertTicket implements _i1.SerializableModel {
     _i2.UserInfo? user,
     required int ticketMasterId,
     _i3.TicketMaster? ticketMaster,
+    required bool used,
   }) = _UsertTicketImpl;
 
   factory UsertTicket.fromJson(Map<String, dynamic> jsonSerialization) {
@@ -42,6 +44,7 @@ abstract class UsertTicket implements _i1.SerializableModel {
           ? null
           : _i3.TicketMaster.fromJson(
               (jsonSerialization['ticketMaster'] as Map<String, dynamic>)),
+      used: jsonSerialization['used'] as bool,
     );
   }
 
@@ -58,12 +61,15 @@ abstract class UsertTicket implements _i1.SerializableModel {
 
   _i3.TicketMaster? ticketMaster;
 
+  bool used;
+
   UsertTicket copyWith({
     int? id,
     int? userId,
     _i2.UserInfo? user,
     int? ticketMasterId,
     _i3.TicketMaster? ticketMaster,
+    bool? used,
   });
   @override
   Map<String, dynamic> toJson() {
@@ -73,6 +79,7 @@ abstract class UsertTicket implements _i1.SerializableModel {
       if (user != null) 'user': user?.toJson(),
       'ticketMasterId': ticketMasterId,
       if (ticketMaster != null) 'ticketMaster': ticketMaster?.toJson(),
+      'used': used,
     };
   }
 
@@ -91,12 +98,14 @@ class _UsertTicketImpl extends UsertTicket {
     _i2.UserInfo? user,
     required int ticketMasterId,
     _i3.TicketMaster? ticketMaster,
+    required bool used,
   }) : super._(
           id: id,
           userId: userId,
           user: user,
           ticketMasterId: ticketMasterId,
           ticketMaster: ticketMaster,
+          used: used,
         );
 
   @override
@@ -106,6 +115,7 @@ class _UsertTicketImpl extends UsertTicket {
     Object? user = _Undefined,
     int? ticketMasterId,
     Object? ticketMaster = _Undefined,
+    bool? used,
   }) {
     return UsertTicket(
       id: id is int? ? id : this.id,
@@ -115,6 +125,7 @@ class _UsertTicketImpl extends UsertTicket {
       ticketMaster: ticketMaster is _i3.TicketMaster?
           ? ticketMaster
           : this.ticketMaster?.copyWith(),
+      used: used ?? this.used,
     );
   }
 }

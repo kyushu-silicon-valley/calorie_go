@@ -1,0 +1,7 @@
+class: GeneratedMonsters
+fields:
+    img1: String
+    img1Id: int
+    img2: String
+    img2Id: int
+    generateUserId: int

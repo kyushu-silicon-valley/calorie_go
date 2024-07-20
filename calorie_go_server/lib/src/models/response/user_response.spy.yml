@@ -1,0 +1,7 @@
+class: UserResponse
+
+fields:
+    userId: int
+    userName: String
+    totalSteps: int
+
