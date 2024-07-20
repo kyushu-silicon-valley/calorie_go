@@ -108,7 +108,7 @@ class CustomPage extends HookConsumerWidget {
                     ),
                     onPressed: selectedImage != null
                         ? () async {
-                            final selectedMonsterId = selectedImage == 0
+                            final selectedMonsterId = selectedImage == 1
                                 ? state.selectStylePageState.monsters!.img1Id
                                 : state.selectStylePageState.monsters!.img2Id;
                             await ref
