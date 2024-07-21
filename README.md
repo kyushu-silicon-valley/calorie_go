@@ -6,6 +6,7 @@
 
 ## 資料
 [当日展示スライド(GoogleSlide)](https://docs.google.com/presentation/d/11vOz8NjSVBLS8bzpT3z6ToJ21W5HYjtTyRRerLZD20s/edit?usp=sharing)
+
 [当日発表スライド(GoogleSlide)](https://docs.google.com/presentation/d/1yFP_o7xEuhMrFRxbvqxbjeX_HqrTazoL7WHtEHlKQ_M/edit?usp=sharing)
 
 [DB設計(DrawIO)](https://drive.google.com/file/d/1mqP5QjC2Z9bpwvjdTgEvvOcW6ezy0hXq/view?usp=sharing)
@@ -37,6 +38,7 @@
 ## 実行方法
 
 アプリの実行にはOpenAIのAPIキーが必要です。`/calorie_go_server/.env.sample`を参考に`.env`を同ディレクトリに作成してください。
+
 サーバーの起動
 ```
 cd calorie_go_server
