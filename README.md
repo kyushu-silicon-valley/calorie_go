@@ -1,5 +1,8 @@
 # Calorie GO
 
+![calorie_go](https://github.com/user-attachments/assets/be0afbbe-f036-4d12-92a9-e0ea9ad915fd)
+
+
 2024 年 OpenHackU FUKUOKA で開発/発表したモバイルアプリケーション
 
 ダイエットや運動を継続することが難しい人に、歩数に応じて自分がもつキャラクターカードを着せ替えられたり、歩数を競争してもらったりすることで、楽しく運動を続けてもらうスマホアプリ
